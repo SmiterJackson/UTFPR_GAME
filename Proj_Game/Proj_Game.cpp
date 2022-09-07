@@ -1,24 +1,13 @@
 #include "stdafx.h"
+#include "game/game.h"
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(450, 450), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
+    Game game;
+    setlocale(LC_ALL, "");
 
-    while (window.isOpen())
-    {
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
-
-        window.clear();
-        window.draw(shape);
-        window.display();
-    }
+    if (!game.StartGame())
+        std::cout << "Não foi possível abrir a janela de contexto." << std::endl;
 
     return 0;
 }
