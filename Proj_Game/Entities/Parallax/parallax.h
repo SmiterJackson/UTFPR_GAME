@@ -2,17 +2,36 @@
 
 #include "../Player/player.h"
 
+typedef std::pair<sf::Texture, sf::RectangleShape> Background;
+
 class ParallaxBackground : public Ente
 {
 public:
-	ParallaxBackground(sf::View* _view = nullptr, const std::vector<std::string>& paths = std::vector<std::string>(), const float size_coefficient = 1.f);
+	ParallaxBackground();
+	ParallaxBackground(sf::View* _view, float* elapsed_timeRef, const std::vector<std::string>& paths = std::vector<std::string>(), const float size_coefficient = 1.f);
 	~ParallaxBackground();
 
-	void Execute(const float elapsedTime);
-	void SelfPrint(sf::RenderWindow& context_window, const float elapsedTime);
+	void Execute();
+	void SelfPrint(sf::RenderWindow& context_window);
 
-	typedef std::pair<sf::Texture, sf::RectangleShape> Background;
+	unsigned int GetBackgroundListSize();
+	void SetBackgrounds(const std::vector<std::string>& paths);
 
+	float GetSizeCoefficient() { return this->size_coeff; };
+	void SetSizeCoefficient(float _size_coeff) 
+	{ 
+		std::list<Background>::iterator it;
+		this->size_coeff = _size_coeff; 
+
+		if (this->backGrounds.size() > 0)
+		{
+			for (it = this->backGrounds.begin(); it != this->backGrounds.end(); it++)
+			{
+				it->second.setScale(_size_coeff, _size_coeff);
+			}
+		}
+	};
+	
 private:
 	std::list<Background> backGrounds;
 	sf::View* visionReference;

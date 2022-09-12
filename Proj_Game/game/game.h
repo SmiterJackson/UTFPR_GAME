@@ -19,4 +19,6 @@ private:
 
 	Camera camera;
 	GraphicManager graphicManager;
+
+	float elapsedTime;
 };

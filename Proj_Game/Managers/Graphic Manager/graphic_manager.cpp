@@ -54,13 +54,13 @@ void GraphicManager::RemoveEnte(const unsigned int enteId)
 		}
 	};
 };
-void GraphicManager::Draw(const float elapsedTime)
+void GraphicManager::Draw()
 {
 	std::list<Ente*>::const_iterator cIt;
 
 	windowRef->clear();
 	for (cIt = entes.cbegin(); cIt != entes.cend(); cIt++)
 	{
-		(*cIt)->SelfPrint(*windowRef, elapsedTime);
+		(*cIt)->SelfPrint(*windowRef);
 	}
 };

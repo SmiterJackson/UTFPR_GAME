@@ -15,8 +15,8 @@ namespace Obstacles
 		const sf::Vector2f GetPosition();
 		void MovePosition(const sf::Vector2f _newPosition);
 
-		void Execute(const float elapsedTime);
-		void SelfPrint(sf::RenderWindow& context_window, const float elapsedTime);
+		void Execute();
+		void SelfPrint(sf::RenderWindow& context_window);
 		void Collided(const Entity* _other);
 
 	private:

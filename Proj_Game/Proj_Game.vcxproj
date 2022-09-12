@@ -159,6 +159,7 @@
     <ClCompile Include="Entities\Character\character.cpp" />
     <ClCompile Include="Entities\Entity\entity.cpp" />
     <ClCompile Include="Entities\Ente\ente.cpp" />
+    <ClCompile Include="Entities\Instance\instance.cpp" />
     <ClCompile Include="Entities\Obstacles\obstacle.cpp" />
     <ClCompile Include="Entities\Obstacles\static_obstacle.cpp" />
     <ClCompile Include="Entities\Parallax\parallax.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="Entities\Character\character.h" />
     <ClInclude Include="Entities\Entity\entity.h" />
     <ClInclude Include="Entities\Ente\ente.h" />
+    <ClInclude Include="Entities\Instance\instance.h" />
     <ClInclude Include="Entities\Obstacles\obstacle.h" />
     <ClInclude Include="Entities\Obstacles\static_obstacle.h" />
     <ClInclude Include="Entities\Parallax\parallax.h" />

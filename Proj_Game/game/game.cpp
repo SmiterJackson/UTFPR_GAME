@@ -16,7 +16,8 @@
 Game::Game():
     players(),
     window(sf::VideoMode(WINDOW_SIZE_X_I, WINDOW_SIZE_Y_I), "JANELA DE CONTEXTO - GRÁFICO"), 
-    graphicManager(&window)
+    graphicManager(&window),
+    elapsedTime(0.f)
 {};
 Game::~Game()
 {};
@@ -31,10 +32,11 @@ bool Game::StartGame()
 
     sf::FloatRect bounds((352.f * IMAGE_COEFFICIENT * -2.f), (-192.f + 40.f), (352.f * IMAGE_COEFFICIENT * 2.f), (192.f * IMAGE_COEFFICIENT));
 
-    this->players.emplace_back();
+    this->players.emplace_back(&this->elapsedTime);
     players.front().MovePosition(position);
-    this->players.emplace_back();
+    this->players.emplace_back(&this->elapsedTime);
     players.back().MovePosition(position + sf::Vector2f(48.f, 0.f));
+    std::list<Characters::Player>::iterator it;
 
     Camera camera(sf::Vector2f(WINDOW_SIZE_X_F / X_Coeff, WINDOW_SIZE_Y_F / X_Coeff), sf::Vector2f(WINDOW_SIZE_X_F / Y_Coeff, WINDOW_SIZE_Y_F / Y_Coeff), &this->players, &bounds);
 
@@ -43,14 +45,12 @@ bool Game::StartGame()
         "Resources/parallax_background/back-buildings.png",
         "Resources/parallax_background/far-buildings.png" 
     });
-    ParallaxBackground bckg(camera.GetView(), paths, 2.5f);
+    ParallaxBackground bckg(camera.GetView(), &this->elapsedTime, paths, 2.5f);
 
-    float timediff = 0.0f;
     sf::Clock clock;
-
     while (window.isOpen())
     {
-        timediff = clock.restart().asSeconds();
+        this->elapsedTime = clock.restart().asSeconds();
 
         sf::Event event;
         while (window.pollEvent(event))
@@ -59,32 +59,28 @@ bool Game::StartGame()
                 window.close();
             if (event.type == sf::Event::KeyPressed)
             {
-                players.front().PlayerInputHandler(event);
-                if(players.size() > 1)
-                    players.back().PlayerInputHandler(event);
+                for (it = this->players.begin(); it != this->players.end(); it++)
+                    it->PlayerInputHandler(event);
             }
             if (event.type == sf::Event::KeyReleased)
             {
-                players.front().PlayerInputHandler(event);
-                if (players.size() > 1)
-                    players.back().PlayerInputHandler(event);
+                for (it = this->players.begin(); it != this->players.end(); it++)
+                    it->PlayerInputHandler(event);
             }
         }
 
-        players.front().Execute(timediff);
-        if (players.size() > 1)
-            players.back().Execute(timediff);
+        for (it = this->players.begin(); it != this->players.end(); it++)
+            it->Execute();
 
-        bckg.Execute(timediff);
-        camera.Execute(timediff);
+        bckg.Execute();
+        camera.Execute();
 
         window.clear();
 
-        bckg.SelfPrint(this->window, timediff);
+        bckg.SelfPrint(this->window);
 
-        players.front().SelfPrint(this->window, timediff);
-        if (players.size() > 1)
-            players.back().SelfPrint(this->window, timediff);
+        for (it = this->players.begin(); it != this->players.end(); it++)
+            it->SelfPrint(this->window);
 
         window.setView(*camera.GetView());
         window.display();

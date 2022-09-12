@@ -8,11 +8,13 @@ namespace Characters
 	{
 	public:
 		Player();
+		Player(float* elapsed_timeRef);
 		~Player();
 
 		void PlayerInputHandler(const sf::Event& _event);
-		void Execute(const float elapsedTime);
-		void SelfPrint(sf::RenderWindow& context_window, const float elapsedTime);
+		void Initialize();
+		void Execute();
+		void SelfPrint(sf::RenderWindow& context_window);
 		void Collided(const int type, const sf::Vector2f& movement);
 
 		static unsigned int const GetNumberOfPlayers() { return playerCounter; };

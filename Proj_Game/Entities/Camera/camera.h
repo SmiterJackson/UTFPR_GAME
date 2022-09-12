@@ -2,15 +2,14 @@
 
 #include "../Player/player.h"
 
-class Camera : public Ente
+class Camera : public Instance
 {
 public:
 	Camera(std::list<Characters::Player>* _players = nullptr);
 	Camera(const sf::Vector2f _center, const sf::Vector2f _size, std::list<Characters::Player>* _players = nullptr, const sf::FloatRect* _mapBounds = nullptr);
 	~Camera();
 
-	void Execute(const float elapsedTime);
-	void SelfPrint(sf::RenderWindow& context_window, const float elapsedTime);
+	void Execute();
 	const sf::FloatRect CameraBounds();
 
 	void SetMapBounds(const sf::FloatRect* _mapBounds)

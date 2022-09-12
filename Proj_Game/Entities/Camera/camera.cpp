@@ -1,21 +1,21 @@
 #include "camera.h"
 
 Camera::Camera(std::list<Characters::Player>* _players) :
-    Ente(Ente::CAMERA), view(), players(_players), mapBounds()
+    Instance(Instance::CAMERA), view(), players(_players), mapBounds()
 {
-    this->Execute(0.f);
+    this->Execute();
 };
 Camera::Camera(const sf::Vector2f _center, const sf::Vector2f _size, std::list<Characters::Player>* _players, const sf::FloatRect* _mapBounds):
-    Ente(Ente::CAMERA), view(_center, _size), players(_players), mapBounds()
+    Instance(Instance::CAMERA), view(_center, _size), players(_players), mapBounds()
 {
     if (_mapBounds != nullptr)
         this->mapBounds = *_mapBounds;
-    this->Execute(0.f);
+    this->Execute();
 };
 Camera::~Camera()
 {};
 
-void Camera::Execute(const float elapsedTime)
+void Camera::Execute()
 {
     constexpr float max = std::numeric_limits<float>::max();
     constexpr float min = std::numeric_limits<float>::lowest();
@@ -74,8 +74,6 @@ void Camera::Execute(const float elapsedTime)
 
     this->view.setCenter(least);
 };
-void Camera::SelfPrint(sf::RenderWindow& context_window, const float elapsedTime)
-{};
 const sf::FloatRect Camera::CameraBounds()
 {
     sf::FloatRect bounds;

@@ -2,7 +2,7 @@
 
 #include "../../Entities/Ente/ente.h"
 
-class GraphicManager 
+class GraphicManager
 {
 public:
 	GraphicManager();
@@ -11,7 +11,7 @@ public:
 
 	void AddEnte(Ente* ente);
 	void RemoveEnte(const unsigned int enteId);
-	void Draw(const float elapsedTime);
+	void Draw();
 
 private:
 	std::list<Ente*> entes;

@@ -17,20 +17,22 @@
 unsigned int Characters::Player::playerCounter = 0;
 
 Characters::Player::Player():
-	Character(Ente::CHARACTER, sf::RectangleShape(sf::Vector2f(24.f, 24.f)), sf::IntRect(sf::Vector2i(0, 0), sf::Vector2i(24, 24)), std::string(), PLAYER_TOTAL_LIFE, INVENCIBILITY_FRAMES_TIME),
+	Character(
+		Instance::CHARACTER, sf::RectangleShape(sf::Vector2f(0.f, 0.f)), nullptr, std::string(),
+		sf::IntRect(0, 0, 24, 24),  PLAYER_TOTAL_LIFE, INVENCIBILITY_FRAMES_TIME
+	),
 	onGround(true), crouching(false), jump(false), walkLeft(false), walkRight(false), walking(true), done(false), playerId(playerCounter)
 {
-	playerCounter++;
-
-	if(playerCounter == 1)
-		this->texture.loadFromFile(P1_TEXTURE_REF);
-	else
-		this->texture.loadFromFile(P2_TEXTURE_REF);
-
-#ifdef _DEBUG
-	this->hitBox.setOutlineColor(sf::Color::Red);
-	this->hitBox.setOutlineThickness(1.5f);
-#endif
+	Initialize();
+};
+Characters::Player::Player(float* elapsed_timeRef):
+	Character(
+		Instance::CHARACTER, sf::RectangleShape(sf::Vector2f(15.f, 18.f)), elapsed_timeRef, std::string(),
+		sf::IntRect(0, 0, 0, 0),  PLAYER_TOTAL_LIFE, INVENCIBILITY_FRAMES_TIME
+	),
+	onGround(true), crouching(false), jump(false), walkLeft(false), walkRight(false), walking(true), done(false), playerId(playerCounter)
+{
+	Initialize();
 };
 Characters::Player::~Player()
 {
@@ -129,9 +131,23 @@ void Characters::Player::PlayerInputHandler(const sf::Event& _event)
 		}
 	}
 };
-void Characters::Player::Execute(const float elapsedTime)
+void Characters::Player::Initialize()
 {
-	float coeff = H_ACCELERATION * elapsedTime;
+	this->playerCounter++;
+
+	if (this->playerCounter == 1)
+		this->SetTexture(P1_TEXTURE_REF, sf::IntRect(0, 0, 24, 24));
+	else
+		this->SetTexture(P2_TEXTURE_REF, sf::IntRect(0, 0, 24, 24));
+
+#ifdef _DEBUG
+	this->hitBox.setOutlineColor(sf::Color::Red);
+	this->hitBox.setOutlineThickness(1.5f);
+#endif
+};
+void Characters::Player::Execute()
+{
+	float coeff = H_ACCELERATION * (*this->elapsed_time);
 
 	if (this->walking)
 	{
@@ -168,7 +184,7 @@ void Characters::Player::Execute(const float elapsedTime)
 		if (!this->onGround)
 		{
 			if (speedV < V_MAX_ACCELERATION)
-				speedV += V_ACCELERATION * elapsedTime;
+				speedV += V_ACCELERATION * (*this->elapsed_time);
 		}
 		else
 			speedV = 0;
@@ -217,19 +233,24 @@ void Characters::Player::Execute(const float elapsedTime)
 
 	this->MovePosition(sf::Vector2f(speedH, speedV));
 };
-void Characters::Player::SelfPrint(sf::RenderWindow& context_window, const float elapsedTime)
+void Characters::Player::SelfPrint(sf::RenderWindow& context_window)
 {
 	context_window.draw(this->hitBox);
 	context_window.draw(this->body);
 };
 void Characters::Player::Collided(const int type, const sf::Vector2f& movement)
 {
-	if(type == Ente::OBSTACLE || type == Ente::CAMERA)
+	switch (type)
 	{
-		
-	}
-	if (type == Ente::PROJECTILE || type == Ente::ENEMY)
-	{
-
+	case Instance::CAMERA:
+		break;
+	case Instance::OBSTACLE:
+		break;
+	case Instance::PROJECTILE:
+		break;
+	case Instance::ENEMY:
+		break;
+	default:
+		break;
 	}
 };
