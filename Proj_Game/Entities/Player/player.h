@@ -31,5 +31,7 @@ namespace Characters
 
 		unsigned int playerId;
 		static unsigned int playerCounter;
+
+		enum Actions { IDLE = 0, WALKING, KICK, DAMAGED, CROUCHING };
 	};
 }

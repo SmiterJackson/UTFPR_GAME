@@ -1,14 +1,19 @@
 #pragma once
 
 #include "../Entity/entity.h"
+#include "../../Traits/Animated/animated.h"
 
 namespace Characters
 {
-	class Character : public Entity
+	class Character : public Entity, public Animated
 	{
 	public:
 		Character();
-		Character(const unsigned int _type, const sf::RectangleShape& _hitBox, float* elapsed_timeRef,const std::string textureRef = "",
+		Character(const unsigned int _type, const sf::RectangleShape& _hitBox, float* elapsed_timeRef, const std::string textureRef = "",
+			const std::vector<std::pair<int, Animation>> _animations = std::vector<std::pair<int, Animation>>(), 
+			const sf::IntRect sheetCut = sf::IntRect(), const unsigned int _lifeAmount = 0, float invcFramDuration = 0.f);
+		Character(const unsigned int _type, const sf::RectangleShape& _hitBox, float* elapsed_timeRef, const std::string textureRef = "",
+			const std::list<std::pair<int, Animation>> _animations = std::list<std::pair<int, Animation>>(),
 			const sf::IntRect sheetCut = sf::IntRect(), const unsigned int _lifeAmount = 0, float invcFramDuration = 0.f);
 		~Character();
 

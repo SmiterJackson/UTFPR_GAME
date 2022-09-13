@@ -1,21 +1,7 @@
-﻿  camera.cpp
-  character.cpp
-  entity.cpp
-  ente.cpp
-  instance.cpp
-  obstacle.cpp
-  static_obstacle.cpp
-  parallax.cpp
-  player.cpp
-  game.cpp
-  colisionManager.cpp
-  graphic_manager.cpp
-  Proj_Game.cpp
-  stage.cpp
-  stdafx.cpp
-  animated.cpp
+﻿  player.cpp
   Generating code
-  Previous IPDB not found, fall back to full compilation.
-  All 397 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  1 of 704 functions ( 0.1%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   Proj_Game.vcxproj -> C:\Dev\Cplusplus\Proj_Game\Proj_Game.exe

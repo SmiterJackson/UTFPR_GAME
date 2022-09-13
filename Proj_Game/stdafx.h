@@ -6,5 +6,6 @@
 #include <list>
 #include <vector>
 #include <limits>
+#include <unordered_map>
 
 #include "SFML\Graphics.hpp"

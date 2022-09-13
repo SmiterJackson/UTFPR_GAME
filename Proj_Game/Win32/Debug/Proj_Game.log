@@ -1,28 +1,2 @@
-﻿  camera.cpp
-C:\Dev\Cplusplus\Proj_Game\Proj_Game\Entities\Instance\instance.h(18): warning C4091: 'static ': ignored on left of 'Instance::Type' when no variable is declared
-  character.cpp
-C:\Dev\Cplusplus\Proj_Game\Proj_Game\Entities\Instance\instance.h(18): warning C4091: 'static ': ignored on left of 'Instance::Type' when no variable is declared
-  entity.cpp
-C:\Dev\Cplusplus\Proj_Game\Proj_Game\Entities\Instance\instance.h(18): warning C4091: 'static ': ignored on left of 'Instance::Type' when no variable is declared
-  ente.cpp
-C:\Dev\Cplusplus\Proj_Game\Proj_Game\Entities\Instance\instance.h(18): warning C4091: 'static ': ignored on left of 'Instance::Type' when no variable is declared
-  instance.cpp
-C:\Dev\Cplusplus\Proj_Game\Proj_Game\Entities\Instance\instance.h(18): warning C4091: 'static ': ignored on left of 'Instance::Type' when no variable is declared
-  obstacle.cpp
-C:\Dev\Cplusplus\Proj_Game\Proj_Game\Entities\Instance\instance.h(18): warning C4091: 'static ': ignored on left of 'Instance::Type' when no variable is declared
-  parallax.cpp
-C:\Dev\Cplusplus\Proj_Game\Proj_Game\Entities\Instance\instance.h(18): warning C4091: 'static ': ignored on left of 'Instance::Type' when no variable is declared
-  player.cpp
-C:\Dev\Cplusplus\Proj_Game\Proj_Game\Entities\Instance\instance.h(18): warning C4091: 'static ': ignored on left of 'Instance::Type' when no variable is declared
-  game.cpp
-C:\Dev\Cplusplus\Proj_Game\Proj_Game\Entities\Instance\instance.h(18): warning C4091: 'static ': ignored on left of 'Instance::Type' when no variable is declared
-  colisionManager.cpp
-C:\Dev\Cplusplus\Proj_Game\Proj_Game\Entities\Instance\instance.h(18): warning C4091: 'static ': ignored on left of 'Instance::Type' when no variable is declared
-  graphic_manager.cpp
-C:\Dev\Cplusplus\Proj_Game\Proj_Game\Entities\Instance\instance.h(18): warning C4091: 'static ': ignored on left of 'Instance::Type' when no variable is declared
-  Proj_Game.cpp
-C:\Dev\Cplusplus\Proj_Game\Proj_Game\Entities\Instance\instance.h(18): warning C4091: 'static ': ignored on left of 'Instance::Type' when no variable is declared
-  stage.cpp
-C:\Dev\Cplusplus\Proj_Game\Proj_Game\Entities\Instance\instance.h(18): warning C4091: 'static ': ignored on left of 'Instance::Type' when no variable is declared
-  Generating Code...
+﻿  animated.cpp
   Proj_Game.vcxproj -> C:\Dev\Cplusplus\Proj_Game\Proj_Game.exe

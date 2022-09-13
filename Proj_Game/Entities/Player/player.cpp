@@ -19,7 +19,7 @@ unsigned int Characters::Player::playerCounter = 0;
 Characters::Player::Player():
 	Character(
 		Instance::CHARACTER, sf::RectangleShape(sf::Vector2f(0.f, 0.f)), nullptr, std::string(),
-		sf::IntRect(0, 0, 24, 24),  PLAYER_TOTAL_LIFE, INVENCIBILITY_FRAMES_TIME
+		std::vector<std::pair<int, Animation>>(), sf::IntRect(0, 0, 24, 24), PLAYER_TOTAL_LIFE, INVENCIBILITY_FRAMES_TIME
 	),
 	onGround(true), crouching(false), jump(false), walkLeft(false), walkRight(false), walking(true), done(false), playerId(playerCounter)
 {
@@ -28,7 +28,7 @@ Characters::Player::Player():
 Characters::Player::Player(float* elapsed_timeRef):
 	Character(
 		Instance::CHARACTER, sf::RectangleShape(sf::Vector2f(15.f, 18.f)), elapsed_timeRef, std::string(),
-		sf::IntRect(0, 0, 0, 0),  PLAYER_TOTAL_LIFE, INVENCIBILITY_FRAMES_TIME
+		std::list<std::pair<int, Animation>>(), sf::IntRect(0, 0, 0, 0),  PLAYER_TOTAL_LIFE, INVENCIBILITY_FRAMES_TIME
 	),
 	onGround(true), crouching(false), jump(false), walkLeft(false), walkRight(false), walking(true), done(false), playerId(playerCounter)
 {
@@ -47,11 +47,17 @@ void Characters::Player::PlayerInputHandler(const sf::Event& _event)
 		{
 		case sf::Keyboard::D:
 			if (this->playerId == 0)
+			{
 				this->walkRight = true;
+				this->looking_right = true;
+			}
 			break;
 		case sf::Keyboard::A:
 			if (this->playerId == 0)
+			{
 				this->walkLeft = true;
+				this->looking_right = false;
+			}
 			break;
 		case sf::Keyboard::W:
 			if (this->playerId == 0)
@@ -63,11 +69,17 @@ void Characters::Player::PlayerInputHandler(const sf::Event& _event)
 			break;
 		case sf::Keyboard::Right:
 			if (this->playerId == 1)
+			{
 				this->walkRight = true;
+				this->looking_right = true;
+			}
 			break;
 		case sf::Keyboard::Left:
 			if (this->playerId == 1)
+			{
 				this->walkLeft = true;
+				this->looking_right = false;
+			}
 			break;
 		case sf::Keyboard::Up:
 			if (this->playerId == 1)
@@ -140,6 +152,18 @@ void Characters::Player::Initialize()
 	else
 		this->SetTexture(P2_TEXTURE_REF, sf::IntRect(0, 0, 24, 24));
 
+	sf::Vector2i size(24, 24);
+	this->AddRangeAnimations(
+		std::vector<std::pair<int, Animation>>({
+			std::pair<int, Animation>(Actions::IDLE,		Animation(0, 2, 0, size, 0.4f, true)),
+			std::pair<int, Animation>(Actions::WALKING,		Animation(3, 9, 0, size, 0.15f, true)),
+			std::pair<int, Animation>(Actions::KICK,		Animation(10, 12, 0, size, 0.6f, true)),
+			std::pair<int, Animation>(Actions::DAMAGED,		Animation(13, 16, 0, size, 0.6f, true)),
+			std::pair<int, Animation>(Actions::CROUCHING,	Animation(17, 23, 0, size, 0.1f, true))
+			}
+		)
+	);
+
 #ifdef _DEBUG
 	this->hitBox.setOutlineColor(sf::Color::Red);
 	this->hitBox.setOutlineThickness(1.5f);
@@ -160,6 +184,14 @@ void Characters::Player::Execute()
 
 		if ((this->walkLeft && !this->walkRight) || (!this->walkLeft && this->walkRight))
 		{
+			if (!this->crouching)
+				this->next_ani = Actions::WALKING;
+			else
+			{
+				this->next_ani = Actions::CROUCHING;
+				coeff /= 2.f;
+			}
+
 			if (this->walkRight && this->speedH < H_MAX_ACCELERATION)
 				this->speedH += coeff;
 
@@ -168,6 +200,8 @@ void Characters::Player::Execute()
 		}
 		else
 		{
+			this->next_ani = Actions::IDLE;
+
 			if (this->speedH < 0.f)
 				this->speedH += coeff;
 
@@ -235,8 +269,15 @@ void Characters::Player::Execute()
 };
 void Characters::Player::SelfPrint(sf::RenderWindow& context_window)
 {
-	context_window.draw(this->hitBox);
+	if (this->next_ani != this->last_ani)
+	{
+		this->animations[this->last_ani].ResetAnimation();
+		this->last_ani = this->next_ani;
+	}
+
+	this->body.setTextureRect(this->animations[this->next_ani].update(this->elapsed_time, this->looking_right));
 	context_window.draw(this->body);
+	context_window.draw(this->hitBox);
 };
 void Characters::Player::Collided(const int type, const sf::Vector2f& movement)
 {
