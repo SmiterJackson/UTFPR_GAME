@@ -159,9 +159,8 @@
     <ClCompile Include="Entities\Character\character.cpp" />
     <ClCompile Include="Entities\Entity\entity.cpp" />
     <ClCompile Include="Entities\Ente\ente.cpp" />
-    <ClCompile Include="Entities\Instance\instance.cpp" />
-    <ClCompile Include="Entities\Obstacles\obstacle.cpp" />
-    <ClCompile Include="Entities\Obstacles\animatedObstacle.cpp" />
+    <ClCompile Include="Entities\Obstacles\obstacle\obstacle.cpp" />
+    <ClCompile Include="Entities\Obstacles\animatedObstacle\animatedObstacle.cpp" />
     <ClCompile Include="Entities\Parallax\parallax.cpp" />
     <ClCompile Include="Entities\Player\player.cpp" />
     <ClCompile Include="game\game.cpp" />
@@ -177,9 +176,8 @@
     <ClInclude Include="Entities\Character\character.h" />
     <ClInclude Include="Entities\Entity\entity.h" />
     <ClInclude Include="Entities\Ente\ente.h" />
-    <ClInclude Include="Entities\Instance\instance.h" />
-    <ClInclude Include="Entities\Obstacles\obstacle.h" />
-    <ClInclude Include="Entities\Obstacles\animatedObstacle.h" />
+    <ClInclude Include="Entities\Obstacles\obstacle\obstacle.h" />
+    <ClInclude Include="Entities\Obstacles\animatedObstacle\animatedObstacle.h" />
     <ClInclude Include="Entities\Parallax\parallax.h" />
     <ClInclude Include="Entities\Player\player.h" />
     <ClInclude Include="game\game.h" />

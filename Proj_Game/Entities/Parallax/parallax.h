@@ -2,7 +2,7 @@
 
 #include "../Player/player.h"
 
-typedef std::pair<sf::Texture, sf::RectangleShape> Background;
+typedef std::pair<sf::Texture, sf::Sprite> Background;
 
 class ParallaxBackground : public Ente
 {
@@ -14,13 +14,13 @@ public:
 	void Execute();
 	void SelfPrint(sf::RenderWindow& context_window);
 
-	unsigned int GetBackgroundListSize();
 	void SetBackgrounds(const std::vector<std::string>& paths);
+	unsigned int GetBackgroundListSize();
 
 	float GetSizeCoefficient() { return this->size_coeff; };
 	void SetSizeCoefficient(float _size_coeff) 
 	{ 
-		std::list<Background>::iterator it;
+		std::vector<Background>::iterator it;
 		this->size_coeff = _size_coeff; 
 
 		if (this->backGrounds.size() > 0)
@@ -33,7 +33,7 @@ public:
 	};
 	
 private:
-	std::list<Background> backGrounds;
+	std::vector<Background> backGrounds;
 	sf::View* visionReference;
 	sf::Vector2f lastPosition;
 

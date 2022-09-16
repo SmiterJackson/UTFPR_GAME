@@ -18,17 +18,17 @@ unsigned int Characters::Player::playerCounter = 0;
 
 Characters::Player::Player():
 	Character(
-		Instance::CHARACTER, sf::RectangleShape(sf::Vector2f(0.f, 0.f)), nullptr, std::string(),
+		Type::CHARACTER, sf::RectangleShape(sf::Vector2f(0.f, 0.f)), nullptr, std::string(),
 		std::vector<std::pair<int, Animation>>(), sf::IntRect(0, 0, 24, 24), PLAYER_TOTAL_LIFE, INVENCIBILITY_FRAMES_TIME
 	),
 	onGround(true), crouching(false), jump(false), walkLeft(false), walkRight(false), walking(true), done(false), playerId(playerCounter)
 {
 	Initialize();
 };
-Characters::Player::Player(float* elapsed_timeRef):
+Characters::Player::Player(float* elapsed_timeRef) :
 	Character(
-		Instance::CHARACTER, sf::RectangleShape(sf::Vector2f(15.f, 18.f)), elapsed_timeRef, std::string(),
-		std::list<std::pair<int, Animation>>(), sf::IntRect(0, 0, 0, 0),  PLAYER_TOTAL_LIFE, INVENCIBILITY_FRAMES_TIME
+		Type::CHARACTER, sf::RectangleShape(sf::Vector2f(15.f, 18.f)), elapsed_timeRef, std::string(),
+		std::list<std::pair<int, Animation>>(), sf::IntRect(0, 0, 0, 0), PLAYER_TOTAL_LIFE, INVENCIBILITY_FRAMES_TIME
 	),
 	onGround(true), crouching(false), jump(false), walkLeft(false), walkRight(false), walking(true), done(false), playerId(playerCounter)
 {
@@ -37,6 +37,136 @@ Characters::Player::Player(float* elapsed_timeRef):
 Characters::Player::~Player()
 {
 	playerCounter--;
+};
+
+void Characters::Player::Execute()
+{
+	float coeff = H_ACCELERATION * (*this->elapsed_time);
+
+	if (this->walking)
+	{
+		if (this->jump && this->onGround && !this->crouching)
+		{
+			this->onGround = false;
+			this->speedV += JUMP;
+			coeff /= 10;
+		}
+
+		if ((this->walkLeft && !this->walkRight) || (!this->walkLeft && this->walkRight))
+		{
+			if (!this->crouching)
+				this->next_ani = Actions::WALKING;
+			else
+			{
+				this->next_ani = Actions::CROUCHING;
+				coeff /= 2.f;
+			}
+
+			if (this->walkRight && this->speedH < H_MAX_ACCELERATION)
+				this->speedH += coeff;
+
+			if (this->walkLeft && this->speedH > -H_MAX_ACCELERATION)
+				this->speedH -= coeff;
+		}
+		else
+		{
+			this->next_ani = Actions::IDLE;
+
+			if (this->speedH < 0.f)
+				this->speedH += coeff;
+
+			if (this->speedH > 0.f)
+				this->speedH -= coeff;
+
+			if (this->speedH <= 0.1f && this->speedH >= -0.1f)
+				this->speedH = 0.f;
+		}
+
+		/*if(this->crouching)
+			speedH = 0;*/
+
+		if (!this->onGround)
+		{
+			if (speedV < V_MAX_ACCELERATION)
+				speedV += V_ACCELERATION * (*this->elapsed_time);
+		}
+		else
+			speedV = 0;
+	}
+	else
+	{
+		if ((this->walkLeft && !this->walkRight) || (!this->walkLeft && this->walkRight))
+		{
+			if (this->walkRight && this->speedH < H_MAX_ACCELERATION)
+				this->speedH += coeff;
+
+			if (this->walkLeft && this->speedH > -H_MAX_ACCELERATION)
+				this->speedH -= coeff;
+		}
+		else
+		{
+			if (this->speedH < 0.f)
+				this->speedH += coeff;
+
+			if (this->speedH > 0.f)
+				this->speedH -= coeff;
+
+			if (this->speedH <= 0.1f && this->speedH >= -0.1f)
+				this->speedH = 0.f;
+		}
+		if ((this->jump && !this->crouching) || (!this->jump && this->crouching))
+		{
+			if (this->jump && this->speedV < H_MAX_ACCELERATION)
+				this->speedV -= coeff;
+
+			if (this->crouching && this->speedV > -H_MAX_ACCELERATION)
+				this->speedV += coeff;
+		}
+		else
+		{
+			if (this->speedV < 0.f)
+				this->speedV += coeff;
+
+			if (this->speedV > 0.f)
+				this->speedV -= coeff;
+
+			if (this->speedV <= 0.1f && this->speedV >= -0.1f)
+				this->speedV = 0.f;
+		}
+	}
+
+	this->MovePosition(sf::Vector2f(speedH, speedV));
+};
+void Characters::Player::SelfPrint(sf::RenderWindow& context_window)
+{
+	if (this->next_ani != this->last_ani)
+	{
+		this->animations[this->last_ani].ResetAnimation();
+		this->last_ani = this->next_ani;
+	}
+
+	this->body.setTextureRect(this->animations[this->next_ani].update(this->elapsed_time, this->looking_right));
+	context_window.draw(this->body);
+
+#ifdef _DEBUG
+	this->hitBox.setOutlineColor(sf::Color::Red);
+	this->hitBox.setOutlineThickness(1.5f);
+	context_window.draw(this->hitBox);
+#endif
+};
+void Characters::Player::Collided(Entity* _other)
+{
+	switch (_other->GetType())
+	{
+	case Type::OBSTACLE:
+		break;
+	case Type::PROJECTILE:
+		break;
+	case Type::ENEMY:
+		break;
+	default:
+		break;
+	}
 };
 
 void Characters::Player::PlayerInputHandler(const sf::Event& _event)
@@ -163,135 +293,4 @@ void Characters::Player::Initialize()
 			}
 		)
 	);
-
-#ifdef _DEBUG
-	this->hitBox.setOutlineColor(sf::Color::Red);
-	this->hitBox.setOutlineThickness(1.5f);
-#endif
-};
-void Characters::Player::Execute()
-{
-	float coeff = H_ACCELERATION * (*this->elapsed_time);
-
-	if (this->walking)
-	{
-		if (this->jump && this->onGround && !this->crouching)
-		{
-			this->onGround = false;
-			this->speedV += JUMP;
-			coeff /= 10;
-		}
-
-		if ((this->walkLeft && !this->walkRight) || (!this->walkLeft && this->walkRight))
-		{
-			if (!this->crouching)
-				this->next_ani = Actions::WALKING;
-			else
-			{
-				this->next_ani = Actions::CROUCHING;
-				coeff /= 2.f;
-			}
-
-			if (this->walkRight && this->speedH < H_MAX_ACCELERATION)
-				this->speedH += coeff;
-
-			if (this->walkLeft && this->speedH > -H_MAX_ACCELERATION)
-				this->speedH -= coeff;
-		}
-		else
-		{
-			this->next_ani = Actions::IDLE;
-
-			if (this->speedH < 0.f)
-				this->speedH += coeff;
-
-			if (this->speedH > 0.f)
-				this->speedH -= coeff;
-
-			if (this->speedH <= 0.1f && this->speedH >= -0.1f)
-				this->speedH = 0.f;
-		}
-
-		/*if(this->crouching)
-			speedH = 0;*/
-
-		if (!this->onGround)
-		{
-			if (speedV < V_MAX_ACCELERATION)
-				speedV += V_ACCELERATION * (*this->elapsed_time);
-		}
-		else
-			speedV = 0;
-	}
-	else
-	{
-		if ((this->walkLeft && !this->walkRight) || (!this->walkLeft && this->walkRight))
-		{
-			if (this->walkRight && this->speedH < H_MAX_ACCELERATION)
-				this->speedH += coeff;
-
-			if (this->walkLeft && this->speedH > -H_MAX_ACCELERATION)
-				this->speedH -= coeff;
-		}
-		else
-		{
-			if (this->speedH < 0.f)
-				this->speedH += coeff;
-
-			if (this->speedH > 0.f)
-				this->speedH -= coeff;
-
-			if (this->speedH <= 0.1f && this->speedH >= -0.1f)
-				this->speedH = 0.f;
-		}
-		if ((this->jump && !this->crouching) || (!this->jump && this->crouching))
-		{
-			if (this->jump && this->speedV < H_MAX_ACCELERATION)
-				this->speedV -= coeff;
-
-			if (this->crouching && this->speedV > -H_MAX_ACCELERATION)
-				this->speedV += coeff;
-		}
-		else
-		{
-			if (this->speedV < 0.f)
-				this->speedV += coeff;
-
-			if (this->speedV > 0.f)
-				this->speedV -= coeff;
-
-			if (this->speedV <= 0.1f && this->speedV >= -0.1f)
-				this->speedV = 0.f;
-		}
-	}
-
-	this->MovePosition(sf::Vector2f(speedH, speedV));
-};
-void Characters::Player::SelfPrint(sf::RenderWindow& context_window)
-{
-	if (this->next_ani != this->last_ani)
-	{
-		this->animations[this->last_ani].ResetAnimation();
-		this->last_ani = this->next_ani;
-	}
-
-	this->body.setTextureRect(this->animations[this->next_ani].update(this->elapsed_time, this->looking_right));
-	context_window.draw(this->body);
-	context_window.draw(this->hitBox);
-};
-void Characters::Player::Collided(const int type, const sf::Vector2f& movement)
-{
-	switch (type)
-	{
-	case Instance::CAMERA:
-		break;
-	case Instance::OBSTACLE:
-		break;
-	case Instance::PROJECTILE:
-		break;
-	case Instance::ENEMY:
-		break;
-	default:
-		break;
-	}
 };

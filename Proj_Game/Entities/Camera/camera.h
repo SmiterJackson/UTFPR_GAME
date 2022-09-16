@@ -2,7 +2,7 @@
 
 #include "../Player/player.h"
 
-class Camera : public Instance
+class Camera
 {
 public:
 	Camera(std::list<Characters::Player>* _players = nullptr);
@@ -21,8 +21,8 @@ public:
 	sf::View* GetView() { return &this->view; }
 
 private:
-	sf::View view;
 	std::list<Characters::Player>* players;
 
 	sf::FloatRect mapBounds;
+	sf::View view;
 };

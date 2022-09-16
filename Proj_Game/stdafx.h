@@ -7,5 +7,6 @@
 #include <vector>
 #include <limits>
 #include <unordered_map>
+#include <memory>
 
 #include "SFML\Graphics.hpp"

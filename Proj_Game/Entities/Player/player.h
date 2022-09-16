@@ -11,11 +11,12 @@ namespace Characters
 		Player(float* elapsed_timeRef);
 		~Player();
 
-		void PlayerInputHandler(const sf::Event& _event);
-		void Initialize();
 		void Execute();
 		void SelfPrint(sf::RenderWindow& context_window);
-		void Collided(const int type, const sf::Vector2f& movement);
+		void Collided(Entity* _other);
+
+		void PlayerInputHandler(const sf::Event& _event);
+		void Initialize();
 
 		static unsigned int const GetNumberOfPlayers() { return playerCounter; };
 

@@ -18,7 +18,6 @@ private:
 	//std::list</*Obstacle*/> obstacles;
 	//std::vector</*Enemies*/> enemies;
 	sf::FloatRect mapBorders;
-	sf::View viewRef;
 
 	Camera* cameraRef;
 	float elapsTime_accumulator;

@@ -45,10 +45,10 @@
     <ClCompile Include="Entities\Camera\camera.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Entities\Obstacles\animatedObstacle.cpp">
+    <ClCompile Include="Entities\Obstacles\animatedObstacle\animatedObstacle.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Entities\Obstacles\obstacle.cpp">
+    <ClCompile Include="Entities\Obstacles\obstacle\obstacle.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="Entities\Character\character.cpp">
@@ -58,9 +58,6 @@
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="Traits\Animated\animated.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="Entities\Instance\instance.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
   </ItemGroup>
@@ -92,10 +89,10 @@
     <ClInclude Include="Entities\Camera\camera.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Entities\Obstacles\animatedObstacle.h">
+    <ClInclude Include="Entities\Obstacles\animatedObstacle\animatedObstacle.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Entities\Obstacles\obstacle.h">
+    <ClInclude Include="Entities\Obstacles\obstacle\obstacle.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="Entities\Character\character.h">
@@ -108,9 +105,6 @@
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="Traits\Animated\animated.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="Entities\Instance\instance.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,12 +1,12 @@
 #include "camera.h"
 
 Camera::Camera(std::list<Characters::Player>* _players) :
-    Instance(Instance::CAMERA), view(), players(_players), mapBounds()
+    players(_players), mapBounds(0.f, 0.f, 0.f, 0.f), view()
 {
     this->Execute();
 };
 Camera::Camera(const sf::Vector2f _center, const sf::Vector2f _size, std::list<Characters::Player>* _players, const sf::FloatRect* _mapBounds):
-    Instance(Instance::CAMERA), view(_center, _size), players(_players), mapBounds()
+    players(_players), mapBounds(), view(_center, _size)
 {
     if (_mapBounds != nullptr)
         this->mapBounds = *_mapBounds;

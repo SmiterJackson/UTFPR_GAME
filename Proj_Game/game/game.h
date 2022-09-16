@@ -4,6 +4,7 @@
 #include "../Managers/Graphic Manager/graphic_manager.h"
 #include "../ListConteiner/lista.h"
 #include "../Entities/Camera/camera.h"
+#include "../Entities/Obstacles/obstacle/obstacle.h" 
 
 class Game
 {

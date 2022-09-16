@@ -19,7 +19,7 @@ namespace Characters
 
 		virtual void Execute() = 0;
 		virtual void SelfPrint(sf::RenderWindow& context_window) = 0;
-		virtual void Collided(const int type, const sf::Vector2f& movement) = 0;
+		virtual void Collided(Entity* _other) = 0;
 
 	protected:
 		bool invencible;

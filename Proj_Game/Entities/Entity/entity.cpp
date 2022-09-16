@@ -1,5 +1,7 @@
 #include "entity.h"
 
+// OBS multiplas inserções em vector pode causar realocação de memória que perde a textura de um objeto
+// List sendo encadeado não há o problema
 Entity::Entity():
 	Ente(), hitBox(), body(), texture()
 {
@@ -14,9 +16,11 @@ Entity::Entity(const unsigned int _type, const sf::RectangleShape& _hitBox, floa
 	this->body.setTexture(this->texture);
 
 	if(sheetCut.left != sheetCut.width && sheetCut.top != sheetCut.height)
+	{
 		this->body.setTextureRect(sheetCut);
-
-	if (this->texture.getSize().x > 0 && this->texture.getSize().y > 0)
+		this->body.setOrigin(sheetCut.width / 2.f, sheetCut.height / 2.f);
+	}
+	else
 		this->body.setOrigin(this->texture.getSize().x / 2.f, this->texture.getSize().y / 2.f);
 
 	if (this->hitBox.getSize().x > 0 && this->hitBox.getSize().y > 0)
@@ -24,6 +28,9 @@ Entity::Entity(const unsigned int _type, const sf::RectangleShape& _hitBox, floa
 
 	this->hitBox.setTexture(NULL);
 	this->hitBox.setFillColor(sf::Color::Transparent);
+
+	this->hitBox.setPosition(0.f, 0.f);
+	this->body.setPosition(0.f, 0.f);
 };
 Entity::~Entity()
 {};
