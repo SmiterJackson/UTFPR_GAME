@@ -5,6 +5,7 @@
 #include "../ListConteiner/lista.h"
 #include "../Entities/Camera/camera.h"
 #include "../Entities/Obstacles/obstacle/obstacle.h" 
+#include "../Managers/Colision Manager/colisionManager.h"
 
 class Game
 {

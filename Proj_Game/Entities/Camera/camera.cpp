@@ -1,5 +1,7 @@
 #include "camera.h"
 
+#define OFF_CAMERA_EXTRA_SPACE_COEFF 0.5f
+
 Camera::Camera(std::list<Characters::Player>* _players) :
     players(_players), mapBounds(0.f, 0.f, 0.f, 0.f), view()
 {
@@ -78,10 +80,36 @@ const sf::FloatRect Camera::CameraBounds()
 {
     sf::FloatRect bounds;
 
-    bounds.left = this->view.getCenter().x - this->view.getSize().x;
+    bounds.left = this->view.getCenter().x - (this->view.getSize().x / 2.f);
     bounds.width = this->view.getCenter().x + (this->view.getSize().x / 2.f);
-    bounds.top = this->view.getCenter().y - this->view.getSize().y;
+    bounds.top = this->view.getCenter().y - (this->view.getSize().y / 2.f);
     bounds.height = this->view.getCenter().y + (this->view.getSize().y / 2.f);
 
     return bounds;
+};
+std::vector<Entity*> Camera::GetCameraEntities(std::vector<Entity*>* entities)
+{
+    sf::FloatRect camBounds(this->CameraBounds());
+    sf::FloatRect entBounds;
+    std::vector<Entity*>::const_iterator cIt;
+    std::vector<Entity*> entitiesInCam;
+
+    camBounds.left -= ((this->view.getSize().x / 2.0f) * OFF_CAMERA_EXTRA_SPACE_COEFF);
+    camBounds.top -= ((this->view.getSize().y / 2.0f) * OFF_CAMERA_EXTRA_SPACE_COEFF);
+    camBounds.width += ((this->view.getSize().x / 2.0f) * OFF_CAMERA_EXTRA_SPACE_COEFF);
+    camBounds.height += ((this->view.getSize().y / 2.0f) * OFF_CAMERA_EXTRA_SPACE_COEFF);
+
+    if (entities != nullptr)
+    {
+        for (cIt = entities->cbegin(); cIt != entities->cend(); cIt++)
+        {
+            entBounds = (*cIt)->GetHitBoxBounds();
+
+            if (entBounds.left > camBounds.left && entBounds.width < camBounds.width 
+                && entBounds.top > camBounds.top && entBounds.height < camBounds.height)
+                entitiesInCam.emplace_back((*cIt));
+        }
+    }
+
+    return entitiesInCam;
 };

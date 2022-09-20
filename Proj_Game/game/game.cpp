@@ -37,8 +37,8 @@ bool Game::StartGame()
 
     this->players.emplace_back(&this->elapsedTime);
     players.front().MovePosition(position);
-    //this->players.emplace_back(&this->elapsedTime);
-    //players.back().MovePosition(position + sf::Vector2f(48.f, 0.f));
+    this->players.emplace_back(&this->elapsedTime);
+    players.back().MovePosition(position + sf::Vector2f(48.f, 0.f));
     std::list<Characters::Player>::iterator it;
 
     Camera camera(sf::Vector2f(WINDOW_SIZE_X_F / X_Coeff, WINDOW_SIZE_Y_F / X_Coeff), sf::Vector2f(WINDOW_SIZE_X_F / Y_Coeff, WINDOW_SIZE_Y_F / Y_Coeff), &this->players, &bounds);
@@ -60,6 +60,17 @@ bool Game::StartGame()
         obstacles.back().MovePosition(sf::Vector2f(position.x + (OBSTACLE_SIZE * f), position.y));
     }
     std::vector<Obstacles::Obstacle>::iterator itobs;
+
+    
+    std::vector<Entity*> entities;
+    for (it = this->players.begin(); it != this->players.end(); it++)
+        entities.emplace_back(static_cast<Entity*>(&(*it)));
+
+    for (itobs = obstacles.begin(); itobs != obstacles.end(); itobs++)
+        entities.emplace_back(static_cast<Entity*>(&(*itobs)));
+
+    ColisionManager colisor(&camera, bounds, &this->elapsedTime, &entities);
+    colisor.SortElements();
 
     sf::Clock clock;
     while (window.isOpen())
@@ -85,6 +96,8 @@ bool Game::StartGame()
 
         for (it = this->players.begin(); it != this->players.end(); it++)
             it->Execute();
+
+        colisor.UpdateColisions();
 
         bckg.Execute();
         camera.Execute();

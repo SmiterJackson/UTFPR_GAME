@@ -13,11 +13,11 @@ public:
 	virtual void SelfPrint(sf::RenderWindow& context_window) = 0;
 	virtual void Collided(Entity* _other) = 0;
 	
-	sf::Vector2f const GetPosition();
+	sf::Vector2f const GetPosition() const;
 	void MovePosition(const sf::Vector2f _newPosition);
 
-	sf::FloatRect const GetHitBoxBounds();
-	sf::Vector2f const GetHitBoxSize();
+	sf::FloatRect const GetHitBoxBounds() const;
+	sf::Vector2f const GetHitBoxSize() const;
 	void SetHitBoxSize(const sf::Vector2f _size);
 
 	sf::Vector2u const GetTextureSize();

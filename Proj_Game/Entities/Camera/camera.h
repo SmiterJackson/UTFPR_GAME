@@ -11,6 +11,7 @@ public:
 
 	void Execute();
 	const sf::FloatRect CameraBounds();
+	std::vector<Entity*> GetCameraEntities(std::vector<Entity*>* entities);
 
 	void SetMapBounds(const sf::FloatRect* _mapBounds)
 	{

@@ -35,7 +35,7 @@ Entity::Entity(const unsigned int _type, const sf::RectangleShape& _hitBox, floa
 Entity::~Entity()
 {};
 
-sf::Vector2f const Entity::GetPosition()
+sf::Vector2f const Entity::GetPosition() const
 {
 	return this->hitBox.getPosition();
 };
@@ -45,13 +45,18 @@ void Entity::MovePosition(const sf::Vector2f _newPosition)
 	this->body.move(_newPosition);
 };
 
-sf::FloatRect const Entity::GetHitBoxBounds()
+sf::FloatRect const Entity::GetHitBoxBounds() const
 {
-	sf::Vector2f size(this->hitBox.getSize().x, this->hitBox.getSize().y);
-	sf::Vector2f pos(this->hitBox.getPosition().x, this->hitBox.getPosition().y);
-	return sf::FloatRect(pos.x - size.x, pos.y - size.y, pos.x + size.x, pos.y + size.y);
+	sf::FloatRect bounds(
+		this->hitBox.getPosition().x - (this->hitBox.getSize().x / 2.f),
+		this->hitBox.getPosition().y - (this->hitBox.getSize().y / 2.f),
+		this->hitBox.getPosition().x + (this->hitBox.getSize().x / 2.f),
+		this->hitBox.getPosition().y + (this->hitBox.getSize().y / 2.f)
+	);
+
+	return bounds;
 };
-sf::Vector2f const Entity::GetHitBoxSize()
+sf::Vector2f const Entity::GetHitBoxSize() const
 {
 	return this->hitBox.getSize();
 };

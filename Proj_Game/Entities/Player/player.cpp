@@ -27,7 +27,7 @@ Characters::Player::Player():
 };
 Characters::Player::Player(float* elapsed_timeRef) :
 	Character(
-		Type::CHARACTER, sf::RectangleShape(sf::Vector2f(15.f, 18.f)), elapsed_timeRef, std::string(),
+		Type::CHARACTER, sf::RectangleShape(sf::Vector2f(18.f, 18.f)), elapsed_timeRef, std::string(),
 		std::list<std::pair<int, Animation>>(), sf::IntRect(0, 0, 0, 0), PLAYER_TOTAL_LIFE, INVENCIBILITY_FRAMES_TIME
 	),
 	onGround(true), crouching(false), jump(false), walkLeft(false), walkRight(false), walking(true), done(false), playerId(playerCounter)
