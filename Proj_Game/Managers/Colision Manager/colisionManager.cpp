@@ -1,38 +1,28 @@
 #include "colisionManager.h"
+#include "../../Entities/StageClass/stage.h"
 
 #define COLISION_CHECK_TIMER 0.2f
 
 ColisionManager::ColisionManager() :
-	entities(), mapBorders(), cameraRef(nullptr), elaps_accumul(0.f), pElapsedTime(nullptr)
+	entities(), stageRef(nullptr), cameraRef(nullptr), elaps_accumul(0.f), pElapsedTime(nullptr)
 {};
-ColisionManager::ColisionManager(Camera* pCamera, const sf::FloatRect _mapBorders, float* pElapsedTime, std::list<Entity*>* _entities) :
-	entities(), mapBorders(), cameraRef(pCamera), elaps_accumul(0.f), pElapsedTime(pElapsedTime)
+ColisionManager::ColisionManager(Stage* pStage, Camera* pCamera, float* pElapsedTime, Lista<Ente*>* _pEntities) :
+	entities(), stageRef(pStage), cameraRef(pCamera), elaps_accumul(0.f), pElapsedTime(pElapsedTime)
 {
-	std::list<Entity*>::iterator it;
+	Lista<Ente*>::iterador it;
 
-	if (_entities != nullptr)
+	if (_pEntities != nullptr)
 	{
-		for (it = (*_entities).begin(); it != (*_entities).end(); it++)
+		for (it = _pEntities->begin(); it != _pEntities->end(); ++it)
 		{
-			entities.emplace_back((*it));
-		};
-
-		this->SortElements();
-	}
-};
-ColisionManager::ColisionManager(Camera* pCamera, const sf::FloatRect _mapBorders, float* pElapsedTime, std::vector<Entity*>* _entities) :
-	entities(), mapBorders(), cameraRef(pCamera), elaps_accumul(0.f), pElapsedTime(pElapsedTime)
-{
-	std::vector<Entity*>::iterator it;
-
-	if (_entities != nullptr)
-	{
-		for (it = (*_entities).begin(); it != (*_entities).end(); it++)
-		{
-			entities.emplace_back((*it));
-		};
-
-		this->SortElements();
+			if ((*it)->GetType() != Ente::UNDEFINED		&&
+				(*it)->GetType() != Ente::STAGE			&&
+				(*it)->GetType() != Ente::BACKGROUND	&&
+				(*it)->GetType() != Ente::CAMERA		)
+			{
+				this->entities.emplace_back(static_cast<Entity*>(*it));
+			}
+		}
 	}
 };
 ColisionManager::~ColisionManager()
@@ -43,33 +33,31 @@ void ColisionManager::UpdateColisions()
 	std::vector<Entity*>::iterator itEnte;
 	std::vector<Entity*>::iterator itOther;
 	std::vector<Entity*> camVector;
-	elaps_accumul += *this->pElapsedTime;
+	this->elaps_accumul += *this->pElapsedTime;
 
-	if (COLISION_CHECK_TIMER <= elaps_accumul)
+	if (this->elaps_accumul >= COLISION_CHECK_TIMER)
 	{
 		// Verifica colisões apenas entre entidades proximas a camera
 		camVector = this->cameraRef->GetCameraEntities(&this->entities);
 
 		for (itEnte = camVector.begin(); itEnte != camVector.end(); itEnte++)
 		{
-			//	Evita comparar colisões entre obstaculos
-			if ((*itEnte)->GetType() != Ente::OBSTACLE)
+			for (itOther = camVector.begin(); itOther != camVector.end(); itOther++)
 			{
-				for (itOther = camVector.begin(); itOther != camVector.end(); itOther++)
+				// Evita comparar o objeto consigo mesmo e entre classes de mesmo tipo
+				if(itEnte != itOther && (*itEnte)->GetId() != (*itOther)->GetId())
 				{
-					// Evita comparar o objeto consigo mesmo e colisão entre dois players (nada emplementado nesse sentido)
-					if(itEnte != itOther && (*itOther)->GetId() != Ente::CHARACTER)
-					{
-						CheckColision((*itEnte), (*itOther));
-					}
+					this->CheckColision((*itEnte), (*itOther));
 				}
-
-				if ((*itEnte)->GetType() == Ente::CHARACTER)
-					CheckOutOfCamera((*itEnte));
 			}
+
+			if ((*itEnte)->GetType() == Ente::CHARACTER)
+				this->CheckOutOfCamera((*itEnte));
+
+			this->CheckOutOfMap((*itEnte));
 		}
 
-		elaps_accumul -= *this->pElapsedTime;
+		this->elaps_accumul -= *this->pElapsedTime;
 	}
 };
 void ColisionManager::CheckColision(Entity* entity, Entity* other)
@@ -81,7 +69,7 @@ void ColisionManager::CheckColision(Entity* entity, Entity* other)
 		entity->GetPosition().x - other->GetPosition().x,
 		entity->GetPosition().y - other->GetPosition().y
 	);
-	
+
 	entSize /= 2.0f;
 	otherSize /= 2.0f;
 
@@ -92,8 +80,8 @@ void ColisionManager::CheckColision(Entity* entity, Entity* other)
 
 	if(intersection.x < 0.f && intersection.y < 0.f)
 	{
-		entity->Collided(other);
-		other->Collided(entity);
+		entity->Collided(static_cast<Ente*>(other));
+		other->Collided(static_cast<Ente*>(entity));
 	}
 };
 void ColisionManager::CheckOutOfCamera(Entity* entity)
@@ -102,27 +90,38 @@ void ColisionManager::CheckOutOfCamera(Entity* entity)
 	sf::FloatRect entBounds(entity->GetHitBoxBounds());
 
 	if (entBounds.left < cameraBounds.left || entBounds.width > cameraBounds.width)
+		entity->Collided(static_cast<Ente*>(this->cameraRef));
+};
+void ColisionManager::CheckOutOfMap(Entity* entity)
+{
+	sf::FloatRect entBounds(entity->GetHitBoxBounds());
+	sf::FloatRect mapBounds(this->stageRef->GetMapBounds());
+
+	if (entBounds.top < mapBounds.top || entBounds.height > mapBounds.height)
 	{
-		if (entBounds.left < cameraBounds.left)
-			entity->MovePosition(sf::Vector2f(cameraBounds.left - entBounds.left, 0.f));
-		else
-			entity->MovePosition(sf::Vector2f(cameraBounds.width - entBounds.width, 0.f));
+		entity->Collided(static_cast<Ente*>(this->stageRef));
 	}
 };
 
-void ColisionManager::AddEntity(Entity* entity)
+void ColisionManager::Add(Entity* entity)
 {
 	entities.emplace_back(entity);
 };
-void ColisionManager::AddRange(std::list<Entity*>* _entities)
+void ColisionManager::AddRange(Lista<Ente*>* _entities)
 {
-	std::list<Entity*>::iterator it;
+	Lista<Ente*>::iterador it;
 
 	if (_entities != nullptr)
 	{
-		for(it = (*_entities).begin(); it != (*_entities).end(); it++)
+		for (it = _entities->begin(); it != _entities->end(); ++it)
 		{
-			this->entities.emplace_back((*it));
+			if ((*it)->GetType() != Ente::UNDEFINED &&
+				(*it)->GetType() != Ente::STAGE &&
+				(*it)->GetType() != Ente::BACKGROUND &&
+				(*it)->GetType() != Ente::CAMERA)
+			{
+				this->entities.emplace_back(static_cast<Entity*>(*it));
+			}
 		}
 	}
 };
@@ -134,22 +133,45 @@ void ColisionManager::AddRange(std::vector<Entity*>* _entities)
 	{
 		for (it = (*_entities).begin(); it != (*_entities).end(); it++)
 		{
-			this->entities.emplace_back((*it));
+			if ((*it)->GetType() != Ente::UNDEFINED &&
+				(*it)->GetType() != Ente::STAGE &&
+				(*it)->GetType() != Ente::BACKGROUND &&
+				(*it)->GetType() != Ente::CAMERA)
+			{
+				this->entities.emplace_back((*it));
+			}
 		}
 	}
 };
-void ColisionManager::RemoveEntity(const unsigned int entityId)
+void ColisionManager::Remove(const unsigned int entityId)
 {
 	std::vector<Entity*>::const_iterator cIt;
 
-	for (cIt = entities.cbegin(); cIt != entities.cend(); cIt++)
+	for (cIt = this->entities.cbegin(); cIt != this->entities.cend(); cIt++)
 	{
 		if ((*cIt)->GetId() == entityId)
 		{
-			entities.erase(cIt);
+			this->entities.erase(cIt);
 			break;
 		}
 	};
+};
+void ColisionManager::RemoveRange(const std::vector<unsigned int> entitiesIds)
+{
+	std::vector<unsigned int>::const_iterator idCit;
+	std::vector<Entity*>::const_iterator cIt;
+
+	for(idCit = entitiesIds.cbegin(); idCit != entitiesIds.cend(); idCit++)
+	{
+		for (cIt = this->entities.cbegin(); cIt != this->entities.cend(); cIt++)
+		{
+			if ((*cIt)->GetId() == *idCit)
+			{
+				this->entities.erase(cIt);
+				break;
+			}
+		};
+	}
 };
 
 void ColisionManager::SortElements()

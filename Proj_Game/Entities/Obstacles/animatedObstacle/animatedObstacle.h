@@ -9,14 +9,12 @@ namespace Obstacles
 	{
 	public:
 		AnimatedObstacle();
-		AnimatedObstacle(const unsigned int _type, const sf::RectangleShape& _hitBox, float* elapsed_timeRef, const std::vector<std::pair<int, Animation>> _animations,
-			const std::string textureRef = "", const sf::IntRect sheetCut = sf::IntRect());
-		AnimatedObstacle(const unsigned int _type, const sf::RectangleShape& _hitBox, float* elapsed_timeRef, const std::list<std::pair<int, Animation>> _animations,
+		AnimatedObstacle(const unsigned int _type, float* elapsed_timeRef, const sf::RectangleShape& _hitBox, const AnimationSheet _animations,
 			const std::string textureRef = "", const sf::IntRect sheetCut = sf::IntRect());
 		~AnimatedObstacle();
 
 		virtual void Execute();
 		virtual void SelfPrint(sf::RenderWindow& context_window);
-		virtual void Collided(Entity* _other);
+		virtual void Collided(Ente* _other);
 	};
 }

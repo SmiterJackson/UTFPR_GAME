@@ -1,24 +1,26 @@
 #pragma once
 
-#include "../../Entities/Entity/entity.h"
 #include "../../Entities/Camera/camera.h"
+
+class Stage;
 
 class ColisionManager
 {
 public:
 	ColisionManager();
-	ColisionManager(Camera* pCamera, const sf::FloatRect _mapBorders, float* _pElapsedTime, std::list<Entity*>* _entities = nullptr);
-	ColisionManager(Camera* pCamera, const sf::FloatRect _mapBorders, float* _pElapsedTime, std::vector<Entity*>* _entities = nullptr);
+	ColisionManager(Stage* pStage, Camera* pCamera, float* _pElapsedTime, Lista<Ente*>* _pEntities = nullptr);
 	~ColisionManager();
 	
 	void UpdateColisions();
 	void CheckColision(Entity* entity, Entity* other);
 	void CheckOutOfCamera(Entity* entity);
+	void CheckOutOfMap(Entity* entity);
 
-	void AddEntity(Entity* entity);
-	void AddRange(std::list<Entity*>* _entities);
+	void Add(Entity* entity);
+	void AddRange(Lista<Ente*>* _entities);
 	void AddRange(std::vector<Entity*>* _entities);
-	void RemoveEntity(const unsigned int entityId);
+	void Remove(const unsigned int entityId);
+	void RemoveRange(const std::vector<unsigned int> entitiesIds);
 
 	void SortElements();
 
@@ -30,8 +32,8 @@ private:
 
 private:
 	std::vector<Entity*> entities;
-	sf::FloatRect mapBorders;
 
+	Stage* stageRef;
 	Camera* cameraRef;
 
 	float elaps_accumul;

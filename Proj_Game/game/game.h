@@ -6,6 +6,7 @@
 #include "../Entities/Camera/camera.h"
 #include "../Entities/Obstacles/obstacle/obstacle.h" 
 #include "../Managers/Colision Manager/colisionManager.h"
+#include "../Entities/StageClass/stage.h"
 
 class Game
 {
@@ -16,7 +17,6 @@ public:
 	bool StartGame();
 
 private:
-	std::list<Characters::Player> players;
 	sf::RenderWindow window;
 
 	Camera camera;

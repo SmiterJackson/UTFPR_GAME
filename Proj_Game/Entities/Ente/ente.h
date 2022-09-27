@@ -6,23 +6,48 @@ class Ente
 {
 public:
 	Ente();
-	Ente(const unsigned int _type, float* elapsed_timeRef);
+	Ente(const unsigned int _type, float* pElapsedTime);
 	~Ente();
 
 	virtual void Execute() = 0;
-	virtual void SelfPrint(sf::RenderWindow& context_window) = 0;
+	virtual void SelfPrint(sf::RenderWindow& context_window);
 
-	void SetElapsedTimeRef(float* elapsed_timeRef) { this->elapsed_time = elapsed_timeRef; };
-	unsigned int const GetId() const { return this->id; };
+	void SetElapsedTimeRef(float* pElapsedTime) { this->elapsedTime = pElapsedTime; };
+	unsigned long long int const GetId() const { return this->id; };
 	unsigned int const GetType() const { return this->type; };
 
-	enum Type { UNDEFINED = 0, CAMERA, BACKGROUND, OBSTACLE, PROJECTILE, CHARACTER, ENEMY, MENU };
+	enum Type { UNDEFINED = 0, STAGE, BACKGROUND, OBSTACLE, PROJECTILE, CHARACTER, ENEMY, MENU, CAMERA };
+	
+	bool operator== (const Ente& other)
+	{
+		return this->type == other.type;
+	};
+	bool operator!= (const Ente& other)
+	{
+		return this->type != other.type;
+	};
+	bool operator> (const Ente& other)
+	{
+		return this->type > other.type;
+	};
+	bool operator>= (const Ente& other)
+	{
+		return this->type >= other.type;
+	};
+	bool operator< (const Ente& other)
+	{
+		return this->type < other.type;
+	};
+	bool operator<= (const Ente& other)
+	{
+		return this->type <= other.type;
+	};
 
 protected:
-	const unsigned int id;
-	const unsigned int type;
-	float* elapsed_time;
+	const unsigned long long int id;
+	const unsigned short int type;
+	float* elapsedTime;
 
 private:
-	static unsigned int counter;
+	static unsigned long long int counter;
 };

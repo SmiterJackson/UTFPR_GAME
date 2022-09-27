@@ -54,7 +54,7 @@
     <ClCompile Include="Entities\Character\character.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Stages\StageClass\stage.cpp">
+    <ClCompile Include="Entities\StageClass\stage.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="Traits\Animated\animated.cpp">
@@ -98,7 +98,7 @@
     <ClInclude Include="Entities\Character\character.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Stages\StageClass\stage.h">
+    <ClInclude Include="Entities\StageClass\stage.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="ListConteiner\lista.h">

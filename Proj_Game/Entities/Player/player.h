@@ -2,6 +2,9 @@
 
 #include "../Character/character.h"
 
+class Camera;
+class Stage;
+
 namespace Characters
 {
 	class Player : public Character
@@ -12,13 +15,20 @@ namespace Characters
 		~Player();
 
 		void Execute();
+		void Collided(Ente* _other);
 		void SelfPrint(sf::RenderWindow& context_window);
-		void Collided(Entity* _other);
 
 		void PlayerInputHandler(const sf::Event& _event);
 		void Initialize();
 
 		static unsigned int const GetNumberOfPlayers() { return playerCounter; };
+
+		enum Actions { IDLE = 0, WALKING, KICK, DAMAGED, CROUCHING };
+
+	private:
+		void ObstacleCollision(Entity* Obstacle) override;
+		void CameraCollision(Camera* camera);
+		void StageCollision(Stage* stage);
 
 	private:
 		bool onGround;
@@ -32,7 +42,5 @@ namespace Characters
 
 		unsigned int playerId;
 		static unsigned int playerCounter;
-
-		enum Actions { IDLE = 0, WALKING, KICK, DAMAGED, CROUCHING };
 	};
 }

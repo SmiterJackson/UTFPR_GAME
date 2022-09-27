@@ -63,40 +63,46 @@ const sf::IntRect& Animated::Animation::update(float* pElapsed_time, bool right)
 Animated::Animated():
 	animations(), pTexture(nullptr), pBody(nullptr), next_ani(0), last_ani(0), looking_right(true)
 {};
-Animated::Animated(const std::vector<std::pair<int, Animation>> _animations, sf::Texture* _pTexture, sf::Sprite* _pBody) :
-	animations(), pTexture(nullptr), pBody(nullptr), next_ani(0), last_ani(0), looking_right(true)
+Animated::Animated(const AnimationSheet _animations, sf::Texture* _pTexture, sf::Sprite* _pBody) :
+	animations(), pTexture(_pTexture), pBody(_pBody), next_ani(0), last_ani(0), looking_right(true)
 {
-	std::vector<std::pair<int, Animation>>::const_iterator it;
-	for (it = _animations.cbegin(); it != _animations.cend(); it++)
-		this->animations.emplace(it->first, it->second);
-};
-Animated::Animated(const std::list<std::pair<int, Animation>> _animations, sf::Texture* _pTexture, sf::Sprite* _pBody) :
-	animations(), pTexture(nullptr), pBody(nullptr), next_ani(0), last_ani(0), looking_right(true)
-{
-	std::list<std::pair<int, Animation>>::const_iterator it;
+	AnimationSheet::const_iterator it;
 	for (it = _animations.cbegin(); it != _animations.cend(); it++)
 		this->animations.emplace(it->first, it->second);
 };
 Animated::~Animated()
 {};
 
+void Animated::UpdateAnimation(float* pElapsedTime)
+{
+	if (this->next_ani != this->last_ani)
+	{
+		this->animations[this->last_ani].ResetAnimation();
+		this->last_ani = this->next_ani;
+	}
+
+	this->pBody->setTextureRect(this->animations[this->next_ani].update(
+		pElapsedTime, this->looking_right)
+	);
+};
+
 void Animated::AddAnimation(const int key, const Animation _animation)
 {
 	this->animations.emplace(key, _animation);
 };
-void Animated::AddRangeAnimations(const std::vector<std::pair<int, Animation>> _animations)
+void Animated::AddRangeAnimations(const AnimationSheet _animations)
 {
-	std::vector<std::pair<int, Animation>>::const_iterator it;
-	for (it = _animations.cbegin(); it != _animations.cend(); it++)
-		this->animations.emplace(it->first, it->second);
-};
-void Animated::AddRangeAnimations(const std::list<std::pair<int, Animation>> _animations)
-{
-	std::list<std::pair<int, Animation>>::const_iterator it;
+	AnimationSheet::const_iterator it;
 	for (it = _animations.cbegin(); it != _animations.cend(); it++)
 		this->animations.emplace(it->first, it->second);
 };
 void Animated::RemoveAnimation(const int key)
 {
 	this->animations.erase(key);
+};
+void Animated::RemoveRangeAnimations(const std::vector<int> keys)
+{
+	std::vector<int>::const_iterator it;
+	for (it = keys.cbegin(); it != keys.cend(); it++)
+		this->animations.erase(*it);
 };

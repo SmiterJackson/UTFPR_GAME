@@ -28,69 +28,92 @@ public:
 		}
 	};
 
-	template<typename ElT>
+	template<typename T_El>
 	class Element
 	{
 	public:
 		Element() :
 			info(), previous(nullptr), next(nullptr)
 		{};
-		Element(const ElT* _info) :
+		Element(const T_El* _info) :
 			info(*_info), previous(nullptr), next(nullptr)
 		{};
-		Element(const ElT* _info, Element<ElT>* _previous) :
+		Element(const T_El* _info, Element<T_El>* _previous) :
 			info(*_info), previous(_previous), next(nullptr)
 		{};
-		Element(const ElT* _info, Element<ElT>* _previous, Element<ElT>* _next) :
+		Element(const T_El* _info, Element<T_El>* _previous, Element<T_El>* _next) :
 			info(*_info), previous(_previous), next(_next)
 		{};
 		~Element()
 		{};
 
-		ElT* const GetInfo() { return &this->info; };
-		Element<ElT>* const GetPrevious() { return this->previous; };
-		Element<ElT>* const GetNext() { return this->next; };
+		T_El& GetInfo() { return this->info; };
+		Element<T_El>* const GetPrevious() { return this->previous; };
+		Element<T_El>* const GetNext() { return this->next; };
 
-		void SetInfo(const ElT* _info)
+		void SetInfo(const T_El* _info)
 		{
 			if (_info == nullptr)
 				return;
 
 			this->info = *_info;
 		};
-		void SetPrevious(Element<ElT>* _previous)
+		void SetPrevious(Element<T_El>* _previous)
 		{
 			this->previous = _previous;
 		};
-		void SetNext(Element<ElT>* _next)
+		void SetNext(Element<T_El>* _next)
 		{
 			this->next = _next;
 		};
 
 	private:
-		ElT info;
-		Element<ElT>* previous;
-		Element<ElT>* next;
+		T_El info;
+		Element<T_El>* previous;
+		Element<T_El>* next;
 	};
-
-	Element<T>* const GetFirst() 
-	{ 
-		return this->first; 
-	};
-	Element<T>* const GetLast()
+	class iterador
 	{
-		return this->last;
-	};
-	Element<T>* const GetCurrent() 
-	{ 
-		return this->current; 
+	public:
+		iterador() :
+			pElement(nullptr)
+		{};
+		~iterador()
+		{};
+
+		void operator= (Element<T>* _other)
+		{
+			this->pElement = _other;
+		};
+		bool operator== (Element<T>* _other)
+		{
+			return this->pElement == _other;
+		};
+		bool operator!= (Element<T>* _other)
+		{
+			return this->pElement != _other;
+		};
+		iterador& operator++ ()
+		{
+			this->pElement = this->pElement->GetNext();
+			return (*this);
+		}
+		T& operator* ()
+		{
+			return this->pElement->GetInfo();
+		}
+		T*& operator-> ()
+		{
+			return this->pElement->GetInfo();
+		};
+
+	private:
+		Element<T>* pElement;
 	};
 
-	unsigned int GetSize() { return this->size; };
-
-	void const PushBack(const T* item)
+	void const PushBack(const T& item)
 	{
-		Element<T>* aux = new Element<T>(item, this->last, this->first);
+		Element<T>* aux = new Element<T>(&item, this->last);
 
 		if(aux == nullptr)
 		{
@@ -102,15 +125,11 @@ public:
 		{
 			this->first = aux;
 			this->last = aux;
-
-			this->first->SetNext(this->last);
-			this->last->SetPrevious(this->first);
 		}
 		else
 		{
 			this->last->SetNext(aux);
 			this->last = aux;
-			this->first->SetPrevious(this->last);
 		}
 
 		this->size++;
@@ -128,20 +147,45 @@ public:
 			size--;
 		}
 	};
-
-	Element<T>* operator[] (unsigned int val) const
+	void PopAt(const unsigned int val)
 	{
 		unsigned int i = 0U;
 		Element<T>* aux = this->first;
 
-		for (i = 0U; i < val; i++)
+		for (i = 0U; i < val && i < this->size; i++)
+			aux = aux->GetNext();
+
+		if (aux != nullptr)
 		{
-			if (i >= this->size || aux == nullptr)
-				return nullptr;
+			aux->GetPrevious()->SetNext(aux->GetNext());
+			aux->GetNext()->SetPrevious(aux->GetPrevious());
+		}
+
+		delete aux;
+	};
+
+	Element<T>* const GetFirst(){ return this->first; };
+	Element<T>* const GetLast() { return this->last; };
+	Element<T>* const GetCurrent() { return this->current; };
+
+	Element<T>* begin() { return this->first; };
+	Element<T>* end() { return this->last->GetNext(); };
+
+	unsigned int GetSize() { return this->size; };
+
+	Element<T>& operator[] (unsigned int val) const
+	{
+		unsigned int i = 0U;
+		Element<T>* aux = this->first;
+
+		for (i = 0U; i < val && i < this->size; i++)
+		{
+			if (aux == nullptr)
+				return *(this->first);
 			aux = aux->GetNext();
 		}
 
-		return aux;
+		return *aux;
 	}
 	Lista<T>& operator+= (const Lista<T>& _other)
 	{
@@ -155,6 +199,72 @@ public:
 		this->PushBack(&element);
 		return *this;
 	}
+
+//private:
+//	void ColisionManager::ExchangePointers(Element<T>* p1, Element<T>* p2)
+//	{
+//		Element<T>* aux = nullptr;
+//
+//		if (p1 != nullptr && p2 != nullptr)
+//		{
+//			aux = p1->GetPrevious();
+//			p1->SetPrevious(p2->GetPrevious());
+//			p2->SetPrevious(aux);
+//
+//			aux = p1->GetNext();
+//			p1->SetNext(p2->GetNext());
+//			p2->SetNext(aux);
+//
+//			p1->GetPrevious()->SetNext(p1);
+//			p1->GetNext()->SetPrevious(p1);
+//
+//			p2->GetPrevious()->SetNext(p2);
+//			p2->GetNext()->SetPrevious(p2);
+//		}
+//	};
+//
+//	unsigned int ColisionManager::SortPartition(unsigned int start, unsigned int end)
+//	{
+//		T pivotValue;
+//		unsigned int pivotIndex = 0, i = 0;
+//		unsigned int diff = end - start;
+//
+//		if (diff > 1)
+//		{
+//			this->operator[](start)->GetInfo() > this->operator[](end)->GetInfo() ? pivotIndex = start : pivotIndex = end;
+//			ExchangePointers(&this->operator[](pivotIndex), &this->operator[](end));
+//		}
+//
+//		pivotValue = this->operator[](pivotIndex);
+//		for (i = start, pivotIndex = start; i < end; i++)
+//		{
+//			if (this->operator[](i)->GetInfo() <= pivotValue)
+//			{
+//				ExchangePointers(&this->operator[](i)->GetInfo(), &this->operator[](pivotIndex)->GetInfo());
+//				pivotIndex++;
+//			}
+//		}
+//		if (this->operator[](end)->GetInfo() != this->operator[](pivotIndex)->GetInfo())
+//			ExchangePointers(&this->operator[](end)->GetInfo(), &this->operator[](pivotIndex)->GetInfo());
+//
+//		return pivotIndex;
+//	};
+//	void ColisionManager::QuickSortRecursion(unsigned int start, unsigned int end)
+//	{
+//		unsigned int pivotIndex = 0;
+//
+//		if (start >= end)
+//			return;
+//
+//		pivotIndex = SortPartition(start, end);
+//
+//		QuickSortRecursion(start, pivotIndex - 1);
+//		QuickSortRecursion(pivotIndex + 1, end);
+//	};
+//	void ColisionManager::SortElements()
+//	{
+//		QuickSortRecursion(0, this->size - 1);
+//	};
 
 private:
 	Element<T>* first;

@@ -1,12 +1,15 @@
 #include "ente.h"
 
-unsigned int Ente::counter = 0;
+unsigned long long int Ente::counter = 0;
 
 Ente::Ente() :
-	id(counter++), type(Type::UNDEFINED), elapsed_time(nullptr)
+	id(counter++), type(Type::UNDEFINED), elapsedTime(nullptr)
 {};
-Ente::Ente(const unsigned int _type, float* elapsed_timeRef) :
-	id(counter++), type(_type), elapsed_time(elapsed_timeRef)
+Ente::Ente(const unsigned int _type, float* pElapsedTime) :
+	id(counter++), type(_type), elapsedTime(pElapsedTime)
 {};
 Ente::~Ente()
+{};
+
+void Ente::SelfPrint(sf::RenderWindow& context_window)
 {};

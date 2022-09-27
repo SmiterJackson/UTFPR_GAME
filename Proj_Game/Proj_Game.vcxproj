@@ -167,7 +167,7 @@
     <ClCompile Include="Managers\Colision Manager\colisionManager.cpp" />
     <ClCompile Include="Managers\Graphic Manager\graphic_manager.cpp" />
     <ClCompile Include="Proj_Game.cpp" />
-    <ClCompile Include="Stages\StageClass\stage.cpp" />
+    <ClCompile Include="Entities\StageClass\stage.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="Traits\Animated\animated.cpp" />
   </ItemGroup>
@@ -184,7 +184,7 @@
     <ClInclude Include="ListConteiner\lista.h" />
     <ClInclude Include="Managers\Colision Manager\colisionManager.h" />
     <ClInclude Include="Managers\Graphic Manager\graphic_manager.h" />
-    <ClInclude Include="Stages\StageClass\stage.h" />
+    <ClInclude Include="Entities\StageClass\stage.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Traits\Animated\animated.h" />
   </ItemGroup>

@@ -12,7 +12,6 @@ namespace Obstacles
 		~Obstacle();
 
 		virtual void Execute();
-		virtual void SelfPrint(sf::RenderWindow& context_window);
-		virtual void Collided(Entity* _other);
+		virtual void Collided(Ente* _other);
 	};
 }

@@ -9,17 +9,13 @@ namespace Characters
 	{
 	public:
 		Character();
-		Character(const unsigned int _type, const sf::RectangleShape& _hitBox, float* elapsed_timeRef, const std::string textureRef = "",
-			const std::vector<std::pair<int, Animation>> _animations = std::vector<std::pair<int, Animation>>(), 
-			const sf::IntRect sheetCut = sf::IntRect(), const unsigned int _lifeAmount = 0, float invcFramDuration = 0.f);
-		Character(const unsigned int _type, const sf::RectangleShape& _hitBox, float* elapsed_timeRef, const std::string textureRef = "",
-			const std::list<std::pair<int, Animation>> _animations = std::list<std::pair<int, Animation>>(),
-			const sf::IntRect sheetCut = sf::IntRect(), const unsigned int _lifeAmount = 0, float invcFramDuration = 0.f);
+		Character(const unsigned int _type, float* pElapsedTime, const sf::RectangleShape& _hitBox, const std::string textureRef = "",
+				  const sf::IntRect sheetCut = sf::IntRect(), const AnimationSheet _animations = AnimationSheet(),
+				  const unsigned int _lifeAmount = 0, float invcFramDuration = 0.f);
 		~Character();
 
 		virtual void Execute() = 0;
-		virtual void SelfPrint(sf::RenderWindow& context_window) = 0;
-		virtual void Collided(Entity* _other) = 0;
+		virtual void Collided(Ente* _other) = 0;
 
 	protected:
 		bool invencible;

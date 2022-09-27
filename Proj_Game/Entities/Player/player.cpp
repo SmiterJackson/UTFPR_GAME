@@ -1,7 +1,11 @@
 #include "player.h"
+#include "../Camera/camera.h"
+#include "../StageClass/stage.h"
 
 #define P1_TEXTURE_REF "Resources/characters/player/sheets/DinoSprites_mort.png"
 #define P2_TEXTURE_REF "Resources/characters/player/sheets/DinoSprites_vita.png"
+
+#define TEXTURE_TOKEN_SIZE 24
 
 #define INVENCIBILITY_FRAMES_TIME 2.5f
 
@@ -18,8 +22,8 @@ unsigned int Characters::Player::playerCounter = 0;
 
 Characters::Player::Player():
 	Character(
-		Type::CHARACTER, sf::RectangleShape(sf::Vector2f(0.f, 0.f)), nullptr, std::string(),
-		std::vector<std::pair<int, Animation>>(), sf::IntRect(0, 0, 24, 24), PLAYER_TOTAL_LIFE, INVENCIBILITY_FRAMES_TIME
+		Type::CHARACTER, nullptr, sf::RectangleShape(sf::Vector2f(0.f, 0.f)), std::string(),
+		sf::IntRect(0, 0, TEXTURE_TOKEN_SIZE, TEXTURE_TOKEN_SIZE), AnimationSheet(), PLAYER_TOTAL_LIFE, INVENCIBILITY_FRAMES_TIME
 	),
 	onGround(true), crouching(false), jump(false), walkLeft(false), walkRight(false), walking(true), done(false), playerId(playerCounter)
 {
@@ -27,8 +31,8 @@ Characters::Player::Player():
 };
 Characters::Player::Player(float* elapsed_timeRef) :
 	Character(
-		Type::CHARACTER, sf::RectangleShape(sf::Vector2f(18.f, 18.f)), elapsed_timeRef, std::string(),
-		std::list<std::pair<int, Animation>>(), sf::IntRect(0, 0, 0, 0), PLAYER_TOTAL_LIFE, INVENCIBILITY_FRAMES_TIME
+		Type::CHARACTER, elapsed_timeRef, sf::RectangleShape(sf::Vector2f(18.f, 18.f)), std::string(),
+		sf::IntRect(0, 0, TEXTURE_TOKEN_SIZE, TEXTURE_TOKEN_SIZE), AnimationSheet(), PLAYER_TOTAL_LIFE, INVENCIBILITY_FRAMES_TIME
 	),
 	onGround(true), crouching(false), jump(false), walkLeft(false), walkRight(false), walking(true), done(false), playerId(playerCounter)
 {
@@ -41,14 +45,14 @@ Characters::Player::~Player()
 
 void Characters::Player::Execute()
 {
-	float coeff = H_ACCELERATION * (*this->elapsed_time);
+	float coeff = H_ACCELERATION * (*this->elapsedTime);
 
 	if (this->walking)
 	{
 		if (this->jump && this->onGround && !this->crouching)
 		{
 			this->onGround = false;
-			this->speedV += JUMP;
+			this->speedV = JUMP;
 			coeff /= 10;
 		}
 
@@ -82,16 +86,16 @@ void Characters::Player::Execute()
 				this->speedH = 0.f;
 		}
 
-		/*if(this->crouching)
-			speedH = 0;*/
-
 		if (!this->onGround)
 		{
-			if (speedV < V_MAX_ACCELERATION)
-				speedV += V_ACCELERATION * (*this->elapsed_time);
+			if (this->speedV < V_MAX_ACCELERATION)
+				this->speedV += V_ACCELERATION * (*this->elapsedTime);
 		}
 		else
-			speedV = 0;
+		{
+			this->speedV = 0.001f;
+			this->onGround = false;
+		}
 	}
 	else
 	{
@@ -137,28 +141,18 @@ void Characters::Player::Execute()
 
 	this->MovePosition(sf::Vector2f(speedH, speedV));
 };
-void Characters::Player::SelfPrint(sf::RenderWindow& context_window)
-{
-	if (this->next_ani != this->last_ani)
-	{
-		this->animations[this->last_ani].ResetAnimation();
-		this->last_ani = this->next_ani;
-	}
-
-	this->body.setTextureRect(this->animations[this->next_ani].update(this->elapsed_time, this->looking_right));
-	context_window.draw(this->body);
-
-#ifdef _DEBUG
-	this->hitBox.setOutlineColor(sf::Color::Red);
-	this->hitBox.setOutlineThickness(1.5f);
-	context_window.draw(this->hitBox);
-#endif
-};
-void Characters::Player::Collided(Entity* _other)
+void Characters::Player::Collided(Ente* _other)
 {
 	switch (_other->GetType())
 	{
+	case Type::CAMERA:
+		this->CameraCollision(static_cast<Camera*>(_other));
+		break;
+	case Type::STAGE:
+		this->StageCollision(static_cast<Stage*>(_other));
+		break;
 	case Type::OBSTACLE:
+		this->ObstacleCollision(static_cast<Entity*>(_other));
 		break;
 	case Type::PROJECTILE:
 		break;
@@ -167,6 +161,17 @@ void Characters::Player::Collided(Entity* _other)
 	default:
 		break;
 	}
+};
+void Characters::Player::SelfPrint(sf::RenderWindow& context_window)
+{
+	this->UpdateAnimation(this->elapsedTime);
+	context_window.draw(this->body);
+
+#ifdef _DEBUG
+	this->hitBox.setOutlineColor(sf::Color::Red);
+	this->hitBox.setOutlineThickness(1.5f);
+	context_window.draw(this->hitBox);
+#endif
 };
 
 void Characters::Player::PlayerInputHandler(const sf::Event& _event)
@@ -278,19 +283,83 @@ void Characters::Player::Initialize()
 	this->playerCounter++;
 
 	if (this->playerCounter == 1)
-		this->SetTexture(P1_TEXTURE_REF, sf::IntRect(0, 0, 24, 24));
+		this->SetTexture(P1_TEXTURE_REF, sf::IntRect(0, 0, TEXTURE_TOKEN_SIZE, TEXTURE_TOKEN_SIZE));
 	else
-		this->SetTexture(P2_TEXTURE_REF, sf::IntRect(0, 0, 24, 24));
+		this->SetTexture(P2_TEXTURE_REF, sf::IntRect(0, 0, TEXTURE_TOKEN_SIZE, TEXTURE_TOKEN_SIZE));
 
-	sf::Vector2i size(24, 24);
+	sf::Vector2i size(TEXTURE_TOKEN_SIZE, TEXTURE_TOKEN_SIZE);
 	this->AddRangeAnimations(
 		std::vector<std::pair<int, Animation>>({
-			std::pair<int, Animation>(Actions::IDLE,		Animation(0, 2, 0, size, 0.4f, true)),
-			std::pair<int, Animation>(Actions::WALKING,		Animation(3, 9, 0, size, 0.15f, true)),
-			std::pair<int, Animation>(Actions::KICK,		Animation(10, 12, 0, size, 0.6f, true)),
-			std::pair<int, Animation>(Actions::DAMAGED,		Animation(13, 16, 0, size, 0.6f, true)),
-			std::pair<int, Animation>(Actions::CROUCHING,	Animation(17, 23, 0, size, 0.1f, true))
+			std::pair<int, Animation>(Actions::IDLE,		Animation(0, 2, 0,		size, 0.4f,		true)),
+			std::pair<int, Animation>(Actions::WALKING,		Animation(3, 9, 0,		size, 0.15f,	true)),
+			std::pair<int, Animation>(Actions::KICK,		Animation(10, 12, 0,	size, 0.6f,		true)),
+			std::pair<int, Animation>(Actions::DAMAGED,		Animation(13, 16, 0,	size, 0.6f,		true)),
+			std::pair<int, Animation>(Actions::CROUCHING,	Animation(17, 23, 0,	size, 0.1f,		true))
 			}
 		)
 	);
+};
+
+void Characters::Player::ObstacleCollision(Entity* Obstacle)
+{
+	sf::Vector2f intersection;
+	sf::Vector2f obsSize(Obstacle->GetHitBoxSize());
+	sf::Vector2f size(this->GetHitBoxSize());
+	sf::Vector2f distance(
+		Obstacle->GetPosition().x - this->GetPosition().x,
+		Obstacle->GetPosition().y - this->GetPosition().y
+	);
+
+	obsSize /= 2.0f;
+	size /= 2.0f;
+
+	intersection = sf::Vector2f(
+		fabs(distance.x) - (obsSize.x + size.x),
+		fabs(distance.y) - (obsSize.y + size.y)
+	);
+
+	if (intersection.x > intersection.y)
+	{
+		if (distance.x > 0.f)
+			this->MovePosition(intersection.x, 0.f);
+		else
+			this->MovePosition(-(intersection.x), 0.f);
+	}
+	else
+	{
+		if (distance.y > 0.f)
+			this->MovePosition(0.f, intersection.y);
+		else
+			this->MovePosition(0.f, -(intersection.y));
+		this->onGround = true;
+	}
+};
+void Characters::Player::CameraCollision(Camera* camera)
+{
+	sf::FloatRect cameraBounds(camera->CameraBounds());
+	sf::FloatRect entBounds(this->GetHitBoxBounds());
+
+	if (entBounds.left < cameraBounds.left || entBounds.width > cameraBounds.width)
+	{
+		if (entBounds.left < cameraBounds.left)
+			this->MovePosition(sf::Vector2f(cameraBounds.left - entBounds.left, 0.f));
+		else
+			this->MovePosition(sf::Vector2f(cameraBounds.width - entBounds.width, 0.f));
+	}
+};
+void Characters::Player::StageCollision(Stage* stage)
+{
+	sf::FloatRect entBounds(this->GetHitBoxBounds());
+	sf::FloatRect mapBounds(stage->GetMapBounds());
+
+	if (entBounds.top < mapBounds.top || entBounds.height > mapBounds.height)
+	{
+		if (entBounds.top < mapBounds.top)
+			this->MovePosition(sf::Vector2f(0.f, mapBounds.top - entBounds.top));
+		else
+		{
+			this->MovePosition(sf::Vector2f(0.f, mapBounds.height - entBounds.height));
+			this->onGround = true;
+		}
+	}
 };
