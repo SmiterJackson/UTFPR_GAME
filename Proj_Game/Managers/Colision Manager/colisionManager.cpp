@@ -1,6 +1,7 @@
 #include "colisionManager.h"
 #include "../../Entities/StageClass/stage.h"
 
+#define OFFSET sf::Vector2f(0.f, 0.001f)
 #define COLISION_CHECK_TIMER 0.2f
 
 ColisionManager::ColisionManager() :
@@ -69,6 +70,9 @@ void ColisionManager::CheckColision(Entity* entity, Entity* other)
 		entity->GetPosition().x - other->GetPosition().x,
 		entity->GetPosition().y - other->GetPosition().y
 	);
+
+	// Aplica-se o offset para verificar se há uma plataforma abaixo da entidade
+	distance += OFFSET;
 
 	entSize /= 2.0f;
 	otherSize /= 2.0f;

@@ -11,7 +11,7 @@ namespace Characters
 	{
 	public:
 		Player();
-		Player(float* elapsed_timeRef);
+		Player(float* elapsed_timeRef, float _size_coeff = 1.0f);
 		~Player();
 
 		void Execute();

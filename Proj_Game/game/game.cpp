@@ -34,10 +34,6 @@ bool Game::StartGame()
         return false;
 
     sf::FloatRect bounds((352.f * IMAGE_COEFFICIENT * -2.f), (-192.f + 40.f), (352.f * IMAGE_COEFFICIENT * 2.f), (192.f * IMAGE_COEFFICIENT));
-
-    //Camera camera(sf::Vector2f(WINDOW_SIZE_X_F / X_COEFF, WINDOW_SIZE_Y_F / X_COEFF),
-    //    sf::Vector2f(WINDOW_SIZE_X_F / Y_COEFF, WINDOW_SIZE_Y_F / Y_COEFF),
-    //    nullptr, &bounds);
     std::vector<std::string> paths(
     {   "Resources/parallax_background/foreground.png",
         "Resources/parallax_background/back-buildings.png",

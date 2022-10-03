@@ -14,7 +14,7 @@
 
 #define JUMP -0.5f
 #define V_ACCELERATION 1.f
-#define V_MAX_ACCELERATION 0.75f
+#define V_MAX_ACCELERATION (JUMP * -1.5f)
 
 #define PLAYER_TOTAL_LIFE 10U
 
@@ -29,10 +29,11 @@ Characters::Player::Player():
 {
 	Initialize();
 };
-Characters::Player::Player(float* elapsed_timeRef) :
+Characters::Player::Player(float* elapsed_timeRef, float _size_coeff) :
 	Character(
 		Type::CHARACTER, elapsed_timeRef, sf::RectangleShape(sf::Vector2f(18.f, 18.f)), std::string(),
-		sf::IntRect(0, 0, TEXTURE_TOKEN_SIZE, TEXTURE_TOKEN_SIZE), AnimationSheet(), PLAYER_TOTAL_LIFE, INVENCIBILITY_FRAMES_TIME
+		sf::IntRect(0, 0, TEXTURE_TOKEN_SIZE, TEXTURE_TOKEN_SIZE), AnimationSheet(), PLAYER_TOTAL_LIFE, 
+		INVENCIBILITY_FRAMES_TIME, _size_coeff
 	),
 	onGround(true), crouching(false), jump(false), walkLeft(false), walkRight(false), walking(true), done(false), playerId(playerCounter)
 {
@@ -93,7 +94,7 @@ void Characters::Player::Execute()
 		}
 		else
 		{
-			this->speedV = 0.001f;
+			this->speedV = 0.f;
 			this->onGround = false;
 		}
 	}
@@ -139,7 +140,11 @@ void Characters::Player::Execute()
 		}
 	}
 
-	this->MovePosition(sf::Vector2f(speedH, speedV));
+	this->MovePosition(sf::Vector2f(this->speedH, this->speedV));
+
+#ifdef _DEBUG
+	this->origin.setPosition(this->hitBox.getPosition());
+#endif
 };
 void Characters::Player::Collided(Ente* _other)
 {
@@ -168,9 +173,8 @@ void Characters::Player::SelfPrint(sf::RenderWindow& context_window)
 	context_window.draw(this->body);
 
 #ifdef _DEBUG
-	this->hitBox.setOutlineColor(sf::Color::Red);
-	this->hitBox.setOutlineThickness(1.5f);
 	context_window.draw(this->hitBox);
+	context_window.draw(this->origin);
 #endif
 };
 

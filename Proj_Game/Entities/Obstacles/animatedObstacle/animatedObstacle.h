@@ -9,8 +9,8 @@ namespace Obstacles
 	{
 	public:
 		AnimatedObstacle();
-		AnimatedObstacle(const unsigned int _type, float* elapsed_timeRef, const sf::RectangleShape& _hitBox, const AnimationSheet _animations,
-			const std::string textureRef = "", const sf::IntRect sheetCut = sf::IntRect());
+		AnimatedObstacle(float* elapsed_timeRef, const sf::RectangleShape& _hitBox, const AnimationSheet _animations,
+						 const std::string textureRef = "", const sf::IntRect sheetCut = sf::IntRect(), float _size_coeff = 1.0f);
 		~AnimatedObstacle();
 
 		virtual void Execute();

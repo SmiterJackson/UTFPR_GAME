@@ -3,9 +3,9 @@
 Obstacles::AnimatedObstacle::AnimatedObstacle():
 	Entity(), Animated()
 {};
-Obstacles::AnimatedObstacle::AnimatedObstacle(const unsigned int _type, float* elapsed_timeRef, const sf::RectangleShape& _hitBox,
-	const AnimationSheet _animations, const std::string textureRef, const sf::IntRect sheetCut):
-	Entity(Type::OBSTACLE, elapsed_timeRef, _hitBox, textureRef, sheetCut), Animated(_animations, &this->texture, &this->body)
+Obstacles::AnimatedObstacle::AnimatedObstacle(float* elapsed_timeRef, const sf::RectangleShape& _hitBox, const AnimationSheet _animations,
+											  const std::string textureRef, const sf::IntRect sheetCut, float _size_coeff):
+	Entity(Type::OBSTACLE, elapsed_timeRef, _hitBox, textureRef, sheetCut, _size_coeff), Animated(_animations, &this->texture, &this->body)
 {};
 Obstacles::AnimatedObstacle::~AnimatedObstacle()
 {};

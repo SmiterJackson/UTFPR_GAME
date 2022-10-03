@@ -29,24 +29,24 @@ void Stage::Initalize(const float size_coefficient)
 	sf::FloatRect bounds((352.f * size_coefficient * -2.f), (-192.f + 40.f), (352.f * size_coefficient * 2.f), (192.f * size_coefficient));
 
 	std::list<Characters::Player*> players;
-	players.push_back(new Characters::Player(this->elapsedTime));
+	players.push_back(new Characters::Player(this->elapsedTime, 1.0f));
 	players.front()->MovePosition(position);
 	this->entities.PushBack(static_cast<Ente*>(players.front()));
 
-	//players.emplace_back(new Characters::Player(this->elapsedTime));
-	//players.back()->MovePosition(position + sf::Vector2f(-48.f, 0.f));
-	//this->entities.PushBack(static_cast<Ente*>(players.back()));
+	/*players.emplace_back(new Characters::Player(this->elapsedTime));
+	players.back()->MovePosition(position + sf::Vector2f(-48.f, 0.f));
+	this->entities.PushBack(static_cast<Ente*>(players.back()));*/
 
 	this->pCamera->AddPlayerRange(&players);
 
 	std::list<Obstacles::Obstacle*> obstacles;
-	for (int f = 0; f < 10; f++)
+	for (int f = 0; f < 20; f++)
 	{
 		obstacles.push_back(new Obstacles::Obstacle(
-			sf::RectangleShape(sf::Vector2f(OBSTACLE_SIZE, OBSTACLE_SIZE)), this->elapsedTime,
-			OBSTACLE_TEXTURE_REF, sf::IntRect(0, 0, OBSTACLE_SIZE, OBSTACLE_SIZE)
+			this->elapsedTime, sf::RectangleShape(sf::Vector2f(OBSTACLE_SIZE, OBSTACLE_SIZE)),
+			OBSTACLE_TEXTURE_REF, sf::IntRect(0, 0, OBSTACLE_SIZE, OBSTACLE_SIZE), 1.0f
 		));
-		obstacles.back()->MovePosition(sf::Vector2f(position.x + (-OBSTACLE_SIZE * f), position.y + OBSTACLE_SIZE * 1.5f));
+		obstacles.back()->MovePosition(sf::Vector2f(position.x + (-OBSTACLE_SIZE * f), position.y + OBSTACLE_SIZE * 2.f));
 		this->entities.PushBack(static_cast<Ente*>(obstacles.back()));
 	}
 

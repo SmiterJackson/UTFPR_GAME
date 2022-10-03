@@ -8,7 +8,8 @@ namespace Obstacles
 	{
 	public:
 		Obstacle();
-		Obstacle(const sf::RectangleShape& _hitBox, float* elapsed_timeRef, const std::string textureRef = "", const sf::IntRect sheetCut = sf::IntRect());
+		Obstacle(float* elapsed_timeRef, const sf::RectangleShape& _hitBox, const std::string textureRef = "",
+				 const sf::IntRect sheetCut = sf::IntRect(), float _size_coeff = 1.0f);
 		~Obstacle();
 
 		virtual void Execute();

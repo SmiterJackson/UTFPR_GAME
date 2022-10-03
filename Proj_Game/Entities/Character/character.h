@@ -11,7 +11,7 @@ namespace Characters
 		Character();
 		Character(const unsigned int _type, float* pElapsedTime, const sf::RectangleShape& _hitBox, const std::string textureRef = "",
 				  const sf::IntRect sheetCut = sf::IntRect(), const AnimationSheet _animations = AnimationSheet(),
-				  const unsigned int _lifeAmount = 0, float invcFramDuration = 0.f);
+				  const unsigned int _lifeAmount = 0, float invcFramDuration = 0.f, float _size_coeff = 1.0f);
 		~Character();
 
 		virtual void Execute() = 0;
