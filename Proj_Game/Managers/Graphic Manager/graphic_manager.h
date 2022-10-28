@@ -1,19 +1,27 @@
 #pragma once
 
-#include "../../Entities/Ente/ente.h"
+#include "../Traits/BasePrintable/basePrintable.h"
+#include "../Entes/Ente/ente.h"
 
-class GraphicManager
+namespace Manager
 {
-public:
-	GraphicManager();
-	GraphicManager(sf::RenderWindow* windowRef, const std::list<Ente*>& _entes = std::list<Ente*>());
-	~GraphicManager();
+	class GraphicManager
+	{
+	public:
+		static void SetWindowReference() {};
+		static void AddEnte(Trait::BasePrintable* ente);
+		static void RemoveEnte(const unsigned int enteId);
 
-	void AddEnte(Ente* ente);
-	void RemoveEnte(const unsigned int enteId);
-	void Draw();
+		static void Draw(const float& pElapsedTime);
 
-private:
-	std::list<Ente*> entes;
-	sf::RenderWindow* windowRef;
-};
+	private:
+		GraphicManager();
+		~GraphicManager();
+
+	private:
+		static GraphicManager* pGraphManagerInstance;
+
+		static std::list<Trait::BasePrintable*> entes;
+		static sf::RenderWindow* context_window;
+	};
+}

@@ -76,10 +76,12 @@ public:
 	{
 	public:
 		iterador() :
-			pElement(nullptr)
+			pElement(nullptr), listPosition(0)
 		{};
 		~iterador()
 		{};
+
+		unsigned int& ListPosition() { return this->listPosition; };
 
 		void operator= (Element<T>* _other)
 		{
@@ -96,6 +98,7 @@ public:
 		iterador& operator++ ()
 		{
 			this->pElement = this->pElement->GetNext();
+			this->listPosition++;
 			return (*this);
 		}
 		T& operator* ()
@@ -109,6 +112,7 @@ public:
 
 	private:
 		Element<T>* pElement;
+		unsigned int listPosition;
 	};
 
 	void const PushBack(const T& item)
@@ -153,6 +157,22 @@ public:
 		Element<T>* aux = this->first;
 
 		for (i = 0U; i < val && i < this->size; i++)
+			aux = aux->GetNext();
+
+		if (aux != nullptr)
+		{
+			aux->GetPrevious()->SetNext(aux->GetNext());
+			aux->GetNext()->SetPrevious(aux->GetPrevious());
+		}
+
+		delete aux;
+	};
+	void PopAt(iterador it)
+	{
+		unsigned int i = 0U;
+		Element<T>* aux = this->first;
+
+		for (i = 0U; i < it.ListPosition() && i < this->size; i++)
 			aux = aux->GetNext();
 
 		if (aux != nullptr)

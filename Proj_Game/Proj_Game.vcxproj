@@ -71,23 +71,23 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)\Proj_Game</OutDir>
-    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)</OutDir>
+    <IntDir>$(SolutionDir)BuildFiles\$(Configuration)\$(Platform)\</IntDir>
     <TargetName>$(ProjectName) $(Configuration)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)\Proj_Game</OutDir>
-    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)</OutDir>
+    <IntDir>$(SolutionDir)BuildFiles\$(Configuration)\$(Platform)\</IntDir>
     <TargetName>$(ProjectName) $(Configuration)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)\Proj_Game</OutDir>
-    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)</OutDir>
+    <IntDir>$(SolutionDir)BuildFiles\$(Configuration)\$(Platform)\</IntDir>
     <TargetName>$(ProjectName) $(Configuration)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)\Proj_Game</OutDir>
-    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)</OutDir>
+    <IntDir>$(SolutionDir)BuildFiles\$(Configuration)\$(Platform)\</IntDir>
     <TargetName>$(ProjectName) $(Configuration)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -96,13 +96,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Proj_Game\Dependecies\SFML-2.5.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Proj_Game\Dependecies\SFML-2.5.1\include;$(SolutionDir)Proj_Game\stdafx;$(SolutionDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-audio-d.lib;sfml-network-d.lib;sfml-system-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Proj_Game\Dependecies\SFML-2.5.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Proj_Game\Dependecies\SFML-2.5.1\lib;</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -113,7 +113,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Proj_Game\Dependecies\SFML-2.5.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Proj_Game\Dependecies\SFML-2.5.1\include;$(SolutionDir)Proj_Game\stdafx;$(SolutionDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -121,7 +121,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>sfml-graphics.lib;sfml-window.lib;sfml-audio.lib;sfml-network.lib;sfml-system.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Proj_Game\Dependecies\SFML-2.5.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Proj_Game\Dependecies\SFML-2.5.1\lib;</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -130,13 +130,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Proj_Game\Dependecies\SFML-2.5.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Proj_Game\Dependecies\SFML-2.5.1\include;$(SolutionDir)Proj_Game\stdafx;$(SolutionDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-audio-d.lib;sfml-network-d.lib;sfml-system-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Proj_Game\Dependecies\SFML-2.5.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Proj_Game\Dependecies\SFML-2.5.1\lib;</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -147,7 +147,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Proj_Game\Dependecies\SFML-2.5.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Proj_Game\Dependecies\SFML-2.5.1\include;$(SolutionDir)Proj_Game\stdafx;$(SolutionDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -155,47 +155,67 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>sfml-graphics.lib;sfml-window.lib;sfml-audio.lib;sfml-network.lib;sfml-system.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Proj_Game\Dependecies\SFML-2.5.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Proj_Game\Dependecies\SFML-2.5.1\lib;</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Entities\Camera\camera.cpp" />
-    <ClCompile Include="Entities\Character\character.cpp" />
-    <ClCompile Include="Entities\Entity\entity.cpp" />
-    <ClCompile Include="Entities\Ente\ente.cpp" />
-    <ClCompile Include="Entities\Obstacles\obstacle\obstacle.cpp" />
-    <ClCompile Include="Entities\Obstacles\animatedObstacle\animatedObstacle.cpp" />
-    <ClCompile Include="Entities\Parallax\parallax.cpp" />
-    <ClCompile Include="Entities\Player\player.cpp" />
+    <ClCompile Include="Entes\Camera\camera.cpp" />
+    <ClCompile Include="Entes\Characters\Character\character.cpp" />
+    <ClCompile Include="Entes\Characters\Enemies\EnemyMelee\enemyMelee.cpp" />
+    <ClCompile Include="Entes\Entity\entity.cpp" />
+    <ClCompile Include="Entes\Ente\ente.cpp" />
+    <ClCompile Include="Entes\Mouse\mouse.cpp" />
+    <ClCompile Include="Entes\Obstacles\obstacle\obstacle.cpp" />
+    <ClCompile Include="Entes\Obstacles\animatedObstacle\animatedObstacle.cpp" />
+    <ClCompile Include="Entes\Parallax\parallax.cpp" />
+    <ClCompile Include="Entes\Characters\Player\player.cpp" />
     <ClCompile Include="game\game.cpp" />
+    <ClCompile Include="GUI\Button\button.cpp" />
+    <ClCompile Include="GUI\Interfaces\Interface\interface.cpp" />
+    <ClCompile Include="GUI\Interfaces\PauseInterface\pauseInterface.cpp" />
     <ClCompile Include="Managers\Colision Manager\colisionManager.cpp" />
     <ClCompile Include="Managers\Graphic Manager\graphic_manager.cpp" />
     <ClCompile Include="Proj_Game.cpp" />
-    <ClCompile Include="Entities\StageClass\stage.cpp" />
-    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="Entes\StageClass\stage.cpp" />
+    <ClCompile Include="stdafx\stdafx.cpp" />
     <ClCompile Include="Traits\Animated\animated.cpp" />
+    <ClCompile Include="Traits\BasePrintable\basePrintable.cpp" />
+    <ClCompile Include="Traits\Collidable\collidable.cpp" />
+    <ClCompile Include="Traits\Printable\printable.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Entities\Camera\camera.h" />
-    <ClInclude Include="Entities\Character\character.h" />
-    <ClInclude Include="Entities\Entity\entity.h" />
-    <ClInclude Include="Entities\Ente\ente.h" />
-    <ClInclude Include="Entities\Obstacles\obstacle\obstacle.h" />
-    <ClInclude Include="Entities\Obstacles\animatedObstacle\animatedObstacle.h" />
-    <ClInclude Include="Entities\Parallax\parallax.h" />
-    <ClInclude Include="Entities\Player\player.h" />
+    <ClInclude Include="Entes\Camera\camera.h" />
+    <ClInclude Include="Entes\Characters\Character\character.h" />
+    <ClInclude Include="Entes\Characters\Enemies\EnemyMelee\enemyMelee.h" />
+    <ClInclude Include="Entes\Entity\entity.h" />
+    <ClInclude Include="Entes\Ente\ente.h" />
+    <ClInclude Include="Entes\Mouse\mouse.h" />
+    <ClInclude Include="Entes\Obstacles\obstacle\obstacle.h" />
+    <ClInclude Include="Entes\Obstacles\animatedObstacle\animatedObstacle.h" />
+    <ClInclude Include="Entes\Parallax\parallax.h" />
+    <ClInclude Include="Entes\Characters\Player\player.h" />
     <ClInclude Include="game\game.h" />
+    <ClInclude Include="GUI\Button\button.h" />
+    <ClInclude Include="GUI\Interfaces\Interface\interface.h" />
+    <ClInclude Include="GUI\Interfaces\PauseInterface\pauseInterface.h" />
     <ClInclude Include="ListConteiner\lista.h" />
     <ClInclude Include="Managers\Colision Manager\colisionManager.h" />
     <ClInclude Include="Managers\Graphic Manager\graphic_manager.h" />
-    <ClInclude Include="Entities\StageClass\stage.h" />
-    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Entes\StageClass\stage.h" />
+    <ClInclude Include="stdafx\stdafx.h" />
     <ClInclude Include="Traits\Animated\animated.h" />
+    <ClInclude Include="Traits\BasePrintable\basePrintable.h" />
+    <ClInclude Include="Traits\Collidable\collidable.h" />
+    <ClInclude Include="Traits\Printable\printable.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\parallax_background\back-buildings.png" />
     <Image Include="Resources\parallax_background\far-buildings.png" />
     <Image Include="Resources\parallax_background\foreground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Stages\stage1.dat" />
+    <None Include="Stages\stage2.dat" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

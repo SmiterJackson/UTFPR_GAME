@@ -1,66 +1,56 @@
 #include "graphic_manager.h"
+using namespace Manager;
+using namespace Trait;
 
-GraphicManager::GraphicManager():
-	entes(), windowRef(nullptr)
-{
-	if (windowRef == nullptr)
-	{
-		std::cerr << "Nao foi possivel obter referencia para a janela de contexto: Graphic Manager." << std::endl;
-		this->~GraphicManager();
-	}
-};
-GraphicManager::GraphicManager(sf::RenderWindow* windowRef, const std::list<Ente*>& _entes) :
-	entes(), windowRef(windowRef)
-{
-	std::list<Ente*>::const_iterator cIt;
-	if (windowRef == nullptr)
-	{
-		std::cerr << "Nao foi possivel obter referencia para a janela de contexto: Graphic Manager." << std::endl;
-		this->~GraphicManager();
-	}
+GraphicManager* GraphicManager::pGraphManagerInstance = nullptr;
+std::list<BasePrintable*> GraphicManager::entes = std::list<BasePrintable*>();
+sf::RenderWindow* GraphicManager::context_window = nullptr;
 
-	for (cIt = _entes.cbegin(); cIt != _entes.cend(); cIt++)
-	{
-		entes.emplace_back(*cIt);
-	};
-	entes.sort();
-};
+GraphicManager::GraphicManager()
+{};
 GraphicManager::~GraphicManager()
 {};
 
-void GraphicManager::AddEnte(Ente* ente)
+void GraphicManager::AddEnte(BasePrintable* ente)
 {
-	std::list<Ente*>::const_iterator cIt;
+	std::list<BasePrintable*>::const_iterator cIt;
 
-	for (cIt = entes.cbegin(); cIt != entes.cend(); cIt++)
+	if (ente != nullptr)
 	{
-		if ((*cIt)->GetType() >= ente->GetType())
+		for (cIt = entes.cbegin(); cIt != entes.cend(); cIt++)
 		{
-			entes.emplace(cIt, ente);
-			break;
-		}
-	};
+			if(*ente >= (**cIt))
+			{
+				entes.emplace(cIt, ente);
+				break;
+			}
+		};
+		entes.sort();
+	}
 };
 void GraphicManager::RemoveEnte(const unsigned int enteId)
 {
-	std::list<Ente*>::const_iterator cIt;
+	std::list<BasePrintable*>::const_iterator cIt;
+	Ente* aux = nullptr;
 
 	for (cIt = entes.cbegin(); cIt != entes.cend(); cIt++)
 	{
-		if ((*cIt)->GetId() == enteId)
+		aux = static_cast<Ente*>(*cIt);
+
+		if()
 		{
 			entes.erase(cIt);
 			break;
 		}
 	};
 };
-void GraphicManager::Draw()
+void GraphicManager::Draw(const float& pElapsedTime)
 {
-	std::list<Ente*>::const_iterator cIt;
+	std::list<BasePrintable*>::const_iterator cIt;
 
-	windowRef->clear();
+	context_window->clear();
 	for (cIt = entes.cbegin(); cIt != entes.cend(); cIt++)
 	{
-		(*cIt)->SelfPrint(*windowRef);
+		(*cIt)->SelfPrint(*context_window, pElapsedTime);
 	}
 };

@@ -101,6 +101,8 @@ void ColisionManager::CheckOutOfMap(Entity* entity)
 	sf::FloatRect entBounds(entity->GetHitBoxBounds());
 	sf::FloatRect mapBounds(this->stageRef->GetMapBounds());
 
+	entBounds.height += OFFSET.y;
+
 	if (entBounds.top < mapBounds.top || entBounds.height > mapBounds.height)
 	{
 		entity->Collided(static_cast<Ente*>(this->stageRef));
