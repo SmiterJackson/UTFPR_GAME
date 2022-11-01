@@ -7,22 +7,26 @@
 // OBS multiplas inserções em vector pode causar realocação de memória onde perde-se a textura do objeto
 // List sendo encadeado não há o problema
 Entity::Entity():
-	Ente(UNDEFINED), Collidable(false), hitBox()
+	Ente(Type::UNDEFINED, Manager::PrintPriority::undefined),
+	isStatic(true), hitBox()
 {
 	this->hitBox.setTexture(NULL);
 	this->hitBox.setFillColor(sf::Color::Transparent);
 
 	this->hitBox.setPosition(0.f, 0.f);
 };
-Entity::Entity(const unsigned int _type, const sf::RectangleShape& _hitBox, 
-			   const float size_proportion, const bool inverseColisionType) :
-	Ente(_type), Collidable(inverseColisionType), hitBox(_hitBox)
+Entity::Entity(const unsigned short int _type, const unsigned short int printPriority,
+			   const sf::Vector2f _size, const sf::Vector2f _position, const bool isStatic,
+			   const float size_coeff) :
+	Ente(_type, printPriority),
+	isStatic(isStatic), hitBox()
 {
 	this->hitBox.setTexture(NULL);
 	this->hitBox.setFillColor(sf::Color::Transparent);
-	this->hitBox.setScale(size_proportion, size_proportion);
+	this->hitBox.setSize(_size);
+	this->hitBox.setPosition(_position);
+	this->hitBox.setScale(size_coeff, size_coeff);
 	this->hitBox.setOrigin(this->hitBox.getSize() / 2.f);
-	this->hitBox.setPosition(0.f, 0.f);
 
 #ifdef _DEBUG
 	this->hitBox.setOutlineThickness(1.5f);
@@ -39,20 +43,68 @@ Entity::Entity(const unsigned int _type, const sf::RectangleShape& _hitBox,
 Entity::~Entity()
 {};
 
-sf::FloatRect const Entity::GetBounds()
+void Entity::SelfPrint(sf::RenderWindow& context_window, const float& pElapsedTime)
 {
-	float scale(this->hitBox.getScale().x);
+#ifdef _DEBUG
+	context_window.draw(this->origin);
+#endif
+};
+void Entity::Execute(const float& pElapsedTime)
+{
+	this->origin.setPosition(this->hitBox.getPosition());
+};
 
-	sf::FloatRect bounds(
-		this->hitBox.getPosition().x - ((this->hitBox.getSize().x * scale) / 2.f),
-		this->hitBox.getPosition().y - ((this->hitBox.getSize().y * scale) / 2.f),
-		this->hitBox.getPosition().x + ((this->hitBox.getSize().x * scale) / 2.f),
-		this->hitBox.getPosition().y + ((this->hitBox.getSize().y * scale) / 2.f)
+void Entity::Collided(const Entity* _other, const sf::Vector2f& intersection,
+					  const const sf::FloatRect& otherBounds, const unsigned short int colType)
+{
+	if (colType == CollisionType::CameraColl || colType == CollisionType::MapColl)
+		this->OfCollision(otherBounds, colType);
+	else
+	{
+		this->InCollision(_other, intersection, otherBounds);
+	}
+};
+
+void Entity::InCollision(const Entity* _other, const sf::Vector2f& intersection,
+						 const const sf::FloatRect& otherBounds)
+{
+	sf::Vector2f distance(
+		_other->GetPosition().x - this->GetPosition().x,
+		_other->GetPosition().y - this->GetPosition().y
 	);
 
-	return bounds;
+	if (intersection.y >= intersection.x)
+	{
+		if (distance.y > 0.f)
+			this->MovePosition(0.f, (intersection.y));
+		else
+			this->MovePosition(0.f, -(intersection.y));
+	}
+	else
+	{
+		if (distance.x > 0.f)
+			this->MovePosition(intersection.x, 0.f);
+		else
+			this->MovePosition(-(intersection.x), 0.f);
+	}
 };
-sf::Vector2f const Entity::GetHitBoxSize() const
+void Entity::OfCollision(const sf::FloatRect& ofBounds, const unsigned short int colType)
 {
-	return (this->hitBox.getSize() * this->hitBox.getScale().x);
+	sf::FloatRect bounds(this->GetBounds());
+	sf::Vector2f offSet(0.f, 0.f);
+
+	if (bounds.left < ofBounds.left)
+		offSet.x += ofBounds.left - bounds.left;
+	else
+		offSet.x += ofBounds.width - bounds.width;
+
+	if (colType == CollisionType::MapColl)
+	{
+		if (bounds.top < ofBounds.top)
+			offSet.y += ofBounds.top - bounds.top;
+		else
+			offSet.y += ofBounds.height - bounds.height;
+	}
+
+	this->MovePosition(offSet);
 };

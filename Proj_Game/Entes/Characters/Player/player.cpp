@@ -1,4 +1,5 @@
 #include "player.h"
+using namespace Characters;
 
 #define P1_TEXTURE_REF "Proj_Game/Resources/characters/player/sheets/DinoSprites_mort.png"
 #define P2_TEXTURE_REF "Proj_Game/Resources/characters/player/sheets/DinoSprites_vita.png"
@@ -14,45 +15,53 @@
 #define V_ACCELERATION 1.f
 #define V_MAX_ACCELERATION (JUMP * -1.5f)
 
+#define HITBOX sf::Vector2f(18.f, 18.f)
+
 #define PLAYER_TOTAL_LIFE 10U
 
-unsigned int Characters::Player::playerCounter = 0;
+std::list<Player*> Player::playerList = std::list<Player*>();
 
-Characters::Player::Player(float size_proportion) :
+Player::Player(float size_proportion) :
 	Character(
-		Type::CHARACTER, sf::RectangleShape(sf::Vector2f(18.f, 18.f)), std::string(),
-		sf::IntRect(0, 0, TEXTURE_TOKEN_SIZE, TEXTURE_TOKEN_SIZE), AnimationSheet(), PLAYER_TOTAL_LIFE, 
-		INVENCIBILITY_FRAMES_TIME, size_proportion
+		Type::PLAYER, HITBOX, sf::Vector2f(0.f, 0.f), std::string(),
+		AnimationSheet(), PLAYER_TOTAL_LIFE, INVENCIBILITY_FRAMES_TIME, false, size_proportion
 	),
-	onGround(true), crouching(false), jump(false), walkLeft(false), walkRight(false), walking(true), done(false), playerId(playerCounter)
+	onGround(true), crouching(false), jump(false), 
+	walkLeft(false), walkRight(false), walking(true), done(false), 
+	playerId(playerList.size())
 {
-	Initialize();
-};
-Characters::Player::~Player()
-{
-	playerCounter--;
-};
+	playerList.emplace_back(this);
 
-void Characters::Player::Initialize()
-{
-	this->playerCounter++;
-
-	if (this->playerCounter == 1)
+	if (playerList.size() == 1)
 		this->SetTexture(P1_TEXTURE_REF, sf::IntRect(0, 0, TEXTURE_TOKEN_SIZE, TEXTURE_TOKEN_SIZE));
 	else
 		this->SetTexture(P2_TEXTURE_REF, sf::IntRect(0, 0, TEXTURE_TOKEN_SIZE, TEXTURE_TOKEN_SIZE));
 
 	sf::Vector2i size(TEXTURE_TOKEN_SIZE, TEXTURE_TOKEN_SIZE);
 	this->AddRangeAnimations(
-		std::vector<std::pair<int, Animation>>({
+		std::vector<std::pair<int, Animation>>(
+			{
 			std::pair<int, Animation>(Actions::IDLE,		Animation(0, 2, 0,		size, 0.4f,		true)),
 			std::pair<int, Animation>(Actions::WALKING,		Animation(3, 9, 0,		size, 0.15f,	true)),
 			std::pair<int, Animation>(Actions::KICK,		Animation(10, 12, 0,	size, 0.6f,		true)),
 			std::pair<int, Animation>(Actions::DAMAGED,		Animation(13, 16, 0,	size, 0.6f,		true)),
 			std::pair<int, Animation>(Actions::CROUCHING,	Animation(17, 23, 0,	size, 0.1f,		true))
 			}
-			)
+		)
 	);
+};
+Player::~Player()
+{
+	std::list<Player*>::iterator it;
+
+	for(it = playerList.begin(); it != playerList.end(); it++)
+	{
+		if((*it)->GetPlayerId() == this->playerId)
+		{
+			playerList.erase(it);
+			break;
+		}
+	}
 };
 
 void Characters::Player::InputHandle(const sf::Event& _event)

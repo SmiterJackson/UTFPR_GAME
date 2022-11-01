@@ -10,17 +10,20 @@ namespace Characters
 		Player(float size_proportion = 1.0f);
 		~Player();
 
-		static unsigned int const GetNumberOfPlayers() { return playerCounter; };
+		static const std::list<Player*>& GetPlayerList() { return playerList; };
+		static const unsigned int GetNumberOfPlayers() { return playerList.size(); };
 
-		void Initialize();
-
-		void InputHandle(const sf::Event& _event);
-		void Execute(const float& pElapsedTime);
+		const unsigned int GetPlayerId() const { return this->playerId; };
+		
 		void SelfPrint(sf::RenderWindow& context_window, const float& pElapsedTime);
+		void Execute(const float& pElapsedTime);
+		void InputHandle(const sf::Event& _event);
 
 		enum Actions { IDLE = 0, WALKING, KICK, DAMAGED, CROUCHING };
 
 	private:
+		static std::list<Player*> playerList;
+
 		bool onGround;
 		bool crouching;
 		bool jump;
@@ -31,6 +34,5 @@ namespace Characters
 		bool done;
 
 		unsigned int playerId;
-		static unsigned int playerCounter;
 	};
 }

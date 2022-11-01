@@ -1,21 +1,24 @@
 #pragma once
 
-#include "../../../Entities/Camera/camera.h"
+#include "../Traits/GameState/gameState.h"
 #include "../../Button/button.h"
 
 namespace GUI
 {
-	class Interface : public Ente
+	class Interface : public Ente, public Trait::GameState
 	{
 	public:
-		Interface(short int* _pGameState = nullptr);
+		Interface(const unsigned short int GameStateType = 0ULL, Interface* _previousGState = nullptr);
 		virtual ~Interface();
 
-		virtual void Execute() = 0;
-		
-		void SetGameStateReference(short int* _pGameState) { this->pGameState = _pGameState; };
+		virtual void SelfPrint(sf::RenderWindow& context_window, const float& pElapsedTime);
+		virtual void InputHandle(const sf::Event& _event) = 0;
+		virtual void Execute(const float& pElapsedTime) = 0;
 
 	protected:
-		short int* pGameState;
+		void PrintPreviousInterface(sf::RenderWindow& context_window, const float& pElapsedTime);
+
+	protected:
+		Interface* previousGState;
 	};
 }

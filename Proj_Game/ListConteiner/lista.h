@@ -1,5 +1,7 @@
 #pragma once
 
+#include "stdafx.h"
+
 template<typename T>
 class Lista
 {
@@ -67,6 +69,11 @@ public:
 			this->next = _next;
 		};
 
+		bool operator!= (Element<T_El>& other)
+		{
+			return this->GetInfo() != other.GetInfo();
+		}
+
 	private:
 		T_El info;
 		Element<T_El>* previous;
@@ -95,12 +102,20 @@ public:
 		{
 			return this->pElement != _other;
 		};
+
 		iterador& operator++ ()
 		{
 			this->pElement = this->pElement->GetNext();
 			this->listPosition++;
 			return (*this);
 		}
+		iterador& operator++ (int val)
+		{
+			this->pElement = this->pElement->GetNext();
+			this->listPosition++;
+			return (*this);
+		}
+
 		T& operator* ()
 		{
 			return this->pElement->GetInfo();
@@ -220,71 +235,72 @@ public:
 		return *this;
 	}
 
-//private:
-//	void ColisionManager::ExchangePointers(Element<T>* p1, Element<T>* p2)
-//	{
-//		Element<T>* aux = nullptr;
-//
-//		if (p1 != nullptr && p2 != nullptr)
-//		{
-//			aux = p1->GetPrevious();
-//			p1->SetPrevious(p2->GetPrevious());
-//			p2->SetPrevious(aux);
-//
-//			aux = p1->GetNext();
-//			p1->SetNext(p2->GetNext());
-//			p2->SetNext(aux);
-//
-//			p1->GetPrevious()->SetNext(p1);
-//			p1->GetNext()->SetPrevious(p1);
-//
-//			p2->GetPrevious()->SetNext(p2);
-//			p2->GetNext()->SetPrevious(p2);
-//		}
-//	};
-//
-//	unsigned int ColisionManager::SortPartition(unsigned int start, unsigned int end)
-//	{
-//		T pivotValue;
-//		unsigned int pivotIndex = 0, i = 0;
-//		unsigned int diff = end - start;
-//
-//		if (diff > 1)
-//		{
-//			this->operator[](start)->GetInfo() > this->operator[](end)->GetInfo() ? pivotIndex = start : pivotIndex = end;
-//			ExchangePointers(&this->operator[](pivotIndex), &this->operator[](end));
-//		}
-//
-//		pivotValue = this->operator[](pivotIndex);
-//		for (i = start, pivotIndex = start; i < end; i++)
-//		{
-//			if (this->operator[](i)->GetInfo() <= pivotValue)
-//			{
-//				ExchangePointers(&this->operator[](i)->GetInfo(), &this->operator[](pivotIndex)->GetInfo());
-//				pivotIndex++;
-//			}
-//		}
-//		if (this->operator[](end)->GetInfo() != this->operator[](pivotIndex)->GetInfo())
-//			ExchangePointers(&this->operator[](end)->GetInfo(), &this->operator[](pivotIndex)->GetInfo());
-//
-//		return pivotIndex;
-//	};
-//	void ColisionManager::QuickSortRecursion(unsigned int start, unsigned int end)
-//	{
-//		unsigned int pivotIndex = 0;
-//
-//		if (start >= end)
-//			return;
-//
-//		pivotIndex = SortPartition(start, end);
-//
-//		QuickSortRecursion(start, pivotIndex - 1);
-//		QuickSortRecursion(pivotIndex + 1, end);
-//	};
-//	void ColisionManager::SortElements()
-//	{
-//		QuickSortRecursion(0, this->size - 1);
-//	};
+private:
+	void ExchangePointers(Element<T>* p1, Element<T>* p2)
+	{
+		Element<T>* aux = nullptr;
+
+		if (p1 != nullptr && p2 != nullptr)
+		{
+			aux = p1->GetPrevious();
+			p1->SetPrevious(p2->GetPrevious());
+			p2->SetPrevious(aux);
+
+			aux = p1->GetNext();
+			p1->SetNext(p2->GetNext());
+			p2->SetNext(aux);
+
+			p1->GetPrevious()->SetNext(p1);
+			p1->GetNext()->SetPrevious(p1);
+
+			p2->GetPrevious()->SetNext(p2);
+			p2->GetNext()->SetPrevious(p2);
+		}
+	};
+	unsigned int SortPartition(unsigned int start, unsigned int end)
+	{
+		T* pivotValue = nullptr;
+		unsigned int pivotIndex = 0, i = 0;
+		unsigned int diff = end - start;
+
+		if (diff > 1)
+		{
+			this->operator[](start).GetInfo() > this->operator[](end).GetInfo() ? pivotIndex = start : pivotIndex = end;
+			ExchangePointers(&this->operator[](pivotIndex), &this->operator[](end));
+		}
+
+		pivotValue = &this->operator[](pivotIndex).GetInfo();
+		for (i = start, pivotIndex = start; i < end; i++)
+		{
+			if (this->operator[](i).GetInfo() <= (*pivotValue))
+			{
+				ExchangePointers(&this->operator[](i), &this->operator[](pivotIndex));
+				pivotIndex++;
+			}
+		}
+		if (this->operator[](end) != this->operator[](pivotIndex))
+			ExchangePointers(&this->operator[](end), &this->operator[](pivotIndex));
+
+		return pivotIndex;
+	};
+	void QuickSortRecursion(unsigned int start, unsigned int end)
+	{
+		unsigned int pivotIndex = 0;
+
+		if (start >= end)
+			return;
+
+		pivotIndex = SortPartition(start, end);
+
+		QuickSortRecursion(start, pivotIndex - 1);
+		QuickSortRecursion(pivotIndex + 1, end);
+	};
+
+public:
+	void SortElements()
+	{
+		QuickSortRecursion(0, this->size - 1);
+	};
 
 private:
 	Element<T>* first;

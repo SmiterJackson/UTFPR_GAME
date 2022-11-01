@@ -1,15 +1,14 @@
 #pragma once
 
-#include "stdafx.h"
+#include "../Managers/GraphicManager/graphic_manager.h"
 
 const enum Type
 {
-	CHARACTER = 0,
+	PLAYER = 0,
 	ENEMY,
 	PROJECTILE,
 	OBSTACLE,
 	STAGE,
-	CAMERA,
 	MOUSE,
 	BACKGROUND,
 	INTERFACE,
@@ -21,42 +20,34 @@ const enum Type
 class Ente
 {
 public:
-	Ente(const unsigned int _type = UNDEFINED);
+	Ente(const unsigned short int _type = Type::UNDEFINED,
+		 const unsigned short int _printPriority = Manager::PrintPriority::undefined);
 	virtual ~Ente();
 
-	unsigned long long int const GetId() const { return this->id; };
-	unsigned int const GetType() const { return this->type; };
+	const unsigned long long int GetId() const { return this->id; };
+	const unsigned short int GetType() const { return this->type; };
+	const unsigned short int GetPrintPriority() const { return this->printPriority; };
 
+	virtual void SelfPrint(sf::RenderWindow& context_window, const float& pElapsedTime);
 	virtual void Execute(const float& pElapsedTime) = 0;
 
-	bool operator== (const Ente& other)
-	{
-		return this->type == other.type;
-	};
-	bool operator!= (const Ente& other)
-	{
-		return this->type != other.type;
-	};
-	bool operator> (const Ente& other)
+	virtual bool operator> (const Ente& other)
 	{
 		return this->type > other.type;
 	};
-	bool operator>= (const Ente& other)
-	{
-		return this->type >= other.type;
-	};
-	bool operator< (const Ente& other)
+	virtual bool operator< (const Ente& other)
 	{
 		return this->type < other.type;
 	};
-	bool operator<= (const Ente& other)
+	virtual bool operator!= (const Ente& other)
 	{
-		return this->type <= other.type;
+		return this->id != other.id;
 	};
 
 protected:
 	const unsigned long long int id;
 	const unsigned short int type;
+	const unsigned short int printPriority;
 
 private:
 	static unsigned long long int counter;

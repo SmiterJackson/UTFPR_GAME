@@ -1,33 +1,28 @@
 #pragma once
 
-#include "../Entities/StageClass/stage.h"
-#include "../Interface/interface.h"
-#include "../game/game.h"
+#include "../Entes/Stage/stage.h"
 
 namespace GUI 
 {
 	class PauseInterface : public Interface
 	{
 	public:
-		PauseInterface(float* _pElapsedTime = nullptr, short int* _pGameState = nullptr, Camera* _pCamera = nullptr, Mouse* pMouse = nullptr,
-					   Stage* _pStage = nullptr, std::vector<Ente*>* _pStateEnte = nullptr, const std::string fontPath = "");
+		PauseInterface();
+		PauseInterface(unsigned short int* _pGameState, Mouse* _pMouse, Stage* _pStage);
 		~PauseInterface();
 
-		void Execute();
-		void SelfPrint(sf::RenderWindow& context_window);
+		void SelfPrint(sf::RenderWindow& context_window, const float& pElapsedTime);
 		void InputHandle(const sf::Event& _event);
+		void Execute(const float& pElapsedTime);
 
 	private:
 		void VerifyButtons();
 		void ButtonActive(std::vector<Button>::iterator buttonIt);
 
 	private:
-		sf::RectangleShape background;
 		std::vector<Button> buttons;
 
+		unsigned short int* pGameState;
 		Stage* pStage;
-		std::vector<Ente*>* pStateEnte;
-
-		float acummulator;
 	};
 }

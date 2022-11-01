@@ -1,10 +1,5 @@
 #include "game.h"
 
-#include "../Entities/Parallax/parallax.h"
-#include "../Entities/Camera/camera.h"
-
-#define FONT "Proj_Game/Resources/fonts/EquipmentPro.ttf"
-
 #define WINDOW_SIZE_X_F 1440.f
 #define WINDOW_SIZE_X_I 1440
 #define WINDOW_SIZE_Y_F 810.f
@@ -16,21 +11,50 @@
 
 #define IMAGE_COEFFICIENT 2.5f
 
-#define BOUNDS sf::FloatRect((352.f * IMAGE_COEFFICIENT * -2.f), (-192.f + 40.f), (352.f * IMAGE_COEFFICIENT * 2.f), (192.f * IMAGE_COEFFICIENT))
+#define BOUNDS sf::Vector2f((352.f * IMAGE_COEFFICIENT * 4.f), (172.f * IMAGE_COEFFICIENT))
 
 Game::Game():
     window(sf::VideoMode(WINDOW_SIZE_X_I, WINDOW_SIZE_Y_I), "JANELA DE CONTEXTO - GRÁFICO"),
+    graphicManager(Manager::GraphicManager::GetGraphManagerInstance()),
     camera(
         sf::Vector2f(0.f, 0.f),
         sf::Vector2f(WINDOW_SIZE_X_F / ZOOM_COEFF, WINDOW_SIZE_Y_F / ZOOM_COEFF),
-        ZOOM_COEFF, nullptr, nullptr, true, true, true, true),
+        ZOOM_COEFF, nullptr, true, true, true, true
+    ),
     mouse(GRID_SIZE, &this->window),
-    graphicManager(&window),
-    stateEnte(),
+    interfaces(),
     elapsedTime(0.f),
-    gameState(STATE::MAIN_MENU)
+    gameState(GameStateType::IN_GAME)
 {
+    std::vector<std::string> paths(
+    {
+        "Proj_Game/Resources/parallax_background/foreground.png",
+        "Proj_Game/Resources/parallax_background/back-buildings.png",
+        "Proj_Game/Resources/parallax_background/far-buildings.png"
+    });
+    Stage* stage = new Stage(
+        &this->gameState, &this->camera, sf::RectangleShape(BOUNDS), "",
+        paths, IMAGE_COEFFICIENT
+    );
+    GUI::PauseInterface* pauseInter = new GUI::PauseInterface(
+        &this->gameState, &this->camera, &this->mouse, stage
+    );
+
     this->window.setKeyRepeatEnabled(false);
+    this->graphicManager->SetWindowReference(&this->window);
+    this->graphicManager->SetGameStateReference(&this->gameState);
+    this->graphicManager->SetInterfacesReference(&this->interfaces);
+
+    interfaces.emplace(
+        std::pair<unsigned short int, GUI::Interface*>(
+            stage->GetType(), static_cast<GUI::Interface*>(stage)
+        )
+    );
+    interfaces.emplace(
+        std::pair<unsigned short int, GUI::Interface*>(
+            pauseInter->GetType(), static_cast<GUI::Interface*>(pauseInter)
+        )
+    );
 };
 Game::~Game()
 {};
@@ -40,41 +64,12 @@ bool Game::StartGame()
     if (!window.isOpen())
         return false;
 
-    sf::FloatRect bounds((352.f * IMAGE_COEFFICIENT * -2.f), (-192.f + 40.f), (352.f * IMAGE_COEFFICIENT * 2.f), (192.f * IMAGE_COEFFICIENT));
-    std::vector<std::string> paths(
-    {   "Proj_Game/Resources/parallax_background/foreground.png",
-        "Proj_Game/Resources/parallax_background/back-buildings.png",
-        "Proj_Game/Resources/parallax_background/far-buildings.png"
-    });
-
-    //Stage stage(&this->gameState , &this->camera, &this->elapsedTime, bounds, std::string(), paths, IMAGE_COEFFICIENT);
-    //this->camera.SetMapBounds(&stage.GetMapBounds());
-    this->stateEnte.emplace_back(static_cast<Ente*>(
-            new Stage(&this->gameState, &this->camera, &this->elapsedTime, bounds, std::string(), paths, IMAGE_COEFFICIENT)
-        )
-    );
-    this->camera.SetMapBounds(&static_cast<Stage*>(this->stateEnte.back())->GetMapBounds());
-
     sf::Clock clock;
-    
     while (window.isOpen())
     {
         this->elapsedTime = clock.restart().asSeconds();
 
-        if (this->stateEnte.size() <= 1 && this->gameState == Game::PAUSED)
-            this->stateEnte.emplace_back(static_cast<Ente*>(
-                    new GUI::PauseInterface(&this->elapsedTime, &this->gameState, &this->camera, &this->mouse,
-                        static_cast<Stage*>(this->stateEnte.back()), &this->stateEnte, FONT
-                    )
-                )
-            );
-        else if (this->stateEnte.size() == 2 && this->gameState == Game::PLAYING)
-        {
-            delete this->stateEnte.top();
-            this->stateEnte.pop();
-        }
-
-        this->mouse.Execute();
+        this->mouse.Execute(this->elapsedTime);
 
         sf::Event event;
         while (window.pollEvent(event))
@@ -87,26 +82,15 @@ bool Game::StartGame()
             case sf::Event::Resized:
                 this->camera.WindowResized(this->window);
                 break;
-            //case sf::Event::KeyPressed:
-            //    stage.InputHandle(event);
-            //    break;
-            //case sf::Event::KeyReleased:
-            //    stage.InputHandle(event);
-            //    break;
             default:
-                this->stateEnte.top()->InputHandle(event);
+                this->interfaces[this->gameState]->InputHandle(event);
                 break;
             }
         }
 
-        //stage.Execute();
-        this->stateEnte.top()->Execute();
-        this->camera.Execute();
+        this->interfaces[this->gameState]->Execute(this->elapsedTime);
 
-        window.clear();
-
-        //stage.SelfPrint(this->window);
-        this->stateEnte.top()->SelfPrint(this->window);
+        this->graphicManager->Draw(this->elapsedTime);
 
         window.setView((*this->camera.GetView()));
         window.display();

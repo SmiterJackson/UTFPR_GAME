@@ -30,19 +30,16 @@
     <ClCompile Include="Entes\Entity\entity.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Managers\Graphic Manager\graphic_manager.cpp">
+    <ClCompile Include="Managers\GraphicManager\graphic_manager.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Managers\Colision Manager\colisionManager.cpp">
+    <ClCompile Include="Managers\ColisionManager\colisionManager.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="Entes\Characters\Player\player.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Entes\Parallax\parallax.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="Entes\Camera\camera.cpp">
+    <ClCompile Include="Entes\Stage\Parallax\parallax.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="Entes\Obstacles\animatedObstacle\animatedObstacle.cpp">
@@ -54,7 +51,7 @@
     <ClCompile Include="Entes\Characters\Character\character.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Entes\StageClass\stage.cpp">
+    <ClCompile Include="Entes\Stage\stage.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="Traits\Animated\animated.cpp">
@@ -75,13 +72,10 @@
     <ClCompile Include="GUI\Interfaces\PauseInterface\pauseInterface.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Traits\Printable\printable.cpp">
+    <ClCompile Include="Traits\PrintableBody\printableBody.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Traits\BasePrintable\basePrintable.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="Traits\Collidable\collidable.cpp">
+    <ClCompile Include="Traits\GameState\GameState.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
   </ItemGroup>
@@ -98,19 +92,16 @@
     <ClInclude Include="Entes\Entity\entity.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Managers\Graphic Manager\graphic_manager.h">
+    <ClInclude Include="Managers\GraphicManager\graphic_manager.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Managers\Colision Manager\colisionManager.h">
+    <ClInclude Include="Managers\ColisionManager\colisionManager.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="Entes\Characters\Player\player.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Entes\Parallax\parallax.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="Entes\Camera\camera.h">
+    <ClInclude Include="Entes\Stage\Parallax\parallax.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="Entes\Obstacles\animatedObstacle\animatedObstacle.h">
@@ -122,7 +113,7 @@
     <ClInclude Include="Entes\Characters\Character\character.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Entes\StageClass\stage.h">
+    <ClInclude Include="Entes\Stage\stage.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="ListConteiner\lista.h">
@@ -146,13 +137,10 @@
     <ClInclude Include="GUI\Interfaces\PauseInterface\pauseInterface.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Traits\Printable\printable.h">
+    <ClInclude Include="Traits\PrintableBody\printableBody.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Traits\BasePrintable\basePrintable.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="Traits\Collidable\collidable.h">
+    <ClInclude Include="Traits\GameState\gameState.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>

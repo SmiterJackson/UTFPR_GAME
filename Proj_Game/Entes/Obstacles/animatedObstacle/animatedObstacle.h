@@ -9,9 +9,9 @@ namespace Obstacles
 	{
 	public:
 		AnimObstacle();
-		AnimObstacle(const sf::RectangleShape& _hitBox, const std::string textureRef,
-					 const AnimationSheet _animations, const float size_proportion = 1.0f,
-					 const bool repeated = false);
+		AnimObstacle(const sf::Vector2f _size, const sf::Vector2f _position, const std::string path,
+					 const AnimationSheet _animations, const float size_coeff = 1.0f,
+					 const bool isStatic = true, const bool repeated = false);
 		~AnimObstacle();
 
 		virtual void SelfPrint(sf::RenderWindow& context_window, const float& pElapsedTime);

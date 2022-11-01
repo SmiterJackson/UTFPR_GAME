@@ -1,14 +1,10 @@
 #pragma once
 
-#include "../Entities/Characters/Player/player.h"
-#include "../Managers/Graphic Manager/graphic_manager.h"
-#include "../ListConteiner/lista.h"
-#include "../Entities/Camera/camera.h"
-#include "../Entities/Obstacles/obstacle/obstacle.h" 
-#include "../Managers/Colision Manager/colisionManager.h"
-#include "../Entities/StageClass/stage.h"
+#include "../Managers/GraphicManager/graphic_manager.h"
 #include "../GUI/Interfaces/PauseInterface/pauseInterface.h"
-#include "../Entities/Mouse/mouse.h"
+#include "../Entes/Stage/stage.h"
+
+typedef std::unordered_map<unsigned short int, GUI::Interface*> InterfaceMap;
 
 class Game
 {
@@ -18,17 +14,15 @@ public:
 
 	bool StartGame();
 
-	enum STATE { MAIN_MENU = 0, PLAYING, PAUSED };
-
 private:
 	sf::RenderWindow window;
 
+	Manager::GraphicManager* graphicManager;
 	Camera camera;
 	Mouse mouse;
-	GraphicManager graphicManager;
 
-	std::vector<Ente*> stateEnte;
+	InterfaceMap interfaces;
 
 	float elapsedTime;
-	short int gameState;
+	unsigned short int gameState;
 };

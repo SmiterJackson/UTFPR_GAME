@@ -2,11 +2,12 @@
 
 unsigned long long int Ente::counter = 0;
 
-Ente::Ente(const unsigned int _type) :
-	id(counter++), type(_type)
+Ente::Ente(const unsigned short int _type,
+		   const unsigned short int printPriority) :
+	id(counter++), type(_type), printPriority(printPriority)
 {};
-Ente::~Ente()
+Ente::~Ente() 
 {};
 
-void Ente::InputHandle(const sf::Event& _event)
+void Ente::SelfPrint(sf::RenderWindow& context_window, const float& pElapsedTime)
 {};

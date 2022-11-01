@@ -2,20 +2,25 @@
 
 #include "../../Entity/entity.h"
 #include "../../../Traits/Animated/animated.h"
-#include "../../../Traits/Printable/printable.h"
+#include "../../../Traits/PrintableBody/PrintableBody.h"
 
+/*
+Classe characters que herda características de ser interagível bem como
+tem um corpo para ser desenhavel e animado.
+*/
 namespace Characters
 {
-	class Character : public Entity, public Trait::Printable, public Trait::Animated
+	class Character : public Entity, public Trait::PrintableBody, public Trait::Animated
 	{
 	public:
 		Character();
-		Character(const unsigned int _type, const sf::RectangleShape& _hitBox, const std::string textureRef = "",
-				  const sf::IntRect sheetCut = sf::IntRect(), const AnimationSheet _animations = AnimationSheet(),
-				  const unsigned int _lifeAmount = 0, const float invcFramDuration = 0.f, const float size_proportion = 1.0f);
+		Character(const unsigned short int _type, const sf::Vector2f _size, const sf::Vector2f _position, 
+				  const std::string path = "", const AnimationSheet _animations = AnimationSheet(),
+				  const unsigned int _lifeAmount = 0, const float invcFramDuration = 0.f, const bool isStatic = true, 
+				  const float size_coeff = 1.0f);
 		virtual ~Character();
 
-		const unsigned int const GetLifeCount() { return this->life_counter; };
+		const unsigned int GetLifeCount() const { return this->life_counter; };
 
 		void MovePosition(const sf::Vector2f _newPosition) 
 		{ 
@@ -34,8 +39,7 @@ namespace Characters
 			this->SetTextureProportion(proportion);
 		};
 
-		virtual void SelfPrint(sf::RenderWindow& context_window, const float& pElapsedTime) = 0;
-		virtual void Execute(const float& pElapsedTime) = 0;
+		virtual void SelfPrint(sf::RenderWindow& context_window, const float& pElapsedTime);
 
 	protected:
 		bool invencible;

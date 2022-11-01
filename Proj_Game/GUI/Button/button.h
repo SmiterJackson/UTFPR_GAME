@@ -1,6 +1,12 @@
 #pragma once
 
-#include "../../Entities/Mouse/mouse.h"
+#include "../../Entes/Mouse/mouse.h"
+
+const enum BUTTON_STATUS 
+{
+	BTN_IDLE = 0, 
+	BTN_HOVER 
+};
 
 namespace GUI
 {
@@ -8,32 +14,28 @@ namespace GUI
 	{
 	public:
 		Button();
-		Button(sf::View* view, const sf::Vector2f _position, const std::string fontPath,
-			   const std::string _text_data, const unsigned _character_size, Mouse* _pMouse,
+		Button(const sf::Vector2f _size, const sf::Vector2f _position, sf::Font* _font,
+			   const std::string _text_data, const unsigned _char_size, Mouse* _pMouse,
 			   sf::Color _textColor_idle, sf::Color _textColor_hover,
 			   sf::Color _bodyColor_idle, sf::Color _bodyColor_hover);
 		~Button();
 
-		bool IsClicked();
-
 		void SetPosition(const sf::Vector2f position);
 		void SetPosition(const float x, const float y);
 
-		const std::string GetText() { return this->text.getString(); };
 		void SetText(const std::string _text_data) { this->text.setString(_text_data); };
 
-		void Execute();
-		void SelfPrint(sf::RenderWindow& context_window);
+		void SelfPrint(sf::RenderWindow& context_window, const float& pElapsedTime);
+		void Execute(const float& pElapsedTime);
 
-	public:
-		enum BUTTON_STATUS { BTN_IDLE = 0, BTN_HOVER };
+		bool IsClicked();
 
 	protected:
 		short unsigned button_status;
 
 		sf::RectangleShape body;
 
-		sf::Font font;
+		sf::Font* font;
 		sf::Text text;
 
 		sf::Color textColor_idle, textColor_hover;

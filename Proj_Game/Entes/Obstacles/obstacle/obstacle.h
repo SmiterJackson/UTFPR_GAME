@@ -1,18 +1,18 @@
 #pragma once
 
 #include "../../Entity/entity.h"
-#include "../../../Traits/Printable/printable.h"
+#include "../../../Traits/PrintableBody/PrintableBody.h"
 
 namespace Obstacles
 {
-	class Obstacle : public Entity, public Trait::Printable
+	class Obstacle : public Entity, public Trait::PrintableBody
 	{
 	public:
 		Obstacle();
-		Obstacle(const sf::RectangleShape& _hitBox, const std::string textureRef = "",
-				 const sf::IntRect sheetCut = sf::IntRect(), const float size_proportion = 1.0f,
-				 const bool repeated = false);
-		~Obstacle();
+		Obstacle(const sf::Vector2f _size, const sf::Vector2f _position, const std::string path = "",
+				 const sf::IntRect sheetCut = sf::IntRect(), const float size_coeff = 1.0f,
+				 const bool isStatic = true, const bool repeated = false);
+		virtual ~Obstacle();
 
 		void MovePosition(const sf::Vector2f _newPosition)
 		{
@@ -32,6 +32,5 @@ namespace Obstacles
 		};
 
 		virtual void SelfPrint(sf::RenderWindow& context_window, const float& pElapsedTime);
-		virtual void Execute(const float& pElapsedTime);
 	};
 }

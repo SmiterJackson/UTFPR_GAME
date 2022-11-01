@@ -159,7 +159,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Entes\Camera\camera.cpp" />
     <ClCompile Include="Entes\Characters\Character\character.cpp" />
     <ClCompile Include="Entes\Characters\Enemies\EnemyMelee\enemyMelee.cpp" />
     <ClCompile Include="Entes\Entity\entity.cpp" />
@@ -167,24 +166,22 @@
     <ClCompile Include="Entes\Mouse\mouse.cpp" />
     <ClCompile Include="Entes\Obstacles\obstacle\obstacle.cpp" />
     <ClCompile Include="Entes\Obstacles\animatedObstacle\animatedObstacle.cpp" />
-    <ClCompile Include="Entes\Parallax\parallax.cpp" />
+    <ClCompile Include="Entes\Stage\Parallax\parallax.cpp" />
     <ClCompile Include="Entes\Characters\Player\player.cpp" />
     <ClCompile Include="game\game.cpp" />
     <ClCompile Include="GUI\Button\button.cpp" />
     <ClCompile Include="GUI\Interfaces\Interface\interface.cpp" />
     <ClCompile Include="GUI\Interfaces\PauseInterface\pauseInterface.cpp" />
-    <ClCompile Include="Managers\Colision Manager\colisionManager.cpp" />
-    <ClCompile Include="Managers\Graphic Manager\graphic_manager.cpp" />
+    <ClCompile Include="Managers\ColisionManager\colisionManager.cpp" />
+    <ClCompile Include="Managers\GraphicManager\graphic_manager.cpp" />
     <ClCompile Include="Proj_Game.cpp" />
-    <ClCompile Include="Entes\StageClass\stage.cpp" />
+    <ClCompile Include="Entes\Stage\stage.cpp" />
     <ClCompile Include="stdafx\stdafx.cpp" />
     <ClCompile Include="Traits\Animated\animated.cpp" />
-    <ClCompile Include="Traits\BasePrintable\basePrintable.cpp" />
-    <ClCompile Include="Traits\Collidable\collidable.cpp" />
-    <ClCompile Include="Traits\Printable\printable.cpp" />
+    <ClCompile Include="Traits\GameState\GameState.cpp" />
+    <ClCompile Include="Traits\PrintableBody\printableBody.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Entes\Camera\camera.h" />
     <ClInclude Include="Entes\Characters\Character\character.h" />
     <ClInclude Include="Entes\Characters\Enemies\EnemyMelee\enemyMelee.h" />
     <ClInclude Include="Entes\Entity\entity.h" />
@@ -192,21 +189,20 @@
     <ClInclude Include="Entes\Mouse\mouse.h" />
     <ClInclude Include="Entes\Obstacles\obstacle\obstacle.h" />
     <ClInclude Include="Entes\Obstacles\animatedObstacle\animatedObstacle.h" />
-    <ClInclude Include="Entes\Parallax\parallax.h" />
+    <ClInclude Include="Entes\Stage\Parallax\parallax.h" />
     <ClInclude Include="Entes\Characters\Player\player.h" />
     <ClInclude Include="game\game.h" />
     <ClInclude Include="GUI\Button\button.h" />
     <ClInclude Include="GUI\Interfaces\Interface\interface.h" />
     <ClInclude Include="GUI\Interfaces\PauseInterface\pauseInterface.h" />
     <ClInclude Include="ListConteiner\lista.h" />
-    <ClInclude Include="Managers\Colision Manager\colisionManager.h" />
-    <ClInclude Include="Managers\Graphic Manager\graphic_manager.h" />
-    <ClInclude Include="Entes\StageClass\stage.h" />
+    <ClInclude Include="Managers\ColisionManager\colisionManager.h" />
+    <ClInclude Include="Managers\GraphicManager\graphic_manager.h" />
+    <ClInclude Include="Entes\Stage\stage.h" />
     <ClInclude Include="stdafx\stdafx.h" />
     <ClInclude Include="Traits\Animated\animated.h" />
-    <ClInclude Include="Traits\BasePrintable\basePrintable.h" />
-    <ClInclude Include="Traits\Collidable\collidable.h" />
-    <ClInclude Include="Traits\Printable\printable.h" />
+    <ClInclude Include="Traits\GameState\gameState.h" />
+    <ClInclude Include="Traits\PrintableBody\printableBody.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\parallax_background\back-buildings.png" />

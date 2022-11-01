@@ -1,16 +1,17 @@
 #include "obstacle.h"
 
 Obstacles::Obstacle::Obstacle():
-	Entity(Type::OBSTACLE, sf::RectangleShape(), 1.f, false), 
-	Printable(PrintPriority::OBSTACLE)
+	Entity(Type::OBSTACLE, Manager::PrintPriority::obstacles, 
+		   sf::Vector2f(0.f,0.f), sf::Vector2f(0.f, 0.f), true, 1.f),
+	PrintableBody()
 {};
-Obstacles::Obstacle::Obstacle(const sf::RectangleShape& _hitBox, const std::string textureRef,
-							  const sf::IntRect sheetCut, const float size_proportion,
-							  const bool TxtRepeated) :
-	Entity(Type::OBSTACLE, _hitBox, size_proportion, false),
-	Printable(PrintPriority::OBSTACLE, textureRef, sheetCut, size_proportion)
+Obstacles::Obstacle::Obstacle(const sf::Vector2f _size, const sf::Vector2f _position, const std::string path,
+							  const sf::IntRect sheetCut, const float size_coeff, const bool isStatic, const bool repeated):
+	Entity(Type::OBSTACLE, Manager::PrintPriority::obstacles, _size, _position, isStatic, size_coeff),
+	PrintableBody(path, sheetCut, size_coeff)
 {
-	this->texture.setRepeated(TxtRepeated);
+	if(this->texture != nullptr)
+		this->texture->setRepeated(repeated);
 };
 Obstacles::Obstacle::~Obstacle()
 {};
@@ -20,11 +21,5 @@ void Obstacles::Obstacle::SelfPrint(sf::RenderWindow& context_window, const floa
 	context_window.draw(this->body);
 #ifdef _DEBUG
 	context_window.draw(this->origin);
-#endif
-};
-void Obstacles::Obstacle::Execute(const float& pElapsedTime)
-{
-#ifdef _DEBUG
-	this->origin.setPosition(this->hitBox.getPosition());
 #endif
 };
