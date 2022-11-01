@@ -1,7 +1,7 @@
 #include "character.h"
 
 Characters::Character::Character():
-	Entity(Type::UNDEFINED, Manager::PrintPriority::characters, 
+	Entity(Type::UNDEFINED, PrintPriority::characters, 
 		sf::Vector2f(), sf::Vector2f(), true, 1.f
 	),
 	PrintableBody(),
@@ -11,7 +11,7 @@ Characters::Character::Character():
 Characters::Character::Character(const unsigned short int _type, const sf::Vector2f _size, const sf::Vector2f _position,
 								 const std::string path, const AnimationSheet _animations, const unsigned int _lifeAmount, 
 								 const float invcFramDuration, const bool isStatic, const float size_coeff):
-	Entity(_type, Manager::PrintPriority::characters, _size, _position, isStatic, size_coeff),
+	Entity(_type, PrintPriority::characters, _size, _position, isStatic, size_coeff),
 	PrintableBody(path, sf::IntRect(), size_coeff),
 	Animated(_animations, this->texture, &this->body),
 	invencible(false), invcFrames(invcFramDuration), speedH(0.f), speedV(0.f), life_counter(_lifeAmount)

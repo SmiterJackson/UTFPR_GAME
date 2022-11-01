@@ -39,9 +39,6 @@
     <ClCompile Include="Entes\Characters\Player\player.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Entes\Stage\Parallax\parallax.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
     <ClCompile Include="Entes\Obstacles\animatedObstacle\animatedObstacle.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
@@ -99,9 +96,6 @@
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="Entes\Characters\Player\player.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="Entes\Stage\Parallax\parallax.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="Entes\Obstacles\animatedObstacle\animatedObstacle.h">

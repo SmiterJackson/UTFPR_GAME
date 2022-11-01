@@ -4,7 +4,7 @@
 #include "../GUI/Interfaces/PauseInterface/pauseInterface.h"
 #include "../Entes/Stage/stage.h"
 
-typedef std::unordered_map<unsigned short int, GUI::Interface*> InterfaceMap;
+typedef std::stack<GUI::Interface*> Interfaces;
 
 class Game
 {
@@ -15,13 +15,13 @@ public:
 	bool StartGame();
 
 private:
-	sf::RenderWindow window;
+	void UpdateGameState();
 
+private:
 	Manager::GraphicManager* graphicManager;
-	Camera camera;
 	Mouse mouse;
 
-	InterfaceMap interfaces;
+	Interfaces interfaces;
 
 	float elapsedTime;
 	unsigned short int gameState;

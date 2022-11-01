@@ -1,4 +1,6 @@
 #include "pauseInterface.h"
+#include "../Entes/Stage/stage.h"
+#include "../Managers/GraphicManager/graphic_manager.h"
 using namespace Manager;
 using namespace Trait;
 

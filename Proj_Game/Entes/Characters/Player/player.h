@@ -2,6 +2,11 @@
 
 #include "../Character/character.h"
 
+namespace Manager
+{
+	class GraphicManager;
+}
+
 namespace Characters
 {
 	class Player : public Character

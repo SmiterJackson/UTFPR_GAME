@@ -1,12 +1,10 @@
-﻿  camera.cpp
-  character.cpp
+﻿  character.cpp
   enemyMelee.cpp
   entity.cpp
   ente.cpp
   mouse.cpp
   obstacle.cpp
   animatedObstacle.cpp
-  parallax.cpp
   player.cpp
   game.cpp
   button.cpp
@@ -18,8 +16,10 @@
   stage.cpp
   stdafx.cpp
   animated.cpp
+  GameState.cpp
+  printableBody.cpp
   Generating code
   Previous IPDB not found, fall back to full compilation.
-  All 1162 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  All 1255 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
   Proj_Game.vcxproj -> C:\Dev\Cplusplus\Game\Proj_Game Release.exe

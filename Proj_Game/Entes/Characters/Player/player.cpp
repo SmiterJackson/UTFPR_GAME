@@ -1,4 +1,5 @@
 #include "player.h"
+#include "../Managers/GraphicManager/graphic_manager.h"
 using namespace Characters;
 
 #define P1_TEXTURE_REF "Proj_Game/Resources/characters/player/sheets/DinoSprites_mort.png"
@@ -31,6 +32,7 @@ Player::Player(float size_proportion) :
 	playerId(playerList.size())
 {
 	playerList.emplace_back(this);
+	Manager::GraphicManager::UpdateCamera();
 
 	if (playerList.size() == 1)
 		this->SetTexture(P1_TEXTURE_REF, sf::IntRect(0, 0, TEXTURE_TOKEN_SIZE, TEXTURE_TOKEN_SIZE));
@@ -64,7 +66,7 @@ Player::~Player()
 	}
 };
 
-void Characters::Player::InputHandle(const sf::Event& _event)
+void Player::InputHandle(const sf::Event& _event)
 {
 	if (_event.type == sf::Event::KeyPressed)
 	{
@@ -168,7 +170,7 @@ void Characters::Player::InputHandle(const sf::Event& _event)
 		}
 	}
 };
-void Characters::Player::Execute(const float& pElapsedTime)
+void Player::Execute(const float& pElapsedTime)
 {
 	float coeff = H_ACCELERATION * pElapsedTime;
 
@@ -270,7 +272,7 @@ void Characters::Player::Execute(const float& pElapsedTime)
 	this->origin.setPosition(this->hitBox.getPosition());
 #endif
 };
-void Characters::Player::SelfPrint(sf::RenderWindow& context_window, const float& pElapsedTime)
+void Player::SelfPrint(sf::RenderWindow& context_window, const float& pElapsedTime)
 {
 	this->UpdateAnimation(pElapsedTime);
 	context_window.draw(this->body);

@@ -166,7 +166,6 @@
     <ClCompile Include="Entes\Mouse\mouse.cpp" />
     <ClCompile Include="Entes\Obstacles\obstacle\obstacle.cpp" />
     <ClCompile Include="Entes\Obstacles\animatedObstacle\animatedObstacle.cpp" />
-    <ClCompile Include="Entes\Stage\Parallax\parallax.cpp" />
     <ClCompile Include="Entes\Characters\Player\player.cpp" />
     <ClCompile Include="game\game.cpp" />
     <ClCompile Include="GUI\Button\button.cpp" />
@@ -189,7 +188,6 @@
     <ClInclude Include="Entes\Mouse\mouse.h" />
     <ClInclude Include="Entes\Obstacles\obstacle\obstacle.h" />
     <ClInclude Include="Entes\Obstacles\animatedObstacle\animatedObstacle.h" />
-    <ClInclude Include="Entes\Stage\Parallax\parallax.h" />
     <ClInclude Include="Entes\Characters\Player\player.h" />
     <ClInclude Include="game\game.h" />
     <ClInclude Include="GUI\Button\button.h" />

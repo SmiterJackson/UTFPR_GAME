@@ -1,7 +1,7 @@
 #include "interface.h"
 
 GUI::Interface::Interface(const unsigned short int GameStateType, Interface* _previousGState) :
-	Ente(GameStateType, Manager::PrintPriority::interfaces),
+	Ente(GameStateType, PrintPriority::interfaces),
 	GameState(_previousGState == nullptr ? true : false),
 	previousGState(_previousGState)
 {};

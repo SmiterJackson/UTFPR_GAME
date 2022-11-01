@@ -1,4 +1,6 @@
 #include "colisionManager.h"
+#include "../GraphicManager/graphic_manager.h"
+#include "../Entes/Stage/stage.h"
 
 #define OFFSET sf::Vector2f(0.f, 0.001f)
 #define COLISION_CHECK_TIMER 0.2f
@@ -37,9 +39,9 @@ void Manager::ColisionManager::UpdateColisions(const float& pElapsedTime)
 			for (otherEnt = camVector.begin(); otherEnt != camVector.end(); otherEnt++)
 			{
 				// Evita comparar o objeto consigo mesmo e entre classes de mesmo tipo, bem como entre elementos estáticos
-				if(	ente != otherEnt && 
-				  (*ente)->GetType() != (*otherEnt)->GetType() &&
-				 ((*ente)->GetIfStatic() || (*otherEnt)->GetIfStatic()))
+				if(	ente != otherEnt 
+				&&	(*ente)->GetType() != (*otherEnt)->GetType() 
+				&&	((*ente)->GetIfStatic() || (*otherEnt)->GetIfStatic()))
 					this->CheckInColision(*ente, *otherEnt);
 			}
 

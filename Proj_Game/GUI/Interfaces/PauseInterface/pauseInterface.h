@@ -1,6 +1,13 @@
 #pragma once
 
-#include "../Entes/Stage/stage.h"
+#include "../Interface/interface.h"
+
+class Stage;
+
+namespace Manager
+{
+	class GraphicManager;
+}
 
 namespace GUI 
 {

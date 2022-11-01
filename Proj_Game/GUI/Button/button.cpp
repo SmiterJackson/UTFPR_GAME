@@ -3,7 +3,7 @@
 #define PROPORTION 8.0f
 
 GUI::Button::Button():
-	Ente(Type::BUTTON, Manager::PrintPriority::buttons),
+	Ente(Type::BUTTON, PrintPriority::buttons),
 	button_status(BUTTON_STATUS::BTN_IDLE),
 	body(), font(), text(),
 	textColor_idle(), textColor_hover(),
@@ -11,10 +11,10 @@ GUI::Button::Button():
 	pMouse(nullptr)
 {};
 GUI::Button::Button(const sf::Vector2f _size, const sf::Vector2f _position, sf::Font* _font,
-					const std::string _text_data, const unsigned _char_size, Mouse* _pMouse,
+					const std::string _text_data, const unsigned int _char_size, Mouse* _pMouse,
 					sf::Color _textColor_idle, sf::Color _textColor_hover,
 					sf::Color _bodyColor_idle, sf::Color _bodyColor_hover) :
-	Ente(Type::BUTTON, Manager::PrintPriority::buttons),
+	Ente(Type::BUTTON, PrintPriority::buttons),
 	button_status(BUTTON_STATUS::BTN_IDLE), 
 	body(_size),
 	font(_font), text(),

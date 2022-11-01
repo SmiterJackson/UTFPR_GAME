@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../../Entity/entity.h"
-#include "../../../Traits/Animated/animated.h"
-#include "../../../Traits/PrintableBody/PrintableBody.h"
+#include "../Entes/Entity/entity.h"
+#include "../Traits/Animated/animated.h"
+#include "../Traits/PrintableBody/printableBody.h"
 
 /*
 Classe characters que herda características de ser interagível bem como

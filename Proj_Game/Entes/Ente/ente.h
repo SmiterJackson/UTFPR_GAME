@@ -1,7 +1,17 @@
 #pragma once
 
-#include "../Managers/GraphicManager/graphic_manager.h"
+#include "stdafx.h"
 
+const enum PrintPriority
+{
+	undefined = 0,
+	background,
+	obstacles,
+	characters,
+	projectiles,
+	interfaces,
+	buttons
+};
 const enum Type
 {
 	PLAYER = 0,
@@ -21,7 +31,7 @@ class Ente
 {
 public:
 	Ente(const unsigned short int _type = Type::UNDEFINED,
-		 const unsigned short int _printPriority = Manager::PrintPriority::undefined);
+		 const unsigned short int _printPriority = PrintPriority::undefined);
 	virtual ~Ente();
 
 	const unsigned long long int GetId() const { return this->id; };

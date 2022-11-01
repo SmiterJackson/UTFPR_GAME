@@ -1,6 +1,11 @@
 #pragma once
 
-#include "../Managers/GraphicManager/graphic_manager.h"
+#include "stdafx.h"
+
+namespace Manager
+{
+	class GraphicManager;
+}
 
 namespace Trait
 {

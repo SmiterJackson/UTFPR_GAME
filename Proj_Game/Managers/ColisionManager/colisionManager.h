@@ -1,7 +1,14 @@
 #pragma once
 
-#include "../Entes/Stage/stage.h"
+#include "../Entes/Entity/entity.h"
 #include "../ListConteiner/lista.h"
+
+class Stage;
+
+namespace Manager
+{
+	class GraphicManager;
+}
 
 namespace Manager
 {

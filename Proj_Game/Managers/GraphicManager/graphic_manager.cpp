@@ -5,7 +5,8 @@ using namespace Manager;
 
 #define CAMERA_ZOOM 2.f
 
-#define WINDOW_SIZE sf::Vector2f(1440.f / CAMERA_ZOOM, 810.f / CAMERA_ZOOM)
+#define VIEW_SIZE sf::Vector2f(1440.f / CAMERA_ZOOM, 810.f / CAMERA_ZOOM)
+#define WINDOW_SIZE sf::Vector2i(1440, 810)
 
 #define DISTORTION_X true
 #define DISTORTION_Y true
@@ -15,19 +16,19 @@ using namespace Manager;
 #define OFF_CAMERA_EXTRA_SPACE_COEFF 0.5f
 
 GraphicManager*     GraphicManager::instance    =   nullptr;
-InterfaceMap*       GraphicManager::pInterfaces =   nullptr;
+sf::RenderWindow*   GraphicManager::window      =   nullptr;
+Interfaces*         GraphicManager::pInterfaces =   nullptr;
 unsigned short int* GraphicManager::pGameState  =   nullptr;
 sf::Font*           GraphicManager::font        =   nullptr;
-TextureMap          GraphicManager::textures    =   TextureMap();
-sf::View            GraphicManager::view        =   sf::View(sf::Vector2f(), WINDOW_SIZE);
-sf::RenderWindow    GraphicManager::window = sf::RenderWindow();
+sf::View            GraphicManager::view        =   sf::View(sf::Vector2f(), VIEW_SIZE);
+sf::FloatRect       GraphicManager::cameraLim   =   sf::FloatRect();
+TextureMap          GraphicManager::textures = TextureMap();
 
-
-const GraphicManager* GraphicManager::GetGraphicInstance(float& _elapsedTimeRef)
+GraphicManager* GraphicManager::GetGraphicInstance(float& _elapsedTimeRef, Interfaces* _pInterfaces)
 {
     if (instance == nullptr)
     {
-        instance = new GraphicManager(_elapsedTimeRef);
+        instance = new GraphicManager(_elapsedTimeRef, _pInterfaces);
         if (instance == nullptr)
             std::cerr << "Nao foi possivel alocar um gerenciador grafico" << std::endl;
     }
@@ -40,12 +41,19 @@ void GraphicManager::DesconstructGraphicInstance()
         delete instance;
 };
 
-GraphicManager::GraphicManager(float& _elapsedTimeRef) :
-    parallax(), originalSize(WINDOW_SIZE), cameraLim(),
+GraphicManager::GraphicManager(float& _elapsedTimeRef, Interfaces* _pInterfaces) :
+    originalSize(VIEW_SIZE),
     zoom(CAMERA_ZOOM), elapsedTimeRef(_elapsedTimeRef),
     lock_x(DISTORTION_X), lock_y(DISTORTION_Y),
     bar_x(BLCK_BAR_X), bar_y(BLCK_BAR_Y)
 {
+    window = new sf::RenderWindow(sf::VideoMode(WINDOW_SIZE.x, WINDOW_SIZE.y), "JANELA DE CONTEXTO");
+
+    window->setFramerateLimit(60);
+    window->setKeyRepeatEnabled(false);
+
+    pInterfaces = _pInterfaces;
+
     if (font == nullptr)
     {
         font = new sf::Font();
@@ -58,6 +66,31 @@ GraphicManager::GraphicManager(float& _elapsedTimeRef) :
 };
 GraphicManager::~GraphicManager()
 {};
+
+void GraphicManager::InvertDistortion_X()
+{
+    this->lock_x = !this->lock_x;
+    if (!this->lock_x && this->bar_x)
+        this->bar_x = false;
+};
+void GraphicManager::InvertDistortion_Y()
+{
+    this->lock_y = !this->lock_y;
+    if (!this->lock_y && this->bar_y)
+        this->bar_y = false;
+};
+void GraphicManager::InvertBar_X()
+{
+    this->bar_x = !this->bar_x;
+    if (this->bar_x && !this->lock_x)
+        this->lock_x = true;
+};
+void GraphicManager::InvertBar_Y()
+{
+    this->bar_y = !this->bar_y;
+    if (this->bar_y && !this->lock_y)
+        this->lock_y = true;
+};
 
 void GraphicManager::UpdateCamera()
 {
@@ -98,30 +131,6 @@ void GraphicManager::UpdateCamera()
 
     view.setCenter(least);
 };
-void GraphicManager::InvertDistortion_X()
-{
-    this->lock_x = !this->lock_x;
-    if (!this->lock_x && this->bar_x)
-        this->bar_x = false;
-};
-void GraphicManager::InvertDistortion_Y()
-{
-    this->lock_y = !this->lock_y;
-    if (!this->lock_y && this->bar_y)
-        this->bar_y = false;
-};
-void GraphicManager::InvertBar_X()
-{
-    this->bar_x = !this->bar_x;
-    if (this->bar_x && !this->lock_x)
-        this->lock_x = true;
-};
-void GraphicManager::InvertBar_Y()
-{
-    this->bar_y = !this->bar_y;
-    if (this->bar_y && !this->lock_y)
-        this->lock_y = true;
-};
 void GraphicManager::WindowResize()
 {
     sf::FloatRect newPort(0.f, 0.f, 1.f, 1.f);
@@ -129,8 +138,8 @@ void GraphicManager::WindowResize()
 
     // Proporção do novo tamanho de tela em função do tamanho anterior
     sf::Vector2f ratio(
-        window.getSize().x / this->zoom / this->originalSize.x,
-        window.getSize().y / this->zoom / this->originalSize.y
+        window->getSize().x / this->zoom / this->originalSize.x,
+        window->getSize().y / this->zoom / this->originalSize.y
     );
 
     if (this->lock_x)
@@ -179,17 +188,17 @@ const ColisonVector GraphicManager::GetCameraEntities(const ColisonVector& entit
     sf::FloatRect camBounds(GetViewBounds());
     sf::FloatRect entBounds;
 
-    camBounds.left -= ((view.getSize().x / 2.0f) * OFF_CAMERA_EXTRA_SPACE_COEFF);
-    camBounds.top -= ((view.getSize().y / 2.0f) * OFF_CAMERA_EXTRA_SPACE_COEFF);
-    camBounds.width += ((view.getSize().x / 2.0f) * OFF_CAMERA_EXTRA_SPACE_COEFF);
-    camBounds.height += ((view.getSize().y / 2.0f) * OFF_CAMERA_EXTRA_SPACE_COEFF);
+    camBounds.left      -= ((view.getSize().x / 2.0f) * OFF_CAMERA_EXTRA_SPACE_COEFF);
+    camBounds.top       -= ((view.getSize().y / 2.0f) * OFF_CAMERA_EXTRA_SPACE_COEFF);
+    camBounds.width     += ((view.getSize().x / 2.0f) * OFF_CAMERA_EXTRA_SPACE_COEFF);
+    camBounds.height    += ((view.getSize().y / 2.0f) * OFF_CAMERA_EXTRA_SPACE_COEFF);
 
     for (cIt = entities.cbegin(); cIt != entities.cend(); cIt++)
     {
         entBounds = (*cIt)->GetBounds();
 
-        if (entBounds.left > camBounds.left && entBounds.width  < camBounds.width
-            && entBounds.top   >   camBounds.top && entBounds.height < camBounds.height)
+        if (    entBounds.left  >   camBounds.left  && entBounds.width  < camBounds.width
+            &&  entBounds.top   >   camBounds.top   && entBounds.height < camBounds.height)
             entitiesInCam.emplace_back((*cIt));
     }
 
@@ -203,10 +212,6 @@ const sf::FloatRect GraphicManager::GetViewBounds()
         view.getCenter().x + view.getSize().x,
         view.getCenter().y + view.getSize().y
     );
-};
-const sf::Font* GraphicManager::GetFont()
-{
-    return font;
 };
 
 sf::Texture* GraphicManager::LoadTexture(std::string texturePath)
@@ -227,15 +232,19 @@ sf::Texture* GraphicManager::LoadTexture(std::string texturePath)
         return newTexture;
     }
 
+    newTexture->loadFromFile(texturePath);
     textures.insert(std::pair<std::string, sf::Texture*>(texturePath, newTexture));
 
     return newTexture;
 };
-void GraphicManager::Draw(const float& pElapsedTime)
+void GraphicManager::Draw()
 {
 	std::list<Ente*>::const_iterator cIt;
 
-    window.clear();
+    window->clear();
 
-	(*pInterfaces)[*pGameState]->SelfPrint(window, pElapsedTime);
+	pInterfaces->top()->SelfPrint(*window, elapsedTimeRef);
+
+    window->setView(view);
+    window->display();
 };

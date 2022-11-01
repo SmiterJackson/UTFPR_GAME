@@ -6,7 +6,7 @@ class Mouse : public Ente
 {
 public:
 	Mouse(sf::RenderWindow* _pWindow = nullptr);
-	Mouse(const float _gridSize, sf::RenderWindow* _pWindow);
+	Mouse(const float _gridSize, sf::RenderWindow* _pWindow = nullptr);
 	~Mouse();
 
 	const sf::Vector2f GetMouseToDesktop() const { return this->mToDesktop; };

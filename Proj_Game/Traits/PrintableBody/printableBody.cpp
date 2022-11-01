@@ -1,5 +1,7 @@
 #include "printableBody.h"
 
+#include "../Managers/GraphicManager/graphic_manager.h"
+
 Trait::PrintableBody::PrintableBody(const std::string path, const sf::IntRect sheetCut, const float proportion):
 	texture(nullptr), body()
 {

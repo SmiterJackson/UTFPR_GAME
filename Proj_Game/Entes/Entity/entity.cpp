@@ -7,7 +7,7 @@
 // OBS multiplas inserções em vector pode causar realocação de memória onde perde-se a textura do objeto
 // List sendo encadeado não há o problema
 Entity::Entity():
-	Ente(Type::UNDEFINED, Manager::PrintPriority::undefined),
+	Ente(Type::UNDEFINED, PrintPriority::undefined),
 	isStatic(true), hitBox()
 {
 	this->hitBox.setTexture(NULL);
@@ -51,11 +51,13 @@ void Entity::SelfPrint(sf::RenderWindow& context_window, const float& pElapsedTi
 };
 void Entity::Execute(const float& pElapsedTime)
 {
+#ifdef _DEBUG
 	this->origin.setPosition(this->hitBox.getPosition());
+#endif
 };
 
 void Entity::Collided(const Entity* _other, const sf::Vector2f& intersection,
-					  const const sf::FloatRect& otherBounds, const unsigned short int colType)
+					  const sf::FloatRect& otherBounds, const unsigned short int colType)
 {
 	if (colType == CollisionType::CameraColl || colType == CollisionType::MapColl)
 		this->OfCollision(otherBounds, colType);
@@ -66,7 +68,7 @@ void Entity::Collided(const Entity* _other, const sf::Vector2f& intersection,
 };
 
 void Entity::InCollision(const Entity* _other, const sf::Vector2f& intersection,
-						 const const sf::FloatRect& otherBounds)
+						 const sf::FloatRect& otherBounds)
 {
 	sf::Vector2f distance(
 		_other->GetPosition().x - this->GetPosition().x,

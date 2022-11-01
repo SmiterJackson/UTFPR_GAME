@@ -50,7 +50,7 @@ public:
 	virtual void Execute(const float& pElapsedTime);
 
 	virtual void Collided(const Entity* _other, const sf::Vector2f& intersection, 
-						  const const sf::FloatRect& otherBounds, const unsigned short int colType);
+						  const sf::FloatRect& otherBounds, const unsigned short int colType);
 
 	virtual bool operator> (const Entity& other)
 	{
@@ -67,7 +67,7 @@ public:
 
 protected:
 	virtual void InCollision(const Entity* _other, const sf::Vector2f& intersection,
-							 const const sf::FloatRect& otherBounds);
+							 const sf::FloatRect& otherBounds);
 	virtual void OfCollision(const sf::FloatRect& ofBounds, const unsigned short int colType);
 
 protected:
