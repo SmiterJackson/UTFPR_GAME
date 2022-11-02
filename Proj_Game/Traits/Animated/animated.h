@@ -2,6 +2,8 @@
 
 #include "stdafx.h"
 
+class Game;
+
 namespace Trait
 {
 	class Animated

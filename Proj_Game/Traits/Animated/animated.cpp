@@ -1,4 +1,5 @@
 #include "animated.h"
+#include "../game/game.h"
 
 Trait::Animated::Animation::Animation() :
 	sheet_token(), start(0), end(0), row(0), current(0), 
@@ -28,6 +29,13 @@ void Trait::Animated::Animation::ResetAnimation()
 const sf::IntRect& Trait::Animated::Animation::update(const float& pElapsed_time, bool right)
 {
 	this->timeAcumulator += pElapsed_time;
+	unsigned short int state = Game::GetGameState();
+
+	if(state == GameStateType::PAUSE_MENU || state == GameStateType::SUB_MENU)
+	{
+		this->timeAcumulator -= pElapsed_time;
+		return this->sheet_token;
+	}
 
 	if (this->timeAcumulator >= this->switchTime)
 	{

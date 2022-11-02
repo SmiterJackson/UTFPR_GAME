@@ -20,6 +20,12 @@ void Obstacles::Obstacle::SelfPrint(sf::RenderWindow& context_window, const floa
 {
 	context_window.draw(this->body);
 #ifdef _DEBUG
+	context_window.draw(this->hitBox);
 	context_window.draw(this->origin);
 #endif
 };
+
+void Obstacles::Obstacle::InCollision(const Entity* _other, const sf::Vector2f& intersection)
+{};
+void Obstacles::Obstacle::OfCollision(const sf::FloatRect& ofBounds, const unsigned short int colType)
+{};

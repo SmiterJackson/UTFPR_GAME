@@ -20,13 +20,16 @@ namespace Characters
 
 		const unsigned int GetPlayerId() const { return this->playerId; };
 		
-		void SelfPrint(sf::RenderWindow& context_window, const float& pElapsedTime);
 		void Execute(const float& pElapsedTime);
 		void InputHandle(const sf::Event& _event);
 
-		enum Actions { IDLE = 0, WALKING, KICK, DAMAGED, CROUCHING };
+	protected:
+		virtual void InCollision(const Entity* _other, const sf::Vector2f& intersection);
+		virtual void OfCollision(const sf::FloatRect& ofBounds, const unsigned short int colType);
 
 	private:
+		enum Actions { IDLE = 0, WALKING, KICK, DAMAGED, CROUCHING };
+
 		static std::list<Player*> playerList;
 
 		bool onGround;

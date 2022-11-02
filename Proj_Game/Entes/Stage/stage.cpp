@@ -1,5 +1,5 @@
 #include "stage.h"
-#include "../Managers/GraphicManager/graphic_manager.h"
+#include "../game/game.h"
 using namespace Manager;
 using namespace Trait;
 
@@ -138,26 +138,24 @@ Stage::Stage():
 	worldBounds(),
 	colision_manager(*this),
 	background(),
-	entities(),
-	pGameState(pGameState)
+	entities()
 {
 	this->Initalize(1.f);
 };
-Stage::Stage(unsigned short int* pGameState, const sf::FloatRect bounds, const std::string& stagePath,
+Stage::Stage(const sf::FloatRect bounds, const std::string& stagePath,
 			 const std::vector<std::string>& BackgroundPaths, const float size_coefficient):
 	Interface(GameStateType::IN_GAME),
-	worldBounds(bounds),
+	worldBounds(bounds.left, bounds.top, bounds.width, bounds.height /* + 200.f*/),
 	colision_manager(*this),
 	background(BackgroundPaths, size_coefficient),
-	entities(), 
-	pGameState(pGameState)
+	entities()
 {
-	sf::FloatRect camBounds(this->worldBounds);
-	camBounds.height += 200.f;
-
-	GraphicManager::SetCameraLimits(camBounds);
+	GraphicManager::SetCameraLimits(bounds);
 
 	this->Initalize(size_coefficient);
+
+	GraphicManager::UpdateCamera();
+	this->background.ResetBackground();
 };
 Stage::~Stage()
 {};
@@ -197,14 +195,13 @@ void Stage::Initalize(const float size_coefficient)
 		colidiveis.PushBack(static_cast<Entity*>(obstacles.back()));
 	}
 	this->colision_manager.AddRange(&colidiveis);
-	this->background.ResetBackground();
 };
 void Stage::InputHandle(const sf::Event& _event)
 {
 	unsigned int i = 0;
 
 	if (_event.type == sf::Event::KeyPressed && _event.key.code == sf::Keyboard::Escape)
-		*this->pGameState = GameStateType::PAUSE_MENU;
+		Game::SetGameState(GameStateType::PAUSE_MENU);
 
 	for (i = 0; i < this->entities.GetSize(); i++)
 	{

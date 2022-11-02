@@ -48,8 +48,6 @@ GraphicManager::GraphicManager(float& _elapsedTimeRef, Interfaces* _pInterfaces)
     bar_x(BLCK_BAR_X), bar_y(BLCK_BAR_Y)
 {
     window = new sf::RenderWindow(sf::VideoMode(WINDOW_SIZE.x, WINDOW_SIZE.y), "JANELA DE CONTEXTO");
-
-    window->setFramerateLimit(60);
     window->setKeyRepeatEnabled(false);
 
     pInterfaces = _pInterfaces;
@@ -65,7 +63,9 @@ GraphicManager::GraphicManager(float& _elapsedTimeRef, Interfaces* _pInterfaces)
     }
 };
 GraphicManager::~GraphicManager()
-{};
+{
+    window->close();
+};
 
 void GraphicManager::InvertDistortion_X()
 {
@@ -127,6 +127,36 @@ void GraphicManager::UpdateCamera()
         diff /= 2.f;
 
         least += diff;
+    }
+
+    if (cameraLim.left  != cameraLim.width &&
+        cameraLim.top   != cameraLim.height)
+    {
+        if (least.x - radious.x < cameraLim.left)
+        {
+            if (cameraLim.left <= 0)
+                least.x += fabs(least.x - radious.x - cameraLim.left);
+            else
+                least.x += least.x - radious.x - cameraLim.left;
+        }
+        if (least.y - radious.y < cameraLim.top)
+        {
+            val = 0;
+            val = (least.y - radious.y) - cameraLim.top;
+
+            if (cameraLim.top <= 0)
+            {
+                val = least.y - radious.y;
+                val = radious.y - cameraLim.top;
+                least.y += fabs(least.y - radious.y - cameraLim.top);
+            }
+            else
+                least.y += least.y - radious.y - cameraLim.top;
+        }
+        if (least.x + radious.x > cameraLim.width)
+            least.x -= least.x + radious.x - cameraLim.width;
+        if (least.y + radious.y > cameraLim.height)
+            least.y -= least.y + radious.y - cameraLim.height;
     }
 
     view.setCenter(least);

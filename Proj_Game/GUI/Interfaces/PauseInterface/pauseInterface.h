@@ -2,12 +2,8 @@
 
 #include "../Interface/interface.h"
 
+class Game;
 class Stage;
-
-namespace Manager
-{
-	class GraphicManager;
-}
 
 namespace GUI 
 {
@@ -15,7 +11,7 @@ namespace GUI
 	{
 	public:
 		PauseInterface();
-		PauseInterface(unsigned short int* _pGameState, Mouse* _pMouse, Stage* _pStage);
+		PauseInterface(Mouse* _pMouse, Stage* _pStage);
 		~PauseInterface();
 
 		void SelfPrint(sf::RenderWindow& context_window, const float& pElapsedTime);
@@ -29,7 +25,6 @@ namespace GUI
 	private:
 		std::vector<Button> buttons;
 
-		unsigned short int* pGameState;
 		Stage* pStage;
 	};
 }

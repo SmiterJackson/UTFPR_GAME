@@ -42,6 +42,10 @@ namespace Characters
 		virtual void SelfPrint(sf::RenderWindow& context_window, const float& pElapsedTime);
 
 	protected:
+		virtual void InCollision(const Entity* _other, const sf::Vector2f& intersection);
+		virtual void OfCollision(const sf::FloatRect& ofBounds, const unsigned short int colType);
+
+	protected:
 		bool invencible;
 
 		float invcFrames;

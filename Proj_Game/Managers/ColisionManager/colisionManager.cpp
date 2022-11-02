@@ -104,14 +104,8 @@ void Manager::ColisionManager::CheckInColision(Entity* entity, Entity* other)
 {
 	// Aplica-se o offset para verificar se há uma plataforma abaixo da entidade
 	sf::Vector2f distance(entity->GetPosition() - other->GetPosition() + OFFSET);
-	sf::Vector2f entSize(
-		(entity->GetBounds().width / 2.f), 
-		(entity->GetBounds().height / 2.f)
-	);
-	sf::Vector2f otherSize(
-		(other->GetBounds().width / 2.f),
-		(other->GetBounds().height / 2.f)
-	);
+	sf::Vector2f entSize(entity->GetHitBoxSize() / 2.f);
+	sf::Vector2f otherSize(other->GetHitBoxSize() / 2.f);
 	sf::Vector2f intersection(
 		fabs(distance.x) - (entSize.x + otherSize.x),
 		fabs(distance.y) - (entSize.y + otherSize.y)
@@ -125,11 +119,16 @@ void Manager::ColisionManager::CheckInColision(Entity* entity, Entity* other)
 };
 void Manager::ColisionManager::CheckOfColision(Entity* entity)
 {
-	sf::FloatRect bounds(entity->GetBounds());
 	sf::FloatRect cameraBounds(Manager::GraphicManager::GetViewBounds());
 	sf::FloatRect stageBounds(this->stageRef.GetBounds());
+	sf::FloatRect bounds(entity->GetBounds());
 
-	
+	if (bounds.left < cameraBounds.left || bounds.width > cameraBounds.width)
+		entity->Collided(nullptr, sf::Vector2f(), cameraBounds, CollisionType::CameraColl);
+
+	if (bounds.left < stageBounds.left	|| bounds.width		> stageBounds.width ||
+		bounds.top	< stageBounds.top	|| bounds.height	> stageBounds.height)
+		entity->Collided(nullptr, sf::Vector2f(), stageBounds, CollisionType::MapColl);
 };
 
 void Manager::ColisionManager::SortElements()

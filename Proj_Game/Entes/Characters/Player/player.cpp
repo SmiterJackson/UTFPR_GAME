@@ -27,7 +27,7 @@ Player::Player(float size_proportion) :
 		Type::PLAYER, HITBOX, sf::Vector2f(0.f, 0.f), std::string(),
 		AnimationSheet(), PLAYER_TOTAL_LIFE, INVENCIBILITY_FRAMES_TIME, false, size_proportion
 	),
-	onGround(true), crouching(false), jump(false), 
+	onGround(false), crouching(false), jump(false), 
 	walkLeft(false), walkRight(false), walking(true), done(false), 
 	playerId(playerList.size())
 {
@@ -272,13 +272,52 @@ void Player::Execute(const float& pElapsedTime)
 	this->origin.setPosition(this->hitBox.getPosition());
 #endif
 };
-void Player::SelfPrint(sf::RenderWindow& context_window, const float& pElapsedTime)
-{
-	this->UpdateAnimation(pElapsedTime);
-	context_window.draw(this->body);
 
-#ifdef _DEBUG
-	context_window.draw(this->hitBox);
-	context_window.draw(this->origin);
-#endif
+void Player::InCollision(const Entity* _other, const sf::Vector2f& intersection)
+{
+	sf::Vector2f distance(
+		_other->GetPosition().x - this->GetPosition().x,
+		_other->GetPosition().y - this->GetPosition().y
+	);
+
+	if (intersection.y >= intersection.x)
+	{
+		if (distance.y > 0.f)
+		{
+			this->MovePosition(0.f, (intersection.y));
+				this->onGround = true;
+		}
+		else
+			this->MovePosition(0.f, -(intersection.y));
+	}
+	else
+	{
+		if (distance.x > 0.f)
+			this->MovePosition(intersection.x, 0.f);
+		else
+			this->MovePosition(-(intersection.x), 0.f);
+	}
+};
+void Player::OfCollision(const sf::FloatRect& ofBounds, const unsigned short int colType)
+{
+	sf::FloatRect bounds(this->GetBounds());
+	sf::Vector2f offSet(0.f, 0.f);
+
+	if (colType == CollisionType::MapColl)
+	{
+		if (bounds.top < ofBounds.top)
+			offSet.y += ofBounds.top - bounds.top;
+		else if (bounds.height > ofBounds.height)
+		{
+			offSet.y += ofBounds.height - bounds.height;
+			this->onGround = true;
+		}
+	}
+
+	if (bounds.left < ofBounds.left)
+		offSet.x += ofBounds.left - bounds.left;
+	else if (bounds.width > ofBounds.width)
+		offSet.x += ofBounds.width - bounds.width;
+
+	this->MovePosition(offSet);
 };

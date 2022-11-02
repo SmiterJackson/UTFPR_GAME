@@ -5,10 +5,7 @@
 #include "../Entes/Obstacles/obstacle/obstacle.h"
 #include "../Characters/Player/player.h"
 
-namespace Manager
-{
-	class GraphicManager;
-}
+class Game;
 
 class Stage : public GUI::Interface
 {
@@ -50,7 +47,7 @@ public:
 
 public:
 	Stage();
-	Stage(unsigned short int* pGameState, const sf::FloatRect bounds, const std::string& stagePath,
+	Stage(const sf::FloatRect bounds, const std::string& stagePath,
 		  const std::vector<std::string>& BackgroundPaths, const float size_coefficient);
 	~Stage();
 
@@ -78,6 +75,4 @@ protected:
 	Parallax background;
 
 	Lista<Entity*> entities;
-
-	unsigned short int* pGameState;
 };

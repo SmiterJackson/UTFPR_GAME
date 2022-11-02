@@ -1,2 +1,8 @@
-﻿  entity.cpp
+﻿  game.cpp
+  pauseInterface.cpp
+  colisionManager.cpp
+  Proj_Game.cpp
+  stage.cpp
+  animated.cpp
+  Generating Code...
   Proj_Game.vcxproj -> C:\Dev\Cplusplus\Game\Proj_Game Debug.exe

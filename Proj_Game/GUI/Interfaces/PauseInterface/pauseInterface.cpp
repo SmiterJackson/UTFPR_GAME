@@ -1,6 +1,6 @@
 #include "pauseInterface.h"
+#include "../game/game.h"
 #include "../Entes/Stage/stage.h"
-#include "../Managers/GraphicManager/graphic_manager.h"
 using namespace Manager;
 using namespace Trait;
 
@@ -9,11 +9,11 @@ using namespace Trait;
 
 GUI::PauseInterface::PauseInterface():
 	Interface(GameStateType::PAUSE_MENU),
-	pGameState(nullptr), pStage(nullptr)
+	pStage(nullptr)
 {};
-GUI::PauseInterface::PauseInterface(unsigned short int* _pGameState, Mouse* _pMouse, Stage* _pStage):
+GUI::PauseInterface::PauseInterface(Mouse* _pMouse, Stage* _pStage):
 	Interface(GameStateType::PAUSE_MENU, static_cast<Interface*>(_pStage)),
-	pGameState(_pGameState), pStage(_pStage)
+	pStage(_pStage)
 {
 	std::vector<std::string>::iterator it;
 	std::vector<std::string> buttonsTxt;
@@ -61,7 +61,7 @@ void GUI::PauseInterface::InputHandle(const sf::Event& _event)
 	{
 	case sf::Event::KeyPressed:
 		if (_event.key.code == sf::Keyboard::Escape)
-			*this->pGameState = GameStateType::IN_GAME;
+			Game::SetGameState(GameStateType::IN_GAME);
 		break;
 	case sf::Event::MouseButtonPressed:
 		this->VerifyButtons();
@@ -94,9 +94,8 @@ void GUI::PauseInterface::VerifyButtons()
 void GUI::PauseInterface::ButtonActive(std::vector<Button>::iterator buttonIt)
 {
 	if(buttonIt->GetId() == this->buttons[0].GetId())
-	{
-		*this->pGameState = Trait::GameStateType::IN_GAME;
-	}
+		Game::SetGameState(GameStateType::IN_GAME);
+
 	else if(buttonIt->GetId() == this->buttons[1].GetId())
 	{
 		if (Characters::Player::GetNumberOfPlayers() >= 2)

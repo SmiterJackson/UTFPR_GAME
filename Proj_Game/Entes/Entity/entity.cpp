@@ -46,11 +46,13 @@ Entity::~Entity()
 void Entity::SelfPrint(sf::RenderWindow& context_window, const float& pElapsedTime)
 {
 #ifdef _DEBUG
+	context_window.draw(this->hitBox);
 	context_window.draw(this->origin);
 #endif
 };
 void Entity::Execute(const float& pElapsedTime)
 {
+
 #ifdef _DEBUG
 	this->origin.setPosition(this->hitBox.getPosition());
 #endif
@@ -62,51 +64,5 @@ void Entity::Collided(const Entity* _other, const sf::Vector2f& intersection,
 	if (colType == CollisionType::CameraColl || colType == CollisionType::MapColl)
 		this->OfCollision(otherBounds, colType);
 	else
-	{
-		this->InCollision(_other, intersection, otherBounds);
-	}
-};
-
-void Entity::InCollision(const Entity* _other, const sf::Vector2f& intersection,
-						 const sf::FloatRect& otherBounds)
-{
-	sf::Vector2f distance(
-		_other->GetPosition().x - this->GetPosition().x,
-		_other->GetPosition().y - this->GetPosition().y
-	);
-
-	if (intersection.y >= intersection.x)
-	{
-		if (distance.y > 0.f)
-			this->MovePosition(0.f, (intersection.y));
-		else
-			this->MovePosition(0.f, -(intersection.y));
-	}
-	else
-	{
-		if (distance.x > 0.f)
-			this->MovePosition(intersection.x, 0.f);
-		else
-			this->MovePosition(-(intersection.x), 0.f);
-	}
-};
-void Entity::OfCollision(const sf::FloatRect& ofBounds, const unsigned short int colType)
-{
-	sf::FloatRect bounds(this->GetBounds());
-	sf::Vector2f offSet(0.f, 0.f);
-
-	if (bounds.left < ofBounds.left)
-		offSet.x += ofBounds.left - bounds.left;
-	else
-		offSet.x += ofBounds.width - bounds.width;
-
-	if (colType == CollisionType::MapColl)
-	{
-		if (bounds.top < ofBounds.top)
-			offSet.y += ofBounds.top - bounds.top;
-		else
-			offSet.y += ofBounds.height - bounds.height;
-	}
-
-	this->MovePosition(offSet);
+		this->InCollision(_other, intersection);
 };

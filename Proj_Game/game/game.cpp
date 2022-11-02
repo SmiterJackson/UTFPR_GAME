@@ -12,14 +12,15 @@ using namespace Manager;
 
 #define IMAGE_COEFFICIENT 2.5f
 
-#define BOUNDS sf::FloatRect((352.f * IMAGE_COEFFICIENT * -2.f), (172.f * IMAGE_COEFFICIENT), (352.f * IMAGE_COEFFICIENT * 2.f), (192.f * IMAGE_COEFFICIENT))
+#define BOUNDS sf::FloatRect((352.f * IMAGE_COEFFICIENT * -2.f), (-192.f + 40.f), (352.f * IMAGE_COEFFICIENT * 2.f), (192.f * IMAGE_COEFFICIENT))
+
+unsigned short int Game::gameState = Trait::GameStateType::IN_GAME;
 
 Game::Game():
     graphicManager(nullptr),
     mouse(GRID_SIZE),
     interfaces(),
-    elapsedTime(0.f),
-    gameState(Trait::GameStateType::IN_GAME)
+    elapsedTime(0.f)
 {
     graphicManager = GraphicManager::GetGraphicInstance(elapsedTime, &this->interfaces);
     this->mouse.SetWindowReference(&this->graphicManager->GetWindow());
@@ -31,10 +32,7 @@ Game::Game():
         "Proj_Game/Resources/parallax_background/far-buildings.png"
     });
 
-    Stage* stage = new Stage(
-        &this->gameState, BOUNDS, "",
-        paths, IMAGE_COEFFICIENT
-    );
+    Stage* stage = new Stage(BOUNDS, "", paths, IMAGE_COEFFICIENT);
     interfaces.push(static_cast<GUI::Interface*>(stage));
 };
 Game::~Game()
@@ -50,6 +48,8 @@ bool Game::StartGame()
     {
         this->elapsedTime = clock.restart().asSeconds();
         this->mouse.Execute(this->elapsedTime);
+
+        this->UpdateGameState();
 
         sf::Event event;
         while (GraphicManager::GetWindow().pollEvent(event))
@@ -70,7 +70,9 @@ bool Game::StartGame()
         }
 
         this->interfaces.top()->Execute(this->elapsedTime);
-        this->graphicManager->Draw();
+
+        if(this->graphicManager != nullptr)
+            this->graphicManager->Draw();
     }
 
     return true;
@@ -78,17 +80,23 @@ bool Game::StartGame()
 
 void Game::UpdateGameState()
 {
+    GUI::Interface* currentInter = this->interfaces.top();
+    GUI::Interface* newInterface = nullptr;
+
     switch (this->gameState)
     {
     case Trait::GameStateType::PAUSE_MENU:
-        if(this->interfaces.top()->GetType() == Trait::GameStateType::IN_GAME)
-        interfaces.emplace(static_cast<GUI::Interface*>(
-            new GUI::PauseInterface(
-                &this->gameState, &this->mouse, static_cast<Stage*>(this->interfaces.top()))
-            )
-        );
+        if (currentInter->GetType() == Trait::GameStateType::IN_GAME)
+            newInterface = static_cast<GUI::Interface*>(new GUI::PauseInterface(&this->mouse, static_cast<Stage*>(currentInter)));
+        break;
+    case Trait::GameStateType::IN_GAME:
+        if (currentInter->GetType() == Trait::GameStateType::PAUSE_MENU)
+            this->interfaces.pop();
         break;
     default:
         break;
     }
+
+    if (newInterface != nullptr)
+        this->interfaces.emplace(newInterface);
 };

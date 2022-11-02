@@ -25,6 +25,50 @@ void Characters::Character::SelfPrint(sf::RenderWindow& context_window, const fl
 	context_window.draw(this->body);
 
 #ifdef _DEBUG
+	context_window.draw(this->hitBox);
 	context_window.draw(this->origin);
 #endif
+};
+
+void Characters::Character::InCollision(const Entity* _other, const sf::Vector2f& intersection)
+{
+	sf::Vector2f distance(
+		_other->GetPosition().x - this->GetPosition().x,
+		_other->GetPosition().y - this->GetPosition().y
+	);
+
+	if (intersection.y >= intersection.x)
+	{
+		if (distance.y > 0.f)
+			this->MovePosition(0.f, (intersection.y));
+		else
+			this->MovePosition(0.f, -(intersection.y));
+	}
+	else
+	{
+		if (distance.x > 0.f)
+			this->MovePosition(intersection.x, 0.f);
+		else
+			this->MovePosition(-(intersection.x), 0.f);
+	}
+};
+void Characters::Character::OfCollision(const sf::FloatRect& ofBounds, const unsigned short int colType)
+{
+	sf::FloatRect bounds(this->GetBounds());
+	sf::Vector2f offSet(0.f, 0.f);
+
+	if (bounds.left < ofBounds.left)
+		offSet.x += ofBounds.left - bounds.left;
+	else if(bounds.width > ofBounds.width)
+		offSet.x += ofBounds.width - bounds.width;
+
+	if (colType == CollisionType::MapColl)
+	{
+		if (bounds.top < ofBounds.top)
+			offSet.y += ofBounds.top - bounds.top;
+		else if (bounds.height > ofBounds.height)
+			offSet.y += ofBounds.height - bounds.height;
+	}
+
+	this->MovePosition(offSet);
 };

@@ -27,16 +27,17 @@ public:
 	virtual void SetProportion(const float proportion) { this->hitBox.setScale(proportion, proportion); };
 
 	void SetHitBoxSize(const sf::Vector2f _size) { this->hitBox.setSize(_size); };
-	const sf::Vector2f GetHitBoxSize() const { return (this->hitBox.getSize() * this->hitBox.getScale().x); };
+	const sf::Vector2f GetHitBoxSize() const { return (this->hitBox.getSize()); };
 	const sf::FloatRect GetBounds() const
 	{
-		float scale(this->hitBox.getScale().x);
+		sf::Vector2f pos(this->hitBox.getPosition());
+		sf::Vector2f size(this->hitBox.getSize());
 
 		sf::FloatRect bounds(
-			this->hitBox.getPosition().x - ((this->hitBox.getSize().x * scale) / 2.f),
-			this->hitBox.getPosition().y - ((this->hitBox.getSize().y * scale) / 2.f),
-			this->hitBox.getPosition().x + ((this->hitBox.getSize().x * scale) / 2.f),
-			this->hitBox.getPosition().y + ((this->hitBox.getSize().y * scale) / 2.f)
+			this->hitBox.getPosition().x - (this->hitBox.getSize().x / 2.f),
+			this->hitBox.getPosition().y - (this->hitBox.getSize().y / 2.f),
+			this->hitBox.getPosition().x + (this->hitBox.getSize().x / 2.f),
+			this->hitBox.getPosition().y + (this->hitBox.getSize().y / 2.f)
 		);
 
 		return bounds;
@@ -66,9 +67,8 @@ public:
 	};
 
 protected:
-	virtual void InCollision(const Entity* _other, const sf::Vector2f& intersection,
-							 const sf::FloatRect& otherBounds);
-	virtual void OfCollision(const sf::FloatRect& ofBounds, const unsigned short int colType);
+	virtual void InCollision(const Entity* _other, const sf::Vector2f& intersection) = 0;
+	virtual void OfCollision(const sf::FloatRect& ofBounds, const unsigned short int colType) = 0;
 
 protected:
 	const bool isStatic;
