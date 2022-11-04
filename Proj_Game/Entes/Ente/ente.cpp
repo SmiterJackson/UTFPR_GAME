@@ -8,6 +8,3 @@ Ente::Ente(const unsigned short int _type,
 {};
 Ente::~Ente() 
 {};
-
-void Ente::SelfPrint(sf::RenderWindow& context_window, const float& pElapsedTime)
-{};

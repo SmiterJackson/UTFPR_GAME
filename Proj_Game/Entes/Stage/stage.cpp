@@ -1,5 +1,7 @@
 #include "stage.h"
 #include "../game/game.h"
+#include "../Managers/GraphicManager/graphic_manager.h"
+using namespace Characters;
 using namespace Manager;
 using namespace Trait;
 
@@ -10,7 +12,8 @@ using namespace Trait;
 #define OBSTACLE_TEXTURE_REF "Proj_Game/Resources/tile_sets/Texture/TX_Tileset_Ground.png"
 #define OBSTACLE_SIZE 32
 
-#define PLAYER_NUM 1
+#define OBSTACLE_NUM 5.f
+#define PLAYER_NUM 2
 
 Stage::Parallax::Parallax(const std::vector<std::string>& paths, const float _size_coeff) :
 	Ente(Type::BACKGROUND, PrintPriority::background),
@@ -78,14 +81,14 @@ void Stage::Parallax::ResetBackground()
 	this->lastPosition = GraphicManager::GetView()->getCenter();
 };
 
-void Stage::Parallax::SelfPrint(sf::RenderWindow& context_window, const float& pElapsedTime)
+void Stage::Parallax::SelfPrint(const float& pElapsedTime)
 {
 	std::vector<Layer>::reverse_iterator rIt;
 	size_t i = 0;
 
 	for (rIt = this->backGrounds.rbegin(); rIt != this->backGrounds.rend(); rIt++)
 		for (i = 0; i < rIt->second.size(); i++)
-			context_window.draw(rIt->second[i]);
+			GraphicManager::Draw(rIt->second[i]);
 };
 void Stage::Parallax::Execute(const float& pElapsedTime)
 {
@@ -158,38 +161,46 @@ Stage::Stage(const sf::FloatRect bounds, const std::string& stagePath,
 	this->background.ResetBackground();
 };
 Stage::~Stage()
-{};
+{
+	Lista<Entity*>::iterador it;
+
+	for(it = this->entities.begin(); it != this->entities.end(); it++)
+	{
+		delete (*it);
+		this->entities.PopAt(it);
+	}
+};
 
 void Stage::Initalize(const float size_coefficient)
 {
 	Lista<Entity*> colidiveis;
 
 	sf::Vector2f position(0.f, (192 * size_coefficient) - RECT_SIZE - 36.f);
-	float X_Coeff = 3.5f, Y_Coeff = X_Coeff / 2.f;
+	float obsCoeff = 1.f;
 	int i = 0;
 
 	sf::FloatRect bounds((352.f * size_coefficient * -2.f), (-192.f + 40.f), (352.f * size_coefficient * 2.f), (192.f * size_coefficient));
 	
-	std::list<Characters::Player*> players;
+	std::list<Player*> players;
 	for (i = 0; i < PLAYER_NUM; i++)
 	{
-		players.push_back(new Characters::Player(1.0f));
-		players.front()->MovePosition(position + sf::Vector2f(-48.f * i, 0.f * i));
+		players.push_back(new Player(1.0f));
+		players.back()->MovePosition(position + sf::Vector2f(-48.f * i, 0.f));
 		
-		this->entities.PushBack(static_cast<Entity*>(players.front()));
-		colidiveis.PushBack(static_cast<Entity*>(players.front()));
+		this->entities.PushBack(static_cast<Entity*>(players.back()));
+		colidiveis.PushBack(static_cast<Entity*>(players.back()));
 	}
 
 	std::list<Obstacles::Obstacle*> obstacles;
-	for (int f = 0; f < 5; f++)
+	for (float f = 1.f; f < OBSTACLE_NUM + 1.f; f++)
 	{
 		sf::Vector2f obsSize(OBSTACLE_SIZE, OBSTACLE_SIZE);
 
 		obstacles.push_back(new Obstacles::Obstacle(
 			obsSize, sf::Vector2f(0.f,0.f), OBSTACLE_TEXTURE_REF,
-			sf::IntRect(0, 0, OBSTACLE_SIZE, OBSTACLE_SIZE), 1.0f, true, false
+			sf::IntRect(0, 0, OBSTACLE_SIZE, OBSTACLE_SIZE), obsCoeff, true, true
 		));
-		obstacles.back()->MovePosition(sf::Vector2f(position.x + (obsSize.x * f), position.y + OBSTACLE_SIZE * 2.f));
+		obstacles.back()->MovePosition(sf::Vector2f(position.x + (obsSize.x * f * obsCoeff), position.y + OBSTACLE_SIZE * 1.2f));
 		
 		this->entities.PushBack(static_cast<Entity*>(obstacles.back()));
 		colidiveis.PushBack(static_cast<Entity*>(obstacles.back()));
@@ -198,28 +209,24 @@ void Stage::Initalize(const float size_coefficient)
 };
 void Stage::InputHandle(const sf::Event& _event)
 {
+	std::list<Player*> players(Player::GetPlayerList());
+	std::list<Player*>::iterator it;
 	unsigned int i = 0;
 
 	if (_event.type == sf::Event::KeyPressed && _event.key.code == sf::Keyboard::Escape)
 		Game::SetGameState(GameStateType::PAUSE_MENU);
 
-	for (i = 0; i < this->entities.GetSize(); i++)
-	{
-		if (this->entities[i].GetInfo()->GetType() == Type::PLAYER)
-		{
-			static_cast<Characters::Player*>(this->entities[i].GetInfo())->InputHandle(_event);
-		}
-	}
+	for (it = players.begin(); it != players.end(); it++)
+		(*it)->InputHandle(_event);
 };
 
-void Stage::SelfPrint(sf::RenderWindow& context_window, const float& pElapsedTime)
+void Stage::SelfPrint(const float& pElapsedTime)
 {
 	Lista<Entity*>::iterador it;
 
-	this->background.SelfPrint(context_window, pElapsedTime);
-
+	this->background.SelfPrint(pElapsedTime);
 	for(it = this->entities.begin(); it != this->entities.end(); it++)
-		(*it)->SelfPrint(context_window, pElapsedTime);
+		(*it)->SelfPrint(pElapsedTime);
 };
 void Stage::Execute(const float& pElapsedTime)
 {
@@ -270,8 +277,12 @@ void Stage::RemoveEntity(const unsigned long long int entityId)
 
 	for(it = this->entities.begin(); it != this->entities.end(); it++)
 	{
-		if((*it)->GetId() == entityId)
+		if ((*it)->GetId() == entityId)
+		{
+			delete (*it);
 			this->entities.PopAt(it);
+			break;
+		}
 	}
 
 	this->colision_manager.Remove(entityId);
@@ -286,8 +297,12 @@ void Stage::RemoveRange(const std::vector<unsigned long long int> entityId)
 	{
 		for (it = this->entities.begin(); it != this->entities.end(); ++it)
 		{
+
 			if ((*it)->GetId() == (*cIt))
+			{
+				delete (*it); 
 				this->entities.PopAt(it);
+			}
 
 			this->colision_manager.Remove(*cIt);
 		}
@@ -297,6 +312,25 @@ void Stage::RemoveRange(const std::vector<unsigned long long int> entityId)
 };
 
 void Stage::AddPlayer()
-{};
+{
+	Characters::Player* player = Characters::Player::GetPlayerList().front();
+	Characters::Player* newPlayer = nullptr;
+	
+	newPlayer = new Characters::Player(player->GetPorportion());
+	if(newPlayer == nullptr)
+	{
+		std::cerr << "Nao foi possivel criar um novo Jogador." << std::endl;
+		return;
+	}
+	newPlayer->MovePosition(player->GetPosition());
+
+	this->entities.PushBack(static_cast<Entity*>(newPlayer));
+	this->colision_manager.Add(static_cast<Entity*>(newPlayer));
+};
 void Stage::RemovePlayer()
-{};
+{
+	Characters::Player* player = Characters::Player::GetPlayerList().back();
+
+	this->colision_manager.Remove(player->GetId());
+	this->RemoveEntity(player->GetId());
+};

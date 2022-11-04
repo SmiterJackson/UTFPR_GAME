@@ -14,7 +14,7 @@ const enum PrintPriority
 };
 const enum Type
 {
-	PLAYER = 0,
+	PLAYER = 0, 
 	ENEMY,
 	PROJECTILE,
 	OBSTACLE,
@@ -38,7 +38,7 @@ public:
 	const unsigned short int GetType() const { return this->type; };
 	const unsigned short int GetPrintPriority() const { return this->printPriority; };
 
-	virtual void SelfPrint(sf::RenderWindow& context_window, const float& pElapsedTime);
+	virtual void SelfPrint(const float& pElapsedTime) = 0;
 	virtual void Execute(const float& pElapsedTime) = 0;
 
 	virtual bool operator> (const Ente& other)

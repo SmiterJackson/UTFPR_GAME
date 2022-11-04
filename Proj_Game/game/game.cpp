@@ -6,8 +6,6 @@ using namespace Manager;
 #define WINDOW_SIZE_Y_F 810.f
 #define WINDOW_SIZE_Y_I 810
 
-#define GRID_SIZE 32.f
-
 #define ZOOM_COEFF 2.0f
 
 #define IMAGE_COEFFICIENT 2.5f
@@ -18,12 +16,10 @@ unsigned short int Game::gameState = Trait::GameStateType::IN_GAME;
 
 Game::Game():
     graphicManager(nullptr),
-    mouse(GRID_SIZE),
     interfaces(),
     elapsedTime(0.f)
 {
     graphicManager = GraphicManager::GetGraphicInstance(elapsedTime, &this->interfaces);
-    this->mouse.SetWindowReference(&this->graphicManager->GetWindow());
 
     std::vector<std::string> paths(
     {
@@ -47,7 +43,6 @@ bool Game::StartGame()
     while (GraphicManager::IsWindowOpen())
     {
         this->elapsedTime = clock.restart().asSeconds();
-        this->mouse.Execute(this->elapsedTime);
 
         this->UpdateGameState();
 
@@ -72,7 +67,7 @@ bool Game::StartGame()
         this->interfaces.top()->Execute(this->elapsedTime);
 
         if(this->graphicManager != nullptr)
-            this->graphicManager->Draw();
+            this->graphicManager->Update();
     }
 
     return true;
@@ -87,7 +82,7 @@ void Game::UpdateGameState()
     {
     case Trait::GameStateType::PAUSE_MENU:
         if (currentInter->GetType() == Trait::GameStateType::IN_GAME)
-            newInterface = static_cast<GUI::Interface*>(new GUI::PauseInterface(&this->mouse, static_cast<Stage*>(currentInter)));
+            newInterface = static_cast<GUI::Interface*>(new GUI::PauseInterface(static_cast<Stage*>(currentInter)));
         break;
     case Trait::GameStateType::IN_GAME:
         if (currentInter->GetType() == Trait::GameStateType::PAUSE_MENU)

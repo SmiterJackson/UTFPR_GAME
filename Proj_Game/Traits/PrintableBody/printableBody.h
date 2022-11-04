@@ -12,8 +12,7 @@ namespace Trait
 	class PrintableBody
 	{
 	public:
-		PrintableBody(const std::string path = "", const sf::IntRect sheetCut = sf::IntRect(),
-					  const float proportion = 1.0f);
+		PrintableBody(const std::string path = "", const sf::IntRect sheetCut = sf::IntRect(), const float proportion = 1.0f);
 		virtual ~PrintableBody();
 
 		const sf::Vector2u GetTextureSize() const { return this->texture->getSize(); };

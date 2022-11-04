@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../Managers/ColisionManager/colisionManager.h"
+#include "../../Managers/ColisionManager/colision_manager.h"
 #include "../GUI/Interfaces/Interface/interface.h"
 #include "../Entes/Obstacles/obstacle/obstacle.h"
 #include "../Characters/Player/player.h"
@@ -33,7 +33,7 @@ public:
 					it->second[i].setScale(_size_coeff, _size_coeff);
 		};
 
-		void SelfPrint(sf::RenderWindow& context_window, const float& pElapsedTime);
+		void SelfPrint(const float& pElapsedTime);
 		void Execute(const float& pElapsedTime);
 
 	private:
@@ -56,7 +56,7 @@ public:
 	void Initalize(const float size_coefficient);
 	void InputHandle(const sf::Event& _event);
 
-	void SelfPrint(sf::RenderWindow& context_window, const float& pElapsedTime);
+	void SelfPrint(const float& pElapsedTime);
 	void Execute(const float& pElapsedTime);
 	void ReadArchive(const std::string path);
 

@@ -2,29 +2,46 @@
 
 #include "../Interface/interface.h"
 
-class Game;
 class Stage;
 
 namespace GUI 
 {
+	enum Text
+	{
+		VOLTAR = 0,
+		INCLUIR,
+		EXCLUIR,
+		MENU
+	};
+
+	typedef std::map<unsigned short int, std::string> IntToText;
+	typedef std::unordered_map<std::string, void(*)()> StringToFunc;
+
 	class PauseInterface : public Interface
 	{
 	public:
 		PauseInterface();
-		PauseInterface(Mouse* _pMouse, Stage* _pStage);
+		PauseInterface(Stage* _pStage);
 		~PauseInterface();
 
-		void SelfPrint(sf::RenderWindow& context_window, const float& pElapsedTime);
+		void SelfPrint(const float& pElapsedTime);
 		void InputHandle(const sf::Event& _event);
 		void Execute(const float& pElapsedTime);
 
 	private:
 		void VerifyButtons();
-		void ButtonActive(std::vector<Button>::iterator buttonIt);
+
+		static void ChangeGameState();
+		static void AddPlayer();
+		static void RemovePlayer();
+		static void ReturnToMainMenu();
 
 	private:
-		std::vector<Button> buttons;
+		static const IntToText buttonsTxt;
+		static StringToFunc funcMap;
+		static Stage* pStage;
 
-		Stage* pStage;
+		sf::RectangleShape background;
+		std::vector<Button> buttons;
 	};
 }

@@ -1,5 +1,4 @@
 #include "player.h"
-#include "../Managers/GraphicManager/graphic_manager.h"
 using namespace Characters;
 
 #define P1_TEXTURE_REF "Proj_Game/Resources/characters/player/sheets/DinoSprites_mort.png"
@@ -32,7 +31,6 @@ Player::Player(float size_proportion) :
 	playerId(playerList.size())
 {
 	playerList.emplace_back(this);
-	Manager::GraphicManager::UpdateCamera();
 
 	if (playerList.size() == 1)
 		this->SetTexture(P1_TEXTURE_REF, sf::IntRect(0, 0, TEXTURE_TOKEN_SIZE, TEXTURE_TOKEN_SIZE));
@@ -273,7 +271,7 @@ void Player::Execute(const float& pElapsedTime)
 #endif
 };
 
-void Player::InCollision(const Entity* _other, const sf::Vector2f& intersection)
+void Player::InCollision(Entity* _other, const sf::Vector2f& intersection)
 {
 	sf::Vector2f distance(
 		_other->GetPosition().x - this->GetPosition().x,
@@ -288,7 +286,10 @@ void Player::InCollision(const Entity* _other, const sf::Vector2f& intersection)
 				this->onGround = true;
 		}
 		else
+		{
 			this->MovePosition(0.f, -(intersection.y));
+			this->speedV = 0.f;
+		}
 	}
 	else
 	{
@@ -315,9 +316,15 @@ void Player::OfCollision(const sf::FloatRect& ofBounds, const unsigned short int
 	}
 
 	if (bounds.left < ofBounds.left)
+	{
+		this->speedH = 0.f;
 		offSet.x += ofBounds.left - bounds.left;
+	}
 	else if (bounds.width > ofBounds.width)
+	{
+		this->speedH = 0.f;
 		offSet.x += ofBounds.width - bounds.width;
+	}
 
 	this->MovePosition(offSet);
 };

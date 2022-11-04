@@ -14,6 +14,6 @@ namespace Obstacles
 					 const bool isStatic = true, const bool repeated = false);
 		~AnimObstacle();
 
-		virtual void SelfPrint(sf::RenderWindow& context_window, const float& pElapsedTime);
+		virtual void SelfPrint(const float& pElapsedTime);
 	};
 }

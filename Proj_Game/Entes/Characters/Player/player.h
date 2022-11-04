@@ -2,11 +2,6 @@
 
 #include "../Character/character.h"
 
-namespace Manager
-{
-	class GraphicManager;
-}
-
 namespace Characters
 {
 	class Player : public Character
@@ -24,7 +19,7 @@ namespace Characters
 		void InputHandle(const sf::Event& _event);
 
 	protected:
-		virtual void InCollision(const Entity* _other, const sf::Vector2f& intersection);
+		virtual void InCollision(Entity* _other, const sf::Vector2f& intersection);
 		virtual void OfCollision(const sf::FloatRect& ofBounds, const unsigned short int colType);
 
 	private:

@@ -1,11 +1,12 @@
-#include "colisionManager.h"
+#include "colision_manager.h"
 #include "../GraphicManager/graphic_manager.h"
 #include "../Entes/Stage/stage.h"
+using namespace Manager;
 
 #define OFFSET sf::Vector2f(0.f, 0.001f)
 #define COLISION_CHECK_TIMER 0.2f
 
-Manager::ColisionManager::ColisionManager(Stage& stage, Lista<Entity*>* _pEntities):
+ColisionManager::ColisionManager(Stage& stage, Lista<Entity*>* _pEntities):
 	entities(), stageRef(stage), accumulator(0.f)
 {
 	Lista<Entity*>::iterador it;
@@ -19,10 +20,10 @@ Manager::ColisionManager::ColisionManager(Stage& stage, Lista<Entity*>* _pEntiti
 		}
 	}
 };
-Manager::ColisionManager::~ColisionManager()
+ColisionManager::~ColisionManager()
 {};
 
-void Manager::ColisionManager::UpdateColisions(const float& pElapsedTime)
+void ColisionManager::UpdateColisions(const float& pElapsedTime)
 {
 	ColisonVector::iterator ente;
 	ColisonVector::iterator otherEnt;
@@ -32,7 +33,7 @@ void Manager::ColisionManager::UpdateColisions(const float& pElapsedTime)
 	if (this->accumulator >= COLISION_CHECK_TIMER)
 	{
 		// Verifica colisões apenas entre entidades proximas a camera
-		camVector = Manager::GraphicManager::GetCameraEntities(this->entities);
+		camVector = GraphicManager::GetCameraEntities(this->entities);
 
 		for (ente = camVector.begin(); ente != camVector.end(); ente++)
 		{
@@ -53,11 +54,11 @@ void Manager::ColisionManager::UpdateColisions(const float& pElapsedTime)
 	}
 };
 
-void Manager::ColisionManager::Add(Entity* entity)
+void ColisionManager::Add(Entity* entity)
 {
 	entities.emplace_back(entity);
 };
-void Manager::ColisionManager::AddRange(Lista<Entity*>* _entities)
+void ColisionManager::AddRange(Lista<Entity*>* _entities)
 {
 	Lista<Entity*>::iterador it;
 
@@ -69,7 +70,7 @@ void Manager::ColisionManager::AddRange(Lista<Entity*>* _entities)
 		}
 	}
 };
-void Manager::ColisionManager::Remove(const unsigned long long int entityId)
+void ColisionManager::Remove(const unsigned long long int entityId)
 {
 	ColisonVector::const_iterator cIt;
 
@@ -82,7 +83,7 @@ void Manager::ColisionManager::Remove(const unsigned long long int entityId)
 		}
 	};
 };
-void Manager::ColisionManager::RemoveRange(const std::vector<unsigned long long int> entitiesIds)
+void ColisionManager::RemoveRange(const std::vector<unsigned long long int> entitiesIds)
 {
 	std::vector<unsigned long long int>::const_iterator idCit;
 	ColisonVector::const_iterator cIt;
@@ -100,7 +101,7 @@ void Manager::ColisionManager::RemoveRange(const std::vector<unsigned long long 
 	}
 };
 
-void Manager::ColisionManager::CheckInColision(Entity* entity, Entity* other)
+void ColisionManager::CheckInColision(Entity* entity, Entity* other)
 {
 	// Aplica-se o offset para verificar se há uma plataforma abaixo da entidade
 	sf::Vector2f distance(entity->GetPosition() - other->GetPosition() + OFFSET);
@@ -117,7 +118,7 @@ void Manager::ColisionManager::CheckInColision(Entity* entity, Entity* other)
 		other->Collided(entity, intersection, entity->GetBounds(), CollisionType::EntityColl);
 	}
 };
-void Manager::ColisionManager::CheckOfColision(Entity* entity)
+void ColisionManager::CheckOfColision(Entity* entity)
 {
 	sf::FloatRect cameraBounds(Manager::GraphicManager::GetViewBounds());
 	sf::FloatRect stageBounds(this->stageRef.GetBounds());
@@ -131,11 +132,11 @@ void Manager::ColisionManager::CheckOfColision(Entity* entity)
 		entity->Collided(nullptr, sf::Vector2f(), stageBounds, CollisionType::MapColl);
 };
 
-void Manager::ColisionManager::SortElements()
+void ColisionManager::SortElements()
 {
 	QuickSortRecursion(0, this->entities.size() - 1);
 };
-void Manager::ColisionManager::QuickSortRecursion(unsigned int start, unsigned int end)
+void ColisionManager::QuickSortRecursion(unsigned int start, unsigned int end)
 {
 	unsigned int pivotIndex = 0;
 
@@ -147,7 +148,7 @@ void Manager::ColisionManager::QuickSortRecursion(unsigned int start, unsigned i
 	QuickSortRecursion(start, pivotIndex - 1);
 	QuickSortRecursion(pivotIndex + 1, end);
 };
-unsigned int Manager::ColisionManager::SortPartition(unsigned int start, unsigned int end)
+unsigned int ColisionManager::SortPartition(unsigned int start, unsigned int end)
 {
 	ColisonVector::iterator it;
 	unsigned int pivotValue = 0, pivotIndex = 0, i = 0;
@@ -178,7 +179,7 @@ unsigned int Manager::ColisionManager::SortPartition(unsigned int start, unsigne
 	return pivotIndex;
 };
 
-unsigned int Manager::ColisionManager::Mediana(unsigned int val_1, unsigned int val_2, unsigned int val_3)
+unsigned int ColisionManager::Mediana(unsigned int val_1, unsigned int val_2, unsigned int val_3)
 {
 	unsigned int median = 0;
 
@@ -190,7 +191,7 @@ unsigned int Manager::ColisionManager::Mediana(unsigned int val_1, unsigned int 
 
 	return median;
 };
-void Manager::ColisionManager::ExchangePointers(Entity** p1, Entity** p2)
+void ColisionManager::ExchangePointers(Entity** p1, Entity** p2)
 {
 	Entity* aux = nullptr;
 

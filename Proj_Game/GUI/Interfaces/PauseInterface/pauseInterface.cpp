@@ -1,61 +1,80 @@
 #include "pauseInterface.h"
 #include "../game/game.h"
 #include "../Entes/Stage/stage.h"
+#include "../Managers/GraphicManager/graphic_manager.h"
 using namespace Manager;
 using namespace Trait;
+using namespace GUI;
 
-#define TEXT_SIZE 16
-#define BTN_PROPORTION_TO_CAMERA 0.2f
+#define TEXT_SIZE 16U
+#define BTN_PROPORTION_TO_CAMERA 0.15f
 
-GUI::PauseInterface::PauseInterface():
-	Interface(GameStateType::PAUSE_MENU),
-	pStage(nullptr)
-{};
-GUI::PauseInterface::PauseInterface(Mouse* _pMouse, Stage* _pStage):
-	Interface(GameStateType::PAUSE_MENU, static_cast<Interface*>(_pStage)),
-	pStage(_pStage)
+const IntToText	PauseInterface::buttonsTxt = 
 {
-	std::vector<std::string>::iterator it;
-	std::vector<std::string> buttonsTxt;
+	IntToText::value_type(Text::VOLTAR,		"VOLTAR"),
+	IntToText::value_type(Text::INCLUIR,	"INCLUIR P2"),
+	IntToText::value_type(Text::EXCLUIR,	"EXCLUIR"),
+	IntToText::value_type(Text::MENU,		"MENU")
+};
+StringToFunc PauseInterface::funcMap = 
+{
+	StringToFunc::value_type(buttonsTxt.at(Text::VOLTAR),	&ChangeGameState),
+	StringToFunc::value_type(buttonsTxt.at(Text::INCLUIR),	&AddPlayer),
+	StringToFunc::value_type(buttonsTxt.at(Text::EXCLUIR),	&RemovePlayer),
+	StringToFunc::value_type(buttonsTxt.at(Text::MENU),		&ReturnToMainMenu)
+};
+Stage* PauseInterface::pStage = nullptr;
 
+PauseInterface::PauseInterface():
+	Interface(GameStateType::PAUSE_MENU),
+	background(), buttons()
+{};
+PauseInterface::PauseInterface(Stage* _pStage):
+	Interface(GameStateType::PAUSE_MENU, static_cast<Interface*>(_pStage)),
+	background(), buttons()
+{
 	sf::Vector2f camSize(GraphicManager::GetView()->getSize());
 	sf::Vector2f position(GraphicManager::GetView()->getCenter());
 	sf::Vector2f btnSize(camSize * BTN_PROPORTION_TO_CAMERA);
+	unsigned int i = 0, counter = 2;
 
-	unsigned int counter = 1;
+	pStage = _pStage;
 
-	buttonsTxt.emplace_back("VOLTAR");
-	if(Characters::Player::GetNumberOfPlayers() < 2)
-		buttonsTxt.emplace_back("INCLUIR P2");
-	else
-		buttonsTxt.emplace_back("EXCLUIR P2");
-	buttonsTxt.emplace_back("MENU");
+	this->background.setSize(camSize);
+	this->background.setOrigin(camSize / 2.f);
+	this->background.setPosition(position);
+	this->background.setFillColor(sf::Color(60, 6, 125, 40));
 
 	this->buttons.reserve(buttonsTxt.size());
-	for (it = buttonsTxt.begin(), counter = 1; it != buttonsTxt.end(); it++, counter++)
+	for (i = Text::VOLTAR, counter = 2; i <= Text::MENU; i++, counter++)
 	{
-		position.y = (camSize.y / buttonsTxt.size()) * counter;
+		if (Characters::Player::GetNumberOfPlayers() >= 2 && i == Text::INCLUIR)
+			i++;
+		if (Characters::Player::GetNumberOfPlayers() == 1 && i == Text::EXCLUIR)
+			i++;
+
+		position.y = 40.f + (camSize.y / 5) * counter;
 		this->buttons.emplace_back(
-			btnSize, position, GraphicManager::GetFont(),
-			(*it), TEXT_SIZE, _pMouse,
-			sf::Color(187, 158, 132), sf::Color(240, 120, 16),
-			sf::Color(80, 80, 80), sf::Color(60, 60, 60)
+				btnSize, position, GraphicManager::GetFont(), buttonsTxt.at(i), TEXT_SIZE,
+				sf::Color(255, 215, 60), sf::Color(255, 215, 60),
+				sf::Color(30, 150, 95), sf::Color(20, 100, 63)
 		);
 	}
 };
-GUI::PauseInterface::~PauseInterface()
+PauseInterface::~PauseInterface()
 {};
 
-void GUI::PauseInterface::SelfPrint(sf::RenderWindow& context_window, const float& pElapsedTime)
+void PauseInterface::SelfPrint(const float& pElapsedTime)
 {
 	std::vector<Button>::iterator it;
 
-	this->PrintPreviousInterface(context_window, pElapsedTime);
+	this->PrintPreviousInterface(pElapsedTime);
 
+	GraphicManager::Draw(this->background);
 	for (it = this->buttons.begin(); it != this->buttons.end(); it++)
-		it->SelfPrint(context_window, pElapsedTime);
+		it->SelfPrint(pElapsedTime);
 };
-void GUI::PauseInterface::InputHandle(const sf::Event& _event)
+void PauseInterface::InputHandle(const sf::Event& _event)
 {
 	switch (_event.type)
 	{
@@ -70,7 +89,7 @@ void GUI::PauseInterface::InputHandle(const sf::Event& _event)
 		break;
 	}
 };
-void GUI::PauseInterface::Execute(const float& pElapsedTime)
+void PauseInterface::Execute(const float& pElapsedTime)
 {
 	std::vector<Button>::iterator it;
 
@@ -78,7 +97,7 @@ void GUI::PauseInterface::Execute(const float& pElapsedTime)
 		it->Execute(pElapsedTime);
 };
 
-void GUI::PauseInterface::VerifyButtons()
+void PauseInterface::VerifyButtons()
 {
 	std::vector<Button>::iterator it;
 
@@ -86,31 +105,32 @@ void GUI::PauseInterface::VerifyButtons()
 	{
 		if (it->IsClicked())
 		{
-			this->ButtonActive(it);
+			//Para o texto inserido nno botão e utilizado como chave do mapa de funções chama a função do dado texto
+			funcMap[it->GetText()]();
+
+			if (it->GetText() == buttonsTxt.at(Text::INCLUIR))
+				it->SetText(buttonsTxt.at(Text::EXCLUIR));
+			else if(it->GetText() == buttonsTxt.at(Text::EXCLUIR))
+				it->SetText(buttonsTxt.at(Text::INCLUIR));
+
 			break;
 		}
 	}
 };
-void GUI::PauseInterface::ButtonActive(std::vector<Button>::iterator buttonIt)
-{
-	if(buttonIt->GetId() == this->buttons[0].GetId())
-		Game::SetGameState(GameStateType::IN_GAME);
 
-	else if(buttonIt->GetId() == this->buttons[1].GetId())
-	{
-		if (Characters::Player::GetNumberOfPlayers() >= 2)
-		{
-			this->pStage->AddPlayer();
-			this->buttons[1].SetText("EXCLUIR P2");
-		}
-		else if (Characters::Player::GetNumberOfPlayers() < 2)
-		{
-			this->pStage->RemovePlayer();
-			this->buttons[1].SetText("INCLUIR P2");
-		}
-	}
-	else
-	{
-		
-	}
+void PauseInterface::ChangeGameState()
+{
+	Game::SetGameState(GameStateType::IN_GAME);
+};
+void PauseInterface::AddPlayer()
+{
+	pStage->AddPlayer();
+};
+void PauseInterface::RemovePlayer()
+{
+	pStage->RemovePlayer();
+};
+void PauseInterface::ReturnToMainMenu()
+{
+	Game::SetGameState(GameStateType::MAIN_MENU);
 };

@@ -5,7 +5,8 @@
 Trait::PrintableBody::PrintableBody(const std::string path, const sf::IntRect sheetCut, const float proportion):
 	texture(nullptr), body()
 {
-	this->texture = Manager::GraphicManager::LoadTexture(path);
+	if(!path.empty())
+		this->texture = Manager::GraphicManager::LoadTexture(path);
 
 	this->body.setScale(proportion, proportion);
 
@@ -44,7 +45,7 @@ void Trait::PrintableBody::SetTexture(const std::string path, const sf::IntRect 
 
 		this->body.setTexture(*this->texture);
 		this->texture->setRepeated(false);
-
+		
 		if (sheetCut.left != sheetCut.width && sheetCut.top != sheetCut.height)
 		{
 			this->body.setTextureRect(sheetCut);

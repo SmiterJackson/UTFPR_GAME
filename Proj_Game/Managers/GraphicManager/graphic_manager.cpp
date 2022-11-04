@@ -4,6 +4,7 @@ using namespace Manager;
 #define FONT_PATH "Proj_Game/Resources/fonts/EquipmentPro.ttf"
 
 #define CAMERA_ZOOM 2.f
+#define GAME_GRID_SIZE 32.f
 
 #define VIEW_SIZE sf::Vector2f(1440.f / CAMERA_ZOOM, 810.f / CAMERA_ZOOM)
 #define WINDOW_SIZE sf::Vector2i(1440, 810)
@@ -15,14 +16,13 @@ using namespace Manager;
 
 #define OFF_CAMERA_EXTRA_SPACE_COEFF 0.5f
 
+float               GraphicManager::gridSize    =   GAME_GRID_SIZE;
+sf::Font*           GraphicManager::font        =   nullptr;
 GraphicManager*     GraphicManager::instance    =   nullptr;
 sf::RenderWindow*   GraphicManager::window      =   nullptr;
-Interfaces*         GraphicManager::pInterfaces =   nullptr;
-unsigned short int* GraphicManager::pGameState  =   nullptr;
-sf::Font*           GraphicManager::font        =   nullptr;
-sf::View            GraphicManager::view        =   sf::View(sf::Vector2f(), VIEW_SIZE);
 sf::FloatRect       GraphicManager::cameraLim   =   sf::FloatRect();
-TextureMap          GraphicManager::textures = TextureMap();
+TextureMap          GraphicManager::textures    =   TextureMap();
+sf::View            GraphicManager::view        =   sf::View(sf::Vector2f(), VIEW_SIZE);
 
 GraphicManager* GraphicManager::GetGraphicInstance(float& _elapsedTimeRef, Interfaces* _pInterfaces)
 {
@@ -30,7 +30,7 @@ GraphicManager* GraphicManager::GetGraphicInstance(float& _elapsedTimeRef, Inter
     {
         instance = new GraphicManager(_elapsedTimeRef, _pInterfaces);
         if (instance == nullptr)
-            std::cerr << "Nao foi possivel alocar um gerenciador grafico" << std::endl;
+            std::cerr << "Nao foi possivel instanciar um gerenciador grafico: graphic_manager." << std::endl;
     }
 
     return instance;
@@ -42,15 +42,13 @@ void GraphicManager::DesconstructGraphicInstance()
 };
 
 GraphicManager::GraphicManager(float& _elapsedTimeRef, Interfaces* _pInterfaces) :
-    originalSize(VIEW_SIZE),
+    originalSize(VIEW_SIZE), pInterfaces(_pInterfaces),
     zoom(CAMERA_ZOOM), elapsedTimeRef(_elapsedTimeRef),
     lock_x(DISTORTION_X), lock_y(DISTORTION_Y),
     bar_x(BLCK_BAR_X), bar_y(BLCK_BAR_Y)
 {
     window = new sf::RenderWindow(sf::VideoMode(WINDOW_SIZE.x, WINDOW_SIZE.y), "JANELA DE CONTEXTO");
     window->setKeyRepeatEnabled(false);
-
-    pInterfaces = _pInterfaces;
 
     if (font == nullptr)
     {
@@ -59,37 +57,19 @@ GraphicManager::GraphicManager(float& _elapsedTimeRef, Interfaces* _pInterfaces)
         if (font != nullptr)
             font->loadFromFile(FONT_PATH);
         else
-            std::cerr << "Nao foi possivel alocar uma fonte de texto." << std::endl;
+            std::cerr << "Nao foi possivel alocar uma fonte de texto: graphic_manager." << std::endl;
     }
 };
 GraphicManager::~GraphicManager()
 {
-    window->close();
-};
+    if (window != nullptr)
+    {
+        window->close();
+        delete window;
+    }
 
-void GraphicManager::InvertDistortion_X()
-{
-    this->lock_x = !this->lock_x;
-    if (!this->lock_x && this->bar_x)
-        this->bar_x = false;
-};
-void GraphicManager::InvertDistortion_Y()
-{
-    this->lock_y = !this->lock_y;
-    if (!this->lock_y && this->bar_y)
-        this->bar_y = false;
-};
-void GraphicManager::InvertBar_X()
-{
-    this->bar_x = !this->bar_x;
-    if (this->bar_x && !this->lock_x)
-        this->lock_x = true;
-};
-void GraphicManager::InvertBar_Y()
-{
-    this->bar_y = !this->bar_y;
-    if (this->bar_y && !this->lock_y)
-        this->lock_y = true;
+    if (font != nullptr)
+        delete font;
 };
 
 void GraphicManager::UpdateCamera()
@@ -98,7 +78,6 @@ void GraphicManager::UpdateCamera()
     std::list<Characters::Player*> pList = Characters::Player::GetPlayerList();
     sf::Vector2f diff, radious(view.getSize() / 2.f);
     sf::Vector2f least, most;
-    float val = 0.f;
 
     constexpr float max = std::numeric_limits<float>::max();
     constexpr float min = std::numeric_limits<float>::lowest();
@@ -141,15 +120,8 @@ void GraphicManager::UpdateCamera()
         }
         if (least.y - radious.y < cameraLim.top)
         {
-            val = 0;
-            val = (least.y - radious.y) - cameraLim.top;
-
             if (cameraLim.top <= 0)
-            {
-                val = least.y - radious.y;
-                val = radious.y - cameraLim.top;
                 least.y += fabs(least.y - radious.y - cameraLim.top);
-            }
             else
                 least.y += least.y - radious.y - cameraLim.top;
         }
@@ -234,14 +206,22 @@ const ColisonVector GraphicManager::GetCameraEntities(const ColisonVector& entit
 
     return entitiesInCam;
 };
-const sf::FloatRect GraphicManager::GetViewBounds()
+
+void GraphicManager::Draw(const sf::RectangleShape& drawTarget)
 {
-    return sf::FloatRect(
-        view.getCenter().x - view.getSize().x,
-        view.getCenter().y - view.getSize().y,
-        view.getCenter().x + view.getSize().x,
-        view.getCenter().y + view.getSize().y
-    );
+    window->draw(drawTarget);
+};
+void GraphicManager::Draw(const sf::CircleShape& drawTarget)
+{
+    window->draw(drawTarget);
+};
+void GraphicManager::Draw(const sf::Sprite& drawTarget)
+{
+    window->draw(drawTarget);
+};
+void GraphicManager::Draw(const sf::Text& drawTarget)
+{
+    window->draw(drawTarget);
 };
 
 sf::Texture* GraphicManager::LoadTexture(std::string texturePath)
@@ -267,13 +247,14 @@ sf::Texture* GraphicManager::LoadTexture(std::string texturePath)
 
     return newTexture;
 };
-void GraphicManager::Draw()
+void GraphicManager::Update()
 {
 	std::list<Ente*>::const_iterator cIt;
 
     window->clear();
-
-	pInterfaces->top()->SelfPrint(*window, elapsedTimeRef);
+    
+    pInterfaces->top()->SelfPrint(elapsedTimeRef);
+	//pInterfaces->top()->SelfPrint(*window, elapsedTimeRef);
 
     window->setView(view);
     window->display();

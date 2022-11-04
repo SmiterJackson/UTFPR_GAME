@@ -156,14 +156,18 @@ public:
 	void PopBack()
 	{
 		Element<T>* aux = nullptr;
+
 		if(this->last != nullptr)
 		{
 			aux = this->last->GetPrevious();
-			aux->SetNext(this->first);
+
+			if (aux != nullptr)
+				aux->SetNext(nullptr);
+
 			delete this->last;
 			this->last = aux;
-			this->first->SetPrevious(this->last);
-			size--;
+
+			this->size--;
 		}
 	};
 	void PopAt(const unsigned int val)
@@ -172,15 +176,32 @@ public:
 		Element<T>* aux = this->first;
 
 		for (i = 0U; i < val && i < this->size; i++)
+		{
+			if (aux == nullptr)
+			{
+				std::cerr << "Nao foi possivel remover elemento da lista: Overload unsigned int." << std::endl;
+				return;
+			}
 			aux = aux->GetNext();
+		}
 
 		if (aux != nullptr)
 		{
-			aux->GetPrevious()->SetNext(aux->GetNext());
-			aux->GetNext()->SetPrevious(aux->GetPrevious());
+			if (aux->GetPrevious() != nullptr)
+				aux->GetPrevious()->SetNext(aux->GetNext());
+
+			if (aux->GetNext() != nullptr)
+				aux->GetNext()->SetPrevious(aux->GetPrevious());
+
+			if (aux == this->last && aux->GetPrevious() != nullptr)
+				this->last = aux->GetPrevious();
+
+			if (aux == this->first && aux->GetNext() != nullptr)
+				this->first = aux->GetNext();
 		}
 
 		delete aux;
+		this->size--;
 	};
 	void PopAt(iterador it)
 	{
@@ -188,15 +209,32 @@ public:
 		Element<T>* aux = this->first;
 
 		for (i = 0U; i < it.ListPosition() && i < this->size; i++)
+		{
+			if (aux == nullptr)
+			{
+				std::cerr << "Nao foi possivel remover elemento da lista: Overload Iterador." << std::endl;
+				return;
+			}
 			aux = aux->GetNext();
+		}
 
 		if (aux != nullptr)
 		{
-			aux->GetPrevious()->SetNext(aux->GetNext());
-			aux->GetNext()->SetPrevious(aux->GetPrevious());
+			if (aux->GetPrevious() != nullptr)
+				aux->GetPrevious()->SetNext(aux->GetNext());
+
+			if (aux->GetNext() != nullptr)
+				aux->GetNext()->SetPrevious(aux->GetPrevious());
+
+			if (aux == this->last && aux->GetPrevious() != nullptr)
+				this->last = aux->GetPrevious();
+
+			if (aux == this->first && aux->GetNext() != nullptr)
+				this->first = aux->GetNext();
 		}
 
 		delete aux;
+		this->size--;
 	};
 
 	Element<T>* const GetFirst(){ return this->first; };
@@ -250,11 +288,15 @@ private:
 			p1->SetNext(p2->GetNext());
 			p2->SetNext(aux);
 
-			p1->GetPrevious()->SetNext(p1);
-			p1->GetNext()->SetPrevious(p1);
+			if(p1->GetPrevious() != nullptr)
+				p1->GetPrevious()->SetNext(p1);
+			if (p1->GetNext() != nullptr)
+				p1->GetNext()->SetPrevious(p1);
 
-			p2->GetPrevious()->SetNext(p2);
-			p2->GetNext()->SetPrevious(p2);
+			if (p2->GetPrevious() != nullptr)
+				p2->GetPrevious()->SetNext(p2);
+			if (p2->GetNext() != nullptr)
+				p2->GetNext()->SetPrevious(p2);
 		}
 	};
 	unsigned int SortPartition(unsigned int start, unsigned int end)
@@ -299,7 +341,8 @@ private:
 public:
 	void SortElements()
 	{
-		QuickSortRecursion(0, this->size - 1);
+		if(this->size >= 2)
+			QuickSortRecursion(0, this->size - 1);
 	};
 
 private:

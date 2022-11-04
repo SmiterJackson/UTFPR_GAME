@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../Entes/Mouse/mouse.h"
+#include "../Entes/Ente/ente.h"
 
 const enum BUTTON_STATUS 
 {
@@ -15,7 +15,7 @@ namespace GUI
 	public:
 		Button();
 		Button(const sf::Vector2f _size, const sf::Vector2f _position, sf::Font* _font,
-			   const std::string _text_data, const unsigned int _char_size, Mouse* _pMouse,
+			   const std::string _text_data, const unsigned int _char_size,
 			   sf::Color _textColor_idle, sf::Color _textColor_hover,
 			   sf::Color _bodyColor_idle, sf::Color _bodyColor_hover);
 		~Button();
@@ -23,9 +23,10 @@ namespace GUI
 		void SetPosition(const sf::Vector2f position);
 		void SetPosition(const float x, const float y);
 
-		void SetText(const std::string _text_data) { this->text.setString(_text_data); };
+		void SetText(const std::string _text_data);
+		const std::string GetText() { return this->text.getString(); };
 
-		void SelfPrint(sf::RenderWindow& context_window, const float& pElapsedTime);
+		void SelfPrint(const float& pElapsedTime);
 		void Execute(const float& pElapsedTime);
 
 		bool IsClicked();
@@ -34,13 +35,9 @@ namespace GUI
 		short unsigned button_status;
 
 		sf::RectangleShape body;
-
-		sf::Font* font;
 		sf::Text text;
 
 		sf::Color textColor_idle, textColor_hover;
 		sf::Color bodyColor_idle, bodyColor_hover;
-
-		Mouse* pMouse;
 	};
 }

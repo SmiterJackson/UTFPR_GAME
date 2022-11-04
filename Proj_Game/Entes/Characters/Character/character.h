@@ -14,13 +14,17 @@ namespace Characters
 	{
 	public:
 		Character();
-		Character(const unsigned short int _type, const sf::Vector2f _size, const sf::Vector2f _position, 
-				  const std::string path = "", const AnimationSheet _animations = AnimationSheet(),
-				  const unsigned int _lifeAmount = 0, const float invcFramDuration = 0.f, const bool isStatic = true, 
-				  const float size_coeff = 1.0f);
+		Character(const unsigned short int _type, const sf::Vector2f _size, const sf::Vector2f _position, const std::string path = "",
+				  const AnimationSheet _animations = AnimationSheet(), const unsigned int _lifeAmount = 0, 
+				  const float invcFramDuration = 0.f, const bool isStatic = true, const float size_coeff = 1.0f);
 		virtual ~Character();
 
 		const unsigned int GetLifeCount() const { return this->life_counter; };
+		void Damaged() 
+		{
+			this->life_counter--;
+			this->invecTimer = this->invcFrames;
+		};
 
 		void MovePosition(const sf::Vector2f _newPosition) 
 		{ 
@@ -39,16 +43,17 @@ namespace Characters
 			this->SetTextureProportion(proportion);
 		};
 
-		virtual void SelfPrint(sf::RenderWindow& context_window, const float& pElapsedTime);
+		virtual void SelfPrint(const float& pElapsedTime);
+		virtual void Execute(const float& pElapsedTime);
 
 	protected:
-		virtual void InCollision(const Entity* _other, const sf::Vector2f& intersection);
+		virtual void InCollision(Entity* _other, const sf::Vector2f& intersection);
 		virtual void OfCollision(const sf::FloatRect& ofBounds, const unsigned short int colType);
 
 	protected:
-		bool invencible;
+		const float invcFrames;
+		float invecTimer;
 
-		float invcFrames;
 		float speedH; // Velocidade horizontal
 		float speedV; // Velocidade vertical
 

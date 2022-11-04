@@ -1,7 +1,18 @@
-﻿  stage.cpp
+﻿  player.cpp
+  stage.cpp
+  button.cpp
+  interface.cpp
+  pauseInterface.cpp
+  colisionManager.cpp
+  graphic_manager.cpp
+  Proj_Game.cpp
+  animated.cpp
+  printableBody.cpp
+  game.cpp
   Generating code
-  2 of 1257 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    1 functions had inline decision re-evaluated but remain unchanged
+C:\Dev\Cplusplus\Game\Proj_Game\GUI\Button\button.h(27): warning C4172: returning address of local variable or temporary
+  508 of 1562 functions (32.5%) were compiled, the rest were copied from previous compilation.
+    253 functions were new in current compilation
+    154 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   Proj_Game.vcxproj -> C:\Dev\Cplusplus\Game\Proj_Game Release.exe

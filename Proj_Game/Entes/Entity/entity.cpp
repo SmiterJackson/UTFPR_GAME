@@ -1,4 +1,6 @@
 #include "entity.h"
+#include "../Managers/GraphicManager/graphic_manager.h"
+using namespace Manager;
 
 #ifdef _DEBUG
 #define ORIGIN_SIZE 1.f
@@ -43,11 +45,11 @@ Entity::Entity(const unsigned short int _type, const unsigned short int printPri
 Entity::~Entity()
 {};
 
-void Entity::SelfPrint(sf::RenderWindow& context_window, const float& pElapsedTime)
+void Entity::SelfPrint(const float& pElapsedTime)
 {
 #ifdef _DEBUG
-	context_window.draw(this->hitBox);
-	context_window.draw(this->origin);
+	GraphicManager::Draw(this->hitBox);
+	GraphicManager::Draw(this->origin);
 #endif
 };
 void Entity::Execute(const float& pElapsedTime)
@@ -58,7 +60,7 @@ void Entity::Execute(const float& pElapsedTime)
 #endif
 };
 
-void Entity::Collided(const Entity* _other, const sf::Vector2f& intersection,
+void Entity::Collided(Entity* _other, const sf::Vector2f& intersection,
 					  const sf::FloatRect& otherBounds, const unsigned short int colType)
 {
 	if (colType == CollisionType::CameraColl || colType == CollisionType::MapColl)

@@ -33,7 +33,7 @@
     <ClCompile Include="Managers\GraphicManager\graphic_manager.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Managers\ColisionManager\colisionManager.cpp">
+    <ClCompile Include="Managers\ColisionManager\colision_manager.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="Entes\Characters\Player\player.cpp">
@@ -60,9 +60,6 @@
     <ClCompile Include="GUI\Button\button.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Entes\Mouse\mouse.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
     <ClCompile Include="GUI\Interfaces\Interface\interface.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
@@ -73,6 +70,12 @@
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="Traits\GameState\GameState.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Entes\Projectiles\BaseProjectile\baseProjectile.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Managers\EventManager\event_manager.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
   </ItemGroup>
@@ -92,7 +95,7 @@
     <ClInclude Include="Managers\GraphicManager\graphic_manager.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Managers\ColisionManager\colisionManager.h">
+    <ClInclude Include="Managers\ColisionManager\colision_manager.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="Entes\Characters\Player\player.h">
@@ -122,9 +125,6 @@
     <ClInclude Include="GUI\Button\button.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Entes\Mouse\mouse.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
     <ClInclude Include="GUI\Interfaces\Interface\interface.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
@@ -135,6 +135,12 @@
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="Traits\GameState\gameState.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Entes\Projectiles\BaseProjectile\baseProjectile.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Managers\EventManager\event_manager.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>
@@ -152,5 +158,11 @@
   <ItemGroup>
     <None Include="Stages\stage2.dat" />
     <None Include="Stages\stage1.dat" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Resources\fonts\EquipmentPro.ttf" />
+    <Font Include="Resources\fonts\PixelHigh.ttf" />
+    <Font Include="Resources\fonts\PixelMiddle.ttf" />
+    <Font Include="Resources\fonts\PixelSmall.ttf" />
   </ItemGroup>
 </Project>

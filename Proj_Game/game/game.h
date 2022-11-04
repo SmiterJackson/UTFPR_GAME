@@ -24,8 +24,6 @@ private:
 	static unsigned short int gameState;
 
 	Manager::GraphicManager* graphicManager;
-	Mouse mouse;
-
 	Interfaces interfaces;
 
 	float elapsedTime;
