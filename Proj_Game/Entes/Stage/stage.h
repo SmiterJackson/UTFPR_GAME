@@ -1,13 +1,12 @@
 #pragma once
 
-#include "../../Managers/ColisionManager/colision_manager.h"
-#include "../GUI/Interfaces/Interface/interface.h"
-#include "../Entes/Obstacles/obstacle/obstacle.h"
+#include "../Traits/Observer/observer.h"
 #include "../Characters/Player/player.h"
+#include "../Entes/Obstacles/obstacle/obstacle.h"
+#include "../GUI/Interfaces/Interface/interface.h"
+#include "../Managers/ColisionManager/colision_manager.h"
 
-class Game;
-
-class Stage : public GUI::Interface
+class Stage : public GUI::Interface, public Trait::Observer
 {
 public:
 	typedef std::pair<sf::Texture*, std::vector<sf::Sprite>> Layer;
@@ -54,7 +53,7 @@ public:
 	const sf::FloatRect GetBounds() const { return this->worldBounds; };
 
 	void Initalize(const float size_coefficient);
-	void InputHandle(const sf::Event& _event);
+	void UpdateObsever(const sf::Event& _event);
 
 	void SelfPrint(const float& pElapsedTime);
 	void Execute(const float& pElapsedTime);
@@ -71,7 +70,7 @@ public:
 protected:
 	sf::FloatRect worldBounds;
 
-	Manager::ColisionManager colision_manager;
+	Manager::ColisionManager* colision_manager;
 	Parallax background;
 
 	Lista<Entity*> entities;

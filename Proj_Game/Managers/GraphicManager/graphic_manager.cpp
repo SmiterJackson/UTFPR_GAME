@@ -1,4 +1,5 @@
 #include "graphic_manager.h"
+#include "../game/game.h"
 using namespace Manager;
 
 #define FONT_PATH "Proj_Game/Resources/fonts/EquipmentPro.ttf"
@@ -24,26 +25,26 @@ sf::FloatRect       GraphicManager::cameraLim   =   sf::FloatRect();
 TextureMap          GraphicManager::textures    =   TextureMap();
 sf::View            GraphicManager::view        =   sf::View(sf::Vector2f(), VIEW_SIZE);
 
-GraphicManager* GraphicManager::GetGraphicInstance(float& _elapsedTimeRef, Interfaces* _pInterfaces)
+GraphicManager* GraphicManager::GetInstance(Interfaces* _pInterfaces)
 {
     if (instance == nullptr)
     {
-        instance = new GraphicManager(_elapsedTimeRef, _pInterfaces);
+        instance = new GraphicManager(_pInterfaces);
         if (instance == nullptr)
             std::cerr << "Nao foi possivel instanciar um gerenciador grafico: graphic_manager." << std::endl;
     }
 
     return instance;
 };
-void GraphicManager::DesconstructGraphicInstance()
+void GraphicManager::DesconstructInstance()
 {
     if (instance != nullptr)
         delete instance;
 };
 
-GraphicManager::GraphicManager(float& _elapsedTimeRef, Interfaces* _pInterfaces) :
+GraphicManager::GraphicManager(Interfaces* _pInterfaces) :
     originalSize(VIEW_SIZE), pInterfaces(_pInterfaces),
-    zoom(CAMERA_ZOOM), elapsedTimeRef(_elapsedTimeRef),
+    zoom(CAMERA_ZOOM), elapsedTimeRef(Game::GetElapsedTime()),
     lock_x(DISTORTION_X), lock_y(DISTORTION_Y),
     bar_x(BLCK_BAR_X), bar_y(BLCK_BAR_Y)
 {
@@ -63,10 +64,7 @@ GraphicManager::GraphicManager(float& _elapsedTimeRef, Interfaces* _pInterfaces)
 GraphicManager::~GraphicManager()
 {
     if (window != nullptr)
-    {
-        window->close();
         delete window;
-    }
 
     if (font != nullptr)
         delete font;
@@ -133,7 +131,7 @@ void GraphicManager::UpdateCamera()
 
     view.setCenter(least);
 };
-void GraphicManager::WindowResize()
+void GraphicManager::WindowResize() const
 {
     sf::FloatRect newPort(0.f, 0.f, 1.f, 1.f);
     sf::Vector2f newSize(this->originalSize.x, this->originalSize.y);
@@ -254,7 +252,6 @@ void GraphicManager::Update()
     window->clear();
     
     pInterfaces->top()->SelfPrint(elapsedTimeRef);
-	//pInterfaces->top()->SelfPrint(*window, elapsedTimeRef);
 
     window->setView(view);
     window->display();

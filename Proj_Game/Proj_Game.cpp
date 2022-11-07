@@ -3,11 +3,15 @@
 
 int main()
 {
-    Game game;
+    Game* game = Game::GetInstance();
+    if (game == nullptr)
+        return -1;
+
     setlocale(LC_ALL, "");
 
-    if (!game.StartGame())
+    if (!game->StartGame())
         std::cout << "Não foi possível abrir a janela de contexto." << std::endl;
 
+    Game::DesconstructInstance();
     return 0;
 }

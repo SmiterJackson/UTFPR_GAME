@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../Traits/Observer/observer.h"
 #include "../Interface/interface.h"
 
 class Stage;
@@ -17,7 +18,7 @@ namespace GUI
 	typedef std::map<unsigned short int, std::string> IntToText;
 	typedef std::unordered_map<std::string, void(*)()> StringToFunc;
 
-	class PauseInterface : public Interface
+	class PauseInterface : public Interface, public Trait::Observer
 	{
 	public:
 		PauseInterface();
@@ -25,7 +26,7 @@ namespace GUI
 		~PauseInterface();
 
 		void SelfPrint(const float& pElapsedTime);
-		void InputHandle(const sf::Event& _event);
+		void UpdateObsever(const sf::Event& _event);
 		void Execute(const float& pElapsedTime);
 
 	private:

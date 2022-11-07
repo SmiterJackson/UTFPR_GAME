@@ -6,6 +6,25 @@ using namespace Manager;
 #define OFFSET sf::Vector2f(0.f, 0.001f)
 #define COLISION_CHECK_TIMER 0.2f
 
+ColisionManager* ColisionManager::colisionManagerInstance = nullptr;
+
+ColisionManager* ColisionManager::GetInstance(Stage& stage, Lista<Entity*>* _pEntities)
+{
+	if(colisionManagerInstance == nullptr)
+	{
+		colisionManagerInstance = new ColisionManager(stage, _pEntities);
+		if (colisionManagerInstance == nullptr)
+			std::cerr << "Nao foi possivel instanciar um gerenciador de colisoes." << std::endl;
+	}
+
+	return colisionManagerInstance;
+};
+void ColisionManager::DeconstructInstance()
+{
+	if (colisionManagerInstance == nullptr)
+		delete colisionManagerInstance;
+};
+
 ColisionManager::ColisionManager(Stage& stage, Lista<Entity*>* _pEntities):
 	entities(), stageRef(stage), accumulator(0.f)
 {

@@ -1,4 +1,6 @@
 #include "player.h"
+#include "../game/game.h"
+using namespace Trait;
 using namespace Characters;
 
 #define P1_TEXTURE_REF "Proj_Game/Resources/characters/player/sheets/DinoSprites_mort.png"
@@ -26,6 +28,7 @@ Player::Player(float size_proportion) :
 		Type::PLAYER, HITBOX, sf::Vector2f(0.f, 0.f), std::string(),
 		AnimationSheet(), PLAYER_TOTAL_LIFE, INVENCIBILITY_FRAMES_TIME, false, size_proportion
 	),
+	Observer(this->id),
 	onGround(false), crouching(false), jump(false), 
 	walkLeft(false), walkRight(false), walking(true), done(false), 
 	playerId(playerList.size())
@@ -64,9 +67,9 @@ Player::~Player()
 	}
 };
 
-void Player::InputHandle(const sf::Event& _event)
+void Player::UpdateObsever(const sf::Event& _event)
 {
-	if (_event.type == sf::Event::KeyPressed)
+	if (Game::GetGameState() == GameStateType::IN_GAME && _event.type == sf::Event::KeyPressed)
 	{
 		switch (_event.key.code)
 		{
@@ -127,7 +130,7 @@ void Player::InputHandle(const sf::Event& _event)
 			break;
 		}
 	}
-	else
+	else if(Game::GetGameState() == GameStateType::IN_GAME && _event.type == sf::Event::KeyReleased)
 	{
 		switch (_event.key.code)
 		{

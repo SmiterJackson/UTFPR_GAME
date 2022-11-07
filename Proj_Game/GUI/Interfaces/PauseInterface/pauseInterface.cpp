@@ -27,10 +27,12 @@ Stage* PauseInterface::pStage = nullptr;
 
 PauseInterface::PauseInterface():
 	Interface(GameStateType::PAUSE_MENU),
+	Observer(this->id),
 	background(), buttons()
 {};
 PauseInterface::PauseInterface(Stage* _pStage):
 	Interface(GameStateType::PAUSE_MENU, static_cast<Interface*>(_pStage)),
+	Observer(this->id),
 	background(), buttons()
 {
 	sf::Vector2f camSize(GraphicManager::GetView()->getSize());
@@ -74,19 +76,25 @@ void PauseInterface::SelfPrint(const float& pElapsedTime)
 	for (it = this->buttons.begin(); it != this->buttons.end(); it++)
 		it->SelfPrint(pElapsedTime);
 };
-void PauseInterface::InputHandle(const sf::Event& _event)
+void PauseInterface::UpdateObsever(const sf::Event& _event)
 {
-	switch (_event.type)
+	if(Game::GetGameState() == GameStateType::PAUSE_MENU)
 	{
-	case sf::Event::KeyPressed:
-		if (_event.key.code == sf::Keyboard::Escape)
-			Game::SetGameState(GameStateType::IN_GAME);
-		break;
-	case sf::Event::MouseButtonPressed:
-		this->VerifyButtons();
-		break;
-	default:
-		break;
+		switch (_event.type)
+		{
+		case sf::Event::KeyPressed:
+			if (_event.key.code == sf::Keyboard::Escape)
+			{
+				Game::SetGameState(GameStateType::IN_GAME);
+				EventManager::InputSubject::InvertStopWarning();
+			}
+			break;
+		case sf::Event::MouseButtonPressed:
+			this->VerifyButtons();
+			break;
+		default:
+			break;
+		}
 	}
 };
 void PauseInterface::Execute(const float& pElapsedTime)

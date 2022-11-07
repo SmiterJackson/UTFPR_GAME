@@ -178,7 +178,7 @@
     <ClCompile Include="Entes\Stage\stage.cpp" />
     <ClCompile Include="stdafx\stdafx.cpp" />
     <ClCompile Include="Traits\Animated\animated.cpp" />
-    <ClCompile Include="Traits\GameState\GameState.cpp" />
+    <ClCompile Include="Traits\Observer\observer.cpp" />
     <ClCompile Include="Traits\PrintableBody\printableBody.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -201,7 +201,7 @@
     <ClInclude Include="Entes\Stage\stage.h" />
     <ClInclude Include="stdafx\stdafx.h" />
     <ClInclude Include="Traits\Animated\animated.h" />
-    <ClInclude Include="Traits\GameState\gameState.h" />
+    <ClInclude Include="Traits\Observer\observer.h" />
     <ClInclude Include="Traits\PrintableBody\printableBody.h" />
   </ItemGroup>
   <ItemGroup>

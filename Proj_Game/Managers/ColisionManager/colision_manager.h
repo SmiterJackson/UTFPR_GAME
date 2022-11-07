@@ -7,18 +7,13 @@ class Stage;
 
 namespace Manager
 {
-	class GraphicManager;
-}
-
-namespace Manager
-{
 	typedef std::vector<Entity*> ColisonVector;
 
 	class ColisionManager
 	{
 	public:
-		ColisionManager(Stage& stage, Lista<Entity*>* _pEntities = nullptr);
-		~ColisionManager();
+		static ColisionManager* GetInstance(Stage& stage, Lista<Entity*>* _pEntities = nullptr);
+		static void DeconstructInstance();
 
 		void UpdateColisions(const float& pElapsedTime);
 
@@ -30,6 +25,9 @@ namespace Manager
 		void SortElements();
 
 	private:
+		ColisionManager(Stage& stage, Lista<Entity*>* _pEntities = nullptr);
+		~ColisionManager();
+
 		void CheckInColision(Entity* entity, Entity* other);
 		void CheckOfColision(Entity* entity);
 
@@ -39,6 +37,8 @@ namespace Manager
 		void ExchangePointers(Entity** p1, Entity** p2);
 
 	private:
+		static ColisionManager* colisionManagerInstance;
+
 		ColisonVector entities;
 		Stage& stageRef;
 

@@ -13,7 +13,7 @@ using namespace Trait;
 #define OBSTACLE_SIZE 32
 
 #define OBSTACLE_NUM 5.f
-#define PLAYER_NUM 2
+#define PLAYER_NUM 1
 
 Stage::Parallax::Parallax(const std::vector<std::string>& paths, const float _size_coeff) :
 	Ente(Type::BACKGROUND, PrintPriority::background),
@@ -138,8 +138,9 @@ void Stage::Parallax::Execute(const float& pElapsedTime)
 
 Stage::Stage():
 	Interface(GameStateType::IN_GAME),
+	Observer(this->id),
 	worldBounds(),
-	colision_manager(*this),
+	colision_manager(nullptr),
 	background(),
 	entities()
 {
@@ -148,11 +149,13 @@ Stage::Stage():
 Stage::Stage(const sf::FloatRect bounds, const std::string& stagePath,
 			 const std::vector<std::string>& BackgroundPaths, const float size_coefficient):
 	Interface(GameStateType::IN_GAME),
+	Observer(this->id),
 	worldBounds(bounds.left, bounds.top, bounds.width, bounds.height /* + 200.f*/),
-	colision_manager(*this),
+	colision_manager(nullptr),
 	background(BackgroundPaths, size_coefficient),
 	entities()
 {
+	colision_manager = ColisionManager::GetInstance(*this);
 	GraphicManager::SetCameraLimits(bounds);
 
 	this->Initalize(size_coefficient);
@@ -205,19 +208,18 @@ void Stage::Initalize(const float size_coefficient)
 		this->entities.PushBack(static_cast<Entity*>(obstacles.back()));
 		colidiveis.PushBack(static_cast<Entity*>(obstacles.back()));
 	}
-	this->colision_manager.AddRange(&colidiveis);
+	this->colision_manager->AddRange(&colidiveis);
 };
-void Stage::InputHandle(const sf::Event& _event)
+void Stage::UpdateObsever(const sf::Event& _event)
 {
-	std::list<Player*> players(Player::GetPlayerList());
-	std::list<Player*>::iterator it;
-	unsigned int i = 0;
-
-	if (_event.type == sf::Event::KeyPressed && _event.key.code == sf::Keyboard::Escape)
-		Game::SetGameState(GameStateType::PAUSE_MENU);
-
-	for (it = players.begin(); it != players.end(); it++)
-		(*it)->InputHandle(_event);
+	if(Game::GetGameState() == GameStateType::IN_GAME)
+	{
+		if (_event.type == sf::Event::KeyPressed && _event.key.code == sf::Keyboard::Escape)
+		{
+			Game::SetGameState(GameStateType::PAUSE_MENU);
+			EventManager::InputSubject::InvertStopWarning();
+		}
+	}
 };
 
 void Stage::SelfPrint(const float& pElapsedTime)
@@ -238,7 +240,7 @@ void Stage::Execute(const float& pElapsedTime)
 	}
 	Manager::GraphicManager::UpdateCamera();
 
-	this->colision_manager.UpdateColisions(pElapsedTime);
+	this->colision_manager->UpdateColisions(pElapsedTime);
 	this->background.Execute(pElapsedTime);
 };
 void Stage::ReadArchive(const std::string path)
@@ -252,7 +254,7 @@ void Stage::AddEntity(Entity* entity)
 		return;
 
 	this->entities.PushBack(entity);
-	this->colision_manager.Add(static_cast<Entity*>(entity));
+	this->colision_manager->Add(static_cast<Entity*>(entity));
 
 	this->entities.SortElements();
 };
@@ -266,7 +268,7 @@ void Stage::AddRange(std::list<Entity*>* _entities)
 	for(it = _entities->begin(); it != _entities->end(); it++)
 	{
 		this->entities.PushBack(*it);
-		this->colision_manager.Add(static_cast<Entity*>(*it));
+		this->colision_manager->Add(static_cast<Entity*>(*it));
 	}
 
 	this->entities.SortElements();
@@ -285,7 +287,7 @@ void Stage::RemoveEntity(const unsigned long long int entityId)
 		}
 	}
 
-	this->colision_manager.Remove(entityId);
+	this->colision_manager->Remove(entityId);
 	this->entities.SortElements();
 };
 void Stage::RemoveRange(const std::vector<unsigned long long int> entityId)
@@ -304,7 +306,7 @@ void Stage::RemoveRange(const std::vector<unsigned long long int> entityId)
 				this->entities.PopAt(it);
 			}
 
-			this->colision_manager.Remove(*cIt);
+			this->colision_manager->Remove(*cIt);
 		}
 	}
 
@@ -325,12 +327,12 @@ void Stage::AddPlayer()
 	newPlayer->MovePosition(player->GetPosition());
 
 	this->entities.PushBack(static_cast<Entity*>(newPlayer));
-	this->colision_manager.Add(static_cast<Entity*>(newPlayer));
+	this->colision_manager->Add(static_cast<Entity*>(newPlayer));
 };
 void Stage::RemovePlayer()
 {
 	Characters::Player* player = Characters::Player::GetPlayerList().back();
 
-	this->colision_manager.Remove(player->GetId());
+	this->colision_manager->Remove(player->GetId());
 	this->RemoveEntity(player->GetId());
 };

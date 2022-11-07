@@ -10,8 +10,8 @@ namespace Manager
 	class GraphicManager
 	{
 	public:
-		static GraphicManager* GetGraphicInstance(float& _elapsedTimeRef, Interfaces* _pInterfaces);
-		static void DesconstructGraphicInstance();
+		static GraphicManager* GetInstance(Interfaces* _pInterfaces = nullptr);
+		static void DesconstructInstance();
 
 		static void SetCameraLimits(const sf::FloatRect limits) { cameraLim = limits; };
 
@@ -30,6 +30,7 @@ namespace Manager
 		static const sf::View* const GetView() { return &view; };
 
 		static const bool IsWindowOpen() { return window->isOpen(); };
+		static void CloseWindow() { window->close(); };
 		static sf::RenderWindow& GetWindow() { return *window; };
 
 		static const sf::Vector2f MouseToDesktop()
@@ -76,7 +77,7 @@ namespace Manager
 		};
 
 		static void UpdateCamera();
-		void WindowResize();
+		void WindowResize() const;
 
 		static void Draw(const sf::RectangleShape& drawTarget);
 		static void Draw(const sf::CircleShape& drawTarget);
@@ -90,7 +91,7 @@ namespace Manager
 		void Update();
 
 	private:
-		GraphicManager(float& _elapsedTimeRef, Interfaces* _pInterfaces);
+		GraphicManager(Interfaces* _pInterfaces = nullptr);
 		~GraphicManager();
 
 	private:

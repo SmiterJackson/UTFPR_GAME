@@ -5,7 +5,7 @@ using namespace GUI;
 
 Interface::Interface(const unsigned short int GameStateType, Interface* _previousGState) :
 	Ente(GameStateType, PrintPriority::interfaces),
-	GameState(_previousGState == nullptr ? true : false),
+	fullOverlay(_previousGState == nullptr ? false : true), 
 	previousGState(_previousGState)
 {};
 Interface::~Interface()
@@ -14,11 +14,9 @@ Interface::~Interface()
 void Interface::SelfPrint(const float& pElapsedTime)
 {
 	this->PrintPreviousInterface(pElapsedTime);
-	//this->PrintPreviousInterface(context_window, pElapsedTime);
 };
 void Interface::PrintPreviousInterface(const float& pElapsedTime)
 {
 	if(this->previousGState != nullptr)
 		this->previousGState->SelfPrint(pElapsedTime);
-		//this->previousGState->SelfPrint(context_window, pElapsedTime);
 };

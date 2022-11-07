@@ -1,10 +1,11 @@
 #pragma once
 
 #include "../Character/character.h"
+#include "../Traits/Observer/observer.h"
 
 namespace Characters
 {
-	class Player : public Character
+	class Player : public Character, public Trait::Observer
 	{
 	public:
 		Player(float size_proportion = 1.0f);
@@ -16,7 +17,7 @@ namespace Characters
 		const unsigned int GetPlayerId() const { return this->playerId; };
 		
 		void Execute(const float& pElapsedTime);
-		void InputHandle(const sf::Event& _event);
+		void UpdateObsever(const sf::Event& _event);
 
 	protected:
 		virtual void InCollision(Entity* _other, const sf::Vector2f& intersection);
