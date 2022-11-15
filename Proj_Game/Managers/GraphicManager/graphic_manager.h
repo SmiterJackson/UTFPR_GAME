@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Entes/Stage/stage.h"
+#include "../Entes/GUI/Interfaces/Stage/stage.h"
 
 namespace Manager
 {
@@ -27,7 +27,14 @@ namespace Manager
 				view.getCenter().y + (view.getSize().y / 2.f)
 			);
 		};
-		static const sf::View* const GetView() { return &view; };
+		static const sf::Vector2f GetViewPosition()
+		{
+			return view.getCenter();
+		};
+		static const sf::Vector2f GetViewSize()
+		{
+			return view.getSize();
+		};
 
 		static const bool IsWindowOpen() { return window->isOpen(); };
 		static void CloseWindow() { window->close(); };
@@ -50,30 +57,27 @@ namespace Manager
 			sf::Vector2f mousToView = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
 			return sf::Vector2i(mousToView / gridSize);
 		};
+		static const float GetGridSize() { return gridSize; };
 
-		void InvertDistortion_X()
+		void SetResizeDistortion(const bool X_axis, const bool Y_axis)
 		{
-			this->lock_x = !this->lock_x;
-			if (!this->lock_x && this->bar_x)
+			this->distort_x = X_axis;
+			if (!this->distort_x && this->bar_x)
 				this->bar_x = false;
-		};
-		void InvertDistortion_Y()
-		{
-			this->lock_y = !this->lock_y;
-			if (!this->lock_y && this->bar_y)
+
+			this->distort_y = Y_axis;
+			if (!this->distort_y && this->bar_y)
 				this->bar_y = false;
 		};
-		void InvertBar_X()
+		void SetResizeBar(const bool X_axis, const bool Y_axis)
 		{
-			this->bar_x = !this->bar_x;
-			if (this->bar_x && !this->lock_x)
-				this->lock_x = true;
-		};
-		void InvertBar_Y()
-		{
-			this->bar_y = !this->bar_y;
-			if (this->bar_y && !this->lock_y)
-				this->lock_y = true;
+			this->bar_x = X_axis;
+			if (this->bar_x && !this->distort_x)
+				this->distort_x = true;
+
+			this->bar_y = Y_axis;
+			if (this->bar_y && !this->distort_y)
+				this->distort_y = true;
 		};
 
 		static void UpdateCamera();
@@ -85,9 +89,10 @@ namespace Manager
 		static void Draw(const sf::Text& drawTarget);
 
 		static const ColisonVector GetCameraEntities(const ColisonVector& entities);
+		
 		static sf::Font* GetFont() { return font; };
-
-		static sf::Texture* LoadTexture(std::string texturePath);
+		static sf::Texture* LoadTexture(std::string texturePath, sf::IntRect sheetCut = sf::IntRect(0,0,0,0));
+		
 		void Update();
 
 	private:
@@ -109,7 +114,7 @@ namespace Manager
 		float zoom;
 		float& elapsedTimeRef;
 
-		bool lock_x, lock_y;
+		bool distort_x, distort_y;
 		bool bar_x, bar_y;
 	};
 }

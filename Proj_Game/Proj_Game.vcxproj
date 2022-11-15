@@ -163,19 +163,22 @@
     <ClCompile Include="Entes\Characters\Enemies\EnemyMelee\enemyMelee.cpp" />
     <ClCompile Include="Entes\Entity\entity.cpp" />
     <ClCompile Include="Entes\Ente\ente.cpp" />
+    <ClCompile Include="Entes\GUI\Parallax\parallax.cpp" />
     <ClCompile Include="Entes\Obstacles\obstacle\obstacle.cpp" />
-    <ClCompile Include="Entes\Obstacles\animatedObstacle\animatedObstacle.cpp" />
     <ClCompile Include="Entes\Characters\Player\player.cpp" />
+    <ClCompile Include="Entes\Obstacles\Road\road.cpp" />
     <ClCompile Include="Entes\Projectiles\BaseProjectile\baseProjectile.cpp" />
+    <ClCompile Include="Factory\playerFabric.cpp" />
     <ClCompile Include="game\game.cpp" />
-    <ClCompile Include="GUI\Button\button.cpp" />
-    <ClCompile Include="GUI\Interfaces\Interface\interface.cpp" />
-    <ClCompile Include="GUI\Interfaces\PauseInterface\pauseInterface.cpp" />
+    <ClCompile Include="Entes\GUI\Button\button.cpp" />
+    <ClCompile Include="Entes\GUI\Interfaces\Interface\interface.cpp" />
+    <ClCompile Include="Entes\GUI\Interfaces\PauseInterface\pauseInterface.cpp" />
+    <ClCompile Include="List\entitiesLista.cpp" />
     <ClCompile Include="Managers\ColisionManager\colision_manager.cpp" />
     <ClCompile Include="Managers\EventManager\event_manager.cpp" />
     <ClCompile Include="Managers\GraphicManager\graphic_manager.cpp" />
     <ClCompile Include="Proj_Game.cpp" />
-    <ClCompile Include="Entes\Stage\stage.cpp" />
+    <ClCompile Include="Entes\GUI\Interfaces\Stage\stage.cpp" />
     <ClCompile Include="stdafx\stdafx.cpp" />
     <ClCompile Include="Traits\Animated\animated.cpp" />
     <ClCompile Include="Traits\Observer\observer.cpp" />
@@ -186,19 +189,27 @@
     <ClInclude Include="Entes\Characters\Enemies\EnemyMelee\enemyMelee.h" />
     <ClInclude Include="Entes\Entity\entity.h" />
     <ClInclude Include="Entes\Ente\ente.h" />
+    <ClInclude Include="Entes\GUI\Parallax\parallax.h" />
     <ClInclude Include="Entes\Obstacles\obstacle\obstacle.h" />
-    <ClInclude Include="Entes\Obstacles\animatedObstacle\animatedObstacle.h" />
     <ClInclude Include="Entes\Characters\Player\player.h" />
+    <ClInclude Include="Entes\Obstacles\Road\road.h" />
     <ClInclude Include="Entes\Projectiles\BaseProjectile\baseProjectile.h" />
+    <ClInclude Include="Factory\Abstract\fabric.h" />
+    <ClInclude Include="Factory\Abstract\creator.h" />
+    <ClInclude Include="Factory\Abstract\generalizedFabric.h" />
+    <ClInclude Include="Factory\playerFabric.h" />
     <ClInclude Include="game\game.h" />
-    <ClInclude Include="GUI\Button\button.h" />
-    <ClInclude Include="GUI\Interfaces\Interface\interface.h" />
-    <ClInclude Include="GUI\Interfaces\PauseInterface\pauseInterface.h" />
-    <ClInclude Include="ListConteiner\lista.h" />
+    <ClInclude Include="Entes\GUI\Button\button.h" />
+    <ClInclude Include="Entes\GUI\Interfaces\Interface\interface.h" />
+    <ClInclude Include="Entes\GUI\Interfaces\PauseInterface\pauseInterface.h" />
+    <ClInclude Include="List\entitiesLista.h" />
+    <ClInclude Include="List\Iterador\iterador.h" />
+    <ClInclude Include="List\Lista\lista.h" />
+    <ClInclude Include="List\ListaElement\listaElement.h" />
     <ClInclude Include="Managers\ColisionManager\colision_manager.h" />
     <ClInclude Include="Managers\EventManager\event_manager.h" />
     <ClInclude Include="Managers\GraphicManager\graphic_manager.h" />
-    <ClInclude Include="Entes\Stage\stage.h" />
+    <ClInclude Include="Entes\GUI\Interfaces\Stage\stage.h" />
     <ClInclude Include="stdafx\stdafx.h" />
     <ClInclude Include="Traits\Animated\animated.h" />
     <ClInclude Include="Traits\Observer\observer.h" />
@@ -208,10 +219,6 @@
     <Image Include="Resources\parallax_background\back-buildings.png" />
     <Image Include="Resources\parallax_background\far-buildings.png" />
     <Image Include="Resources\parallax_background\foreground.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Stages\stage1.dat" />
-    <None Include="Stages\stage2.dat" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="Resources\fonts\EquipmentPro.ttf" />

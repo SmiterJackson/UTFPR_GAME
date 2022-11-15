@@ -1,34 +1,35 @@
 #include "colision_manager.h"
 #include "../GraphicManager/graphic_manager.h"
-#include "../Entes/Stage/stage.h"
+#include "../Entes/GUI/Interfaces/Stage/stage.h"
 using namespace Manager;
+using namespace GUI;
 
 #define OFFSET sf::Vector2f(0.f, 0.001f)
 #define COLISION_CHECK_TIMER 0.2f
 
-ColisionManager* ColisionManager::colisionManagerInstance = nullptr;
+ColisionManager* ColisionManager::instance = nullptr;
 
 ColisionManager* ColisionManager::GetInstance(Stage& stage, Lista<Entity*>* _pEntities)
 {
-	if(colisionManagerInstance == nullptr)
+	if(instance == nullptr)
 	{
-		colisionManagerInstance = new ColisionManager(stage, _pEntities);
-		if (colisionManagerInstance == nullptr)
+		instance = new ColisionManager(stage, _pEntities);
+		if (instance == nullptr)
 			std::cerr << "Nao foi possivel instanciar um gerenciador de colisoes." << std::endl;
 	}
 
-	return colisionManagerInstance;
+	return instance;
 };
 void ColisionManager::DeconstructInstance()
 {
-	if (colisionManagerInstance == nullptr)
-		delete colisionManagerInstance;
+	if (instance == nullptr)
+		delete instance;
 };
 
 ColisionManager::ColisionManager(Stage& stage, Lista<Entity*>* _pEntities):
 	entities(), stageRef(stage), accumulator(0.f)
 {
-	Lista<Entity*>::iterador it;
+	Lista<Entity*>::Iterador it;
 
 	if (_pEntities != nullptr)
 	{
@@ -60,12 +61,12 @@ void ColisionManager::UpdateColisions(const float& pElapsedTime)
 			{
 				// Evita comparar o objeto consigo mesmo e entre classes de mesmo tipo, bem como entre elementos estáticos
 				if(	ente != otherEnt 
-				&&	(*ente)->GetType() != (*otherEnt)->GetType() 
-				&&	((*ente)->GetIfStatic() || (*otherEnt)->GetIfStatic()))
+				&&	(*ente)->GetType() != (*otherEnt)->GetType()
+				&&	((*ente)->GetIsStatic() || (*otherEnt)->GetIsStatic()))
 					this->CheckInColision(*ente, *otherEnt);
 			}
 
-			if(!(*ente)->GetIfStatic())
+			if(!(*ente)->GetIsStatic())
 				this->CheckOfColision(*ente);
 		}
 
@@ -79,7 +80,7 @@ void ColisionManager::Add(Entity* entity)
 };
 void ColisionManager::AddRange(Lista<Entity*>* _entities)
 {
-	Lista<Entity*>::iterador it;
+	Lista<Entity*>::Iterador it;
 
 	if (_entities != nullptr)
 	{

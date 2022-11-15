@@ -26,7 +26,10 @@ const enum Type
 	UNDEFINED
 };
 
-//Classe base para todas as intâncias do jogo, para cada qual ter definido seu 'executar'
+/*
+Classe base para todas as intâncias do jogo, para cada qual
+ter definido seu 'executar', e 'desenhar-se'.
+*/
 class Ente
 {
 public:

@@ -4,7 +4,7 @@ using namespace Manager;
 
 #define FONT_PATH "Proj_Game/Resources/fonts/EquipmentPro.ttf"
 
-#define CAMERA_ZOOM 2.f
+#define CAMERA_ZOOM 3.5f
 #define GAME_GRID_SIZE 32.f
 
 #define VIEW_SIZE sf::Vector2f(1440.f / CAMERA_ZOOM, 810.f / CAMERA_ZOOM)
@@ -45,7 +45,7 @@ void GraphicManager::DesconstructInstance()
 GraphicManager::GraphicManager(Interfaces* _pInterfaces) :
     originalSize(VIEW_SIZE), pInterfaces(_pInterfaces),
     zoom(CAMERA_ZOOM), elapsedTimeRef(Game::GetElapsedTime()),
-    lock_x(DISTORTION_X), lock_y(DISTORTION_Y),
+    distort_x(DISTORTION_X), distort_y(DISTORTION_Y),
     bar_x(BLCK_BAR_X), bar_y(BLCK_BAR_Y)
 {
     window = new sf::RenderWindow(sf::VideoMode(WINDOW_SIZE.x, WINDOW_SIZE.y), "JANELA DE CONTEXTO");
@@ -142,7 +142,7 @@ void GraphicManager::WindowResize() const
         window->getSize().y / this->zoom / this->originalSize.y
     );
 
-    if (this->lock_x)
+    if (this->distort_x)
     {
         if (this->bar_x)
         {
@@ -159,7 +159,7 @@ void GraphicManager::WindowResize() const
     else
         newSize.x = this->originalSize.x * ratio.x;
 
-    if (this->lock_y)
+    if (this->distort_y)
     {
         if (this->bar_y)
         {
@@ -182,23 +182,18 @@ void GraphicManager::WindowResize() const
 
 const ColisonVector GraphicManager::GetCameraEntities(const ColisonVector& entities)
 {
-    Manager::ColisonVector::const_iterator cIt;
-    Manager::ColisonVector entitiesInCam;
+    ColisonVector::const_iterator cIt;
+    ColisonVector entitiesInCam;
 
-    sf::FloatRect camBounds(GetViewBounds());
-    sf::FloatRect entBounds;
-
-    camBounds.left      -= ((view.getSize().x / 2.0f) * OFF_CAMERA_EXTRA_SPACE_COEFF);
-    camBounds.top       -= ((view.getSize().y / 2.0f) * OFF_CAMERA_EXTRA_SPACE_COEFF);
-    camBounds.width     += ((view.getSize().x / 2.0f) * OFF_CAMERA_EXTRA_SPACE_COEFF);
-    camBounds.height    += ((view.getSize().y / 2.0f) * OFF_CAMERA_EXTRA_SPACE_COEFF);
+    sf::Vector2f entSize;
+    float delta_X = 0;
 
     for (cIt = entities.cbegin(); cIt != entities.cend(); cIt++)
     {
-        entBounds = (*cIt)->GetBounds();
+        entSize = (*cIt)->GetHitBoxSize() / 2.f;
+        delta_X = fabs(GetViewPosition().x - (*cIt)->GetPosition().x);
 
-        if (    entBounds.left  >   camBounds.left  && entBounds.width  < camBounds.width
-            &&  entBounds.top   >   camBounds.top   && entBounds.height < camBounds.height)
+        if (delta_X <= (GetViewSize().x / 2.f * (1.f + OFF_CAMERA_EXTRA_SPACE_COEFF)) + entSize.x)
             entitiesInCam.emplace_back((*cIt));
     }
 
@@ -222,26 +217,37 @@ void GraphicManager::Draw(const sf::Text& drawTarget)
     window->draw(drawTarget);
 };
 
-sf::Texture* GraphicManager::LoadTexture(std::string texturePath)
+sf::Texture* GraphicManager::LoadTexture(std::string texturePath, sf::IntRect sheetCut)
 {
     TextureMap::iterator it;
+    std::stringstream sstring;
     sf::Texture* newTexture = nullptr;
+
+    sstring << texturePath << sheetCut.left << 'x' << sheetCut.top;
 
     for (it = textures.begin(); it != textures.end(); it++)
     {
-        if (it->first == texturePath)
+        if (it->first == texturePath || it->first == sstring.str())
             return it->second;
     }
     
     newTexture = new sf::Texture();
     if(newTexture == nullptr)
     {
-        std::cerr << "Nao foi possivel abrir a nova texture: " << texturePath << std::endl;
+        std::cerr << "Nao foi possivel instanciar um novo texture: " << texturePath << std::endl;
         return newTexture;
     }
 
-    newTexture->loadFromFile(texturePath);
-    textures.insert(std::pair<std::string, sf::Texture*>(texturePath, newTexture));
+    if(sheetCut.width != 0 && sheetCut.height != 0)
+    {
+        newTexture->loadFromFile(texturePath, sheetCut);
+        textures.insert(std::pair<std::string, sf::Texture*>(sstring.str(), newTexture));
+    }
+    else
+    {
+        newTexture->loadFromFile(texturePath);
+        textures.insert(std::pair<std::string, sf::Texture*>(texturePath, newTexture));
+    }
 
     return newTexture;
 };

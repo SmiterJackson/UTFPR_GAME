@@ -2,8 +2,8 @@
 
 #include "../Managers/EventManager/event_manager.h"
 #include "../Managers/GraphicManager/graphic_manager.h"
-#include "../GUI/Interfaces/PauseInterface/pauseInterface.h"
-#include "../Entes/Stage/stage.h"
+#include "../Entes/GUI/Interfaces/PauseInterface/pauseInterface.h"
+#include "../Entes/GUI/Interfaces/Stage/stage.h"
 
 typedef std::stack<GUI::Interface*> Interfaces;
 
@@ -12,7 +12,8 @@ const enum GameStateType
 	MAIN_MENU = 0,
 	IN_GAME,
 	PAUSE_MENU,
-	SUB_MENU
+	SUB_MENU,
+	COMMAND_LINE
 };
 
 class Game

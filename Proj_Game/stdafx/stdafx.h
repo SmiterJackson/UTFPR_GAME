@@ -9,5 +9,6 @@
 #include <unordered_map>
 #include <memory>
 #include <stack>
+#include <sstream>
 
 #include "SFML\Graphics.hpp"

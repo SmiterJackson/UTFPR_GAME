@@ -32,7 +32,7 @@ namespace Manager
 			~InputSubject();
 
 		private:
-			static InputSubject* inpSubInstance;
+			static InputSubject* instance;
 			static bool stopWarning;
 
 			std::list<Trait::Observer*> observers;
@@ -49,7 +49,7 @@ namespace Manager
 		~EventManager();
 
 	private:
-		static EventManager* eventInstance;
+		static EventManager* instance;
 		static sf::RenderWindow* pWindow;
 
 		InputSubject* pInputSubject;

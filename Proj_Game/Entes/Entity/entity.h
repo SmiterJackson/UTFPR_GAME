@@ -10,8 +10,8 @@ const enum CollisionType
 };
 
 /*
-Classe que junta os elementos da classe 'Ente' bem como 'Collidable', cujo objetivo
-é disponibilizar uma entidade com pode interagir com outras.
+Classe que herda características de 'Ente' onde diferencia-se no quesito de ser
+um objeto que interage com outos dentro do jogo.
 */
 class Entity : public Ente
 {
@@ -22,10 +22,10 @@ public:
 		   const float size_coeff = 1.0f);
 	virtual ~Entity();
 
-	const bool GetIfStatic() const { return this->isStatic; };
+	const bool GetIsStatic() const { return this->isStatic; };
 
 	virtual void SetProportion(const float proportion) { this->hitBox.setScale(proportion, proportion); };
-	const float GetPorportion() { return this->hitBox.getScale().x; };
+	const float GetProportion() { return this->hitBox.getScale().x; };
 
 	void SetHitBoxSize(const sf::Vector2f _size) { this->hitBox.setSize(_size); };
 	const sf::Vector2f GetHitBoxSize() const { return (this->hitBox.getSize() * this->hitBox.getScale().x); };
@@ -49,8 +49,8 @@ public:
 	virtual void MovePosition(const sf::Vector2f _newPosition) { this->hitBox.move(_newPosition); };
 	virtual void MovePosition(const float X_axis, const float Y_axis) { this->hitBox.move(X_axis, Y_axis); };
 
-	virtual void SelfPrint(const float& pElapsedTime);
-	virtual void Execute(const float& pElapsedTime);
+	virtual void SelfPrint(const float& pElapsedTime) = 0;
+	virtual void Execute(const float& pElapsedTime) = 0;
 
 	virtual void Collided(Entity* _other, const sf::Vector2f& intersection, 
 						  const sf::FloatRect& otherBounds, const unsigned short int colType);

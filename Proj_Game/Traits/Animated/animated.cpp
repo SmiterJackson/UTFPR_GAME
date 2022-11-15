@@ -26,7 +26,7 @@ void Trait::Animated::Animation::ResetAnimation()
 {
 	this->current = this->start;
 };
-const sf::IntRect& Trait::Animated::Animation::update(const float& pElapsed_time, bool right)
+const sf::IntRect& Trait::Animated::Animation::Update(const float& pElapsed_time, bool right)
 {
 	this->timeAcumulator += pElapsed_time;
 	unsigned short int state = Game::GetGameState();
@@ -69,15 +69,20 @@ const sf::IntRect& Trait::Animated::Animation::update(const float& pElapsed_time
 
 
 Trait::Animated::Animated():
-	animations(), pTexture(nullptr), pBody(nullptr), next_ani(0), last_ani(0), looking_right(true)
+	PrintableBody(),
+	animations(), next_ani(0), last_ani(0), looking_right(true)
 {};
-Trait::Animated::Animated(const AnimationSheet _animations, sf::Texture* _pTexture, sf::Sprite* _pBody) :
-	animations(), pTexture(_pTexture), pBody(_pBody), next_ani(0), last_ani(0), looking_right(true)
+Trait::Animated::Animated(const std::string path, const AnimationSheet _animations, const float proportion) :
+	PrintableBody(path, sf::IntRect(), proportion),
+	animations(), next_ani(0), last_ani(0), looking_right(true)
 {
 	AnimationSheet::const_iterator it;
 
-	if(!_animations.empty())
+	if (!_animations.empty())
+	{
 		this->next_ani = _animations.front().first;
+		this->body.setOrigin(_animations.front().second.GetAnimationSize() / 2.f);
+	}
 
 	for (it = _animations.cbegin(); it != _animations.cend(); it++)
 		this->animations.emplace(it->first, it->second);
@@ -93,7 +98,7 @@ void Trait::Animated::UpdateAnimation(const float& pElapsedTime)
 		this->last_ani = this->next_ani;
 	}
 
-	this->pBody->setTextureRect(this->animations[this->next_ani].update(
+	this->body.setTextureRect(this->animations[this->next_ani].Update(
 		pElapsedTime, this->looking_right)
 	);
 };
@@ -102,7 +107,7 @@ void Trait::Animated::AddAnimation(const int key, const Animation _animation)
 {
 	this->animations.emplace(key, _animation);
 };
-void Trait::Animated::AddRangeAnimations(const AnimationSheet _animations)
+void Trait::Animated::AddAnimationRange(const AnimationSheet _animations)
 {
 	AnimationSheet::const_iterator it;
 	for (it = _animations.cbegin(); it != _animations.cend(); it++)
@@ -112,7 +117,7 @@ void Trait::Animated::RemoveAnimation(const int key)
 {
 	this->animations.erase(key);
 };
-void Trait::Animated::RemoveRangeAnimations(const std::vector<int> keys)
+void Trait::Animated::RemoveAnimationRange(const std::vector<int> keys)
 {
 	std::vector<int>::const_iterator it;
 	for (it = keys.cbegin(); it != keys.cend(); it++)

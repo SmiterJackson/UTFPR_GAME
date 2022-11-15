@@ -39,16 +39,13 @@
     <ClCompile Include="Entes\Characters\Player\player.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Entes\Obstacles\animatedObstacle\animatedObstacle.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
     <ClCompile Include="Entes\Obstacles\obstacle\obstacle.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="Entes\Characters\Character\character.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Entes\Stage\stage.cpp">
+    <ClCompile Include="Entes\GUI\Interfaces\Stage\stage.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="Traits\Animated\animated.cpp">
@@ -57,13 +54,13 @@
     <ClCompile Include="Entes\Characters\Enemies\EnemyMelee\enemyMelee.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="GUI\Button\button.cpp">
+    <ClCompile Include="Entes\GUI\Button\button.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="GUI\Interfaces\Interface\interface.cpp">
+    <ClCompile Include="Entes\GUI\Interfaces\Interface\interface.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="GUI\Interfaces\PauseInterface\pauseInterface.cpp">
+    <ClCompile Include="Entes\GUI\Interfaces\PauseInterface\pauseInterface.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="Traits\PrintableBody\printableBody.cpp">
@@ -76,6 +73,18 @@
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="Traits\Observer\observer.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="List\entitiesLista.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Entes\GUI\Parallax\parallax.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Factory\playerFabric.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Entes\Obstacles\Road\road.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
   </ItemGroup>
@@ -101,19 +110,16 @@
     <ClInclude Include="Entes\Characters\Player\player.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Entes\Obstacles\animatedObstacle\animatedObstacle.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
     <ClInclude Include="Entes\Obstacles\obstacle\obstacle.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="Entes\Characters\Character\character.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Entes\Stage\stage.h">
+    <ClInclude Include="Entes\GUI\Interfaces\Stage\stage.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="ListConteiner\lista.h">
+    <ClInclude Include="List\Lista\lista.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="Traits\Animated\animated.h">
@@ -122,13 +128,13 @@
     <ClInclude Include="Entes\Characters\Enemies\EnemyMelee\enemyMelee.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="GUI\Button\button.h">
+    <ClInclude Include="Entes\GUI\Button\button.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="GUI\Interfaces\Interface\interface.h">
+    <ClInclude Include="Entes\GUI\Interfaces\Interface\interface.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="GUI\Interfaces\PauseInterface\pauseInterface.h">
+    <ClInclude Include="Entes\GUI\Interfaces\PauseInterface\pauseInterface.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="Traits\PrintableBody\printableBody.h">
@@ -143,6 +149,33 @@
     <ClInclude Include="Traits\Observer\observer.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
+    <ClInclude Include="List\ListaElement\listaElement.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="List\Iterador\iterador.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="List\entitiesLista.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Entes\GUI\Parallax\parallax.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory\Abstract\fabric.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory\Abstract\creator.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory\playerFabric.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory\Abstract\generalizedFabric.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Entes\Obstacles\Road\road.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\parallax_background\back-buildings.png">
@@ -154,10 +187,6 @@
     <Image Include="Resources\parallax_background\foreground.png">
       <Filter>Arquivos de Recurso</Filter>
     </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Stages\stage2.dat" />
-    <None Include="Stages\stage1.dat" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="Resources\fonts\EquipmentPro.ttf" />

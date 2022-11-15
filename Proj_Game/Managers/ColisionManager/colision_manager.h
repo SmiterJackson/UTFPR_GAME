@@ -1,9 +1,12 @@
 #pragma once
 
 #include "../Entes/Entity/entity.h"
-#include "../ListConteiner/lista.h"
+#include "../List/Lista/lista.h"
 
-class Stage;
+namespace GUI
+{
+	class Stage;
+}
 
 namespace Manager
 {
@@ -12,7 +15,7 @@ namespace Manager
 	class ColisionManager
 	{
 	public:
-		static ColisionManager* GetInstance(Stage& stage, Lista<Entity*>* _pEntities = nullptr);
+		static ColisionManager* GetInstance(GUI::Stage& stage, Lista<Entity*>* _pEntities = nullptr);
 		static void DeconstructInstance();
 
 		void UpdateColisions(const float& pElapsedTime);
@@ -25,7 +28,7 @@ namespace Manager
 		void SortElements();
 
 	private:
-		ColisionManager(Stage& stage, Lista<Entity*>* _pEntities = nullptr);
+		ColisionManager(GUI::Stage& stage, Lista<Entity*>* _pEntities = nullptr);
 		~ColisionManager();
 
 		void CheckInColision(Entity* entity, Entity* other);
@@ -37,10 +40,10 @@ namespace Manager
 		void ExchangePointers(Entity** p1, Entity** p2);
 
 	private:
-		static ColisionManager* colisionManagerInstance;
+		static ColisionManager* instance;
 
 		ColisonVector entities;
-		Stage& stageRef;
+		GUI::Stage& stageRef;
 
 		float accumulator;
 	};

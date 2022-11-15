@@ -4,24 +4,24 @@
 using namespace Manager;
 using namespace Trait;
 
-EventManager::InputSubject* EventManager::InputSubject::inpSubInstance	= nullptr;
+EventManager::InputSubject* EventManager::InputSubject::instance	= nullptr;
 bool						EventManager::InputSubject::stopWarning		= false;
 
 EventManager::InputSubject* EventManager::InputSubject::GetInstance(std::list<Observer*>* _observers)
 {
-	if(inpSubInstance == nullptr)
+	if(instance == nullptr)
 	{
-		inpSubInstance = new EventManager::InputSubject(_observers);
-		if (inpSubInstance == nullptr)
+		instance = new EventManager::InputSubject(_observers);
+		if (instance == nullptr)
 			std::cerr << "Nao foi possivel instanciar o InputSubject: event_manager." << std::endl;
 	}
 
-	return inpSubInstance;
+	return instance;
 };
 void EventManager::InputSubject::DeconstructInstance()
 {
-	if (inpSubInstance != nullptr)
-		delete inpSubInstance;
+	if (instance != nullptr)
+		delete instance;
 };
 
 EventManager::InputSubject::InputSubject(std::list<Observer*>* _observers):
@@ -92,24 +92,24 @@ void EventManager::InputSubject::WarnObservers(const sf::Event& inputEvent)
 		EventManager::InputSubject::InvertStopWarning();
 };
 
-EventManager*		EventManager::eventInstance	= nullptr;
+EventManager*		EventManager::instance	= nullptr;
 sf::RenderWindow*	EventManager::pWindow		= nullptr;
 
 EventManager* EventManager::GetInstance()
 {
-	if(eventInstance == nullptr)
+	if(instance == nullptr)
 	{
-		eventInstance = new EventManager();
-		if (eventInstance == nullptr)
+		instance = new EventManager();
+		if (instance == nullptr)
 			std::cerr << "Nao foi possivel cria um gerenciador de eventos." << std::endl;
 	}
 
-	return eventInstance;
+	return instance;
 };
 void EventManager::DeconstructInstance()
 {
-	if (eventInstance != nullptr)
-		delete eventInstance;
+	if (instance != nullptr)
+		delete instance;
 };
 
 EventManager::EventManager():

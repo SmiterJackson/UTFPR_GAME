@@ -1,12 +1,10 @@
 #pragma once
 
-#include "stdafx.h"
-
-class Game;
+#include "../Traits/PrintableBody/printableBody.h"
 
 namespace Trait
 {
-	class Animated
+	class Animated : public PrintableBody
 	{
 	public:
 		class Animation
@@ -17,8 +15,10 @@ namespace Trait
 			Animation(int _start, int _end, int _row, int width, int height, float animSwitchTime, bool repeatable = true);
 			~Animation();
 
+			const sf::Vector2f GetAnimationSize() const { return sf::Vector2f(float(this->sheet_token.width), float(this->sheet_token.height)); };
+
 			void ResetAnimation();
-			const sf::IntRect& update(const float& pElapsed_time, bool right = true);
+			const sf::IntRect& Update(const float& pElapsed_time, bool right = true);
 
 		private:
 			sf::IntRect sheet_token;
@@ -31,24 +31,20 @@ namespace Trait
 		typedef std::vector<std::pair<int, Animation>> AnimationSheet;
 
 		Animated();
-		Animated(const AnimationSheet _animations, sf::Texture* _pTexture, sf::Sprite* _pBody);
+		Animated(const std::string path, const AnimationSheet _animations, const float proportion = 1.0f);
 		~Animated();
 
-		void SetTextureReference(sf::Texture* _pTexture) { this->pTexture = _pTexture; };
-		void SetBodyReference(sf::Sprite* _pBody) { this->pBody = _pBody; };
 		void InvertDirection() { this->looking_right = !this->looking_right; };
 
 		void UpdateAnimation(const float& pElapsedTime);
 
 		void AddAnimation(const int key, const Animation _animation);
-		void AddRangeAnimations(const AnimationSheet _animations);
+		void AddAnimationRange(const AnimationSheet _animations);
 		void RemoveAnimation(const int key);
-		void RemoveRangeAnimations(const std::vector<int> keys);
+		void RemoveAnimationRange(const std::vector<int> keys);
 
 	protected:
 		std::unordered_map<int, Animation> animations;
-		sf::Texture* pTexture;
-		sf::Sprite* pBody;
 
 		unsigned int next_ani, last_ani;
 		bool looking_right;

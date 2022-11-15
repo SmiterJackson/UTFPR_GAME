@@ -1,5 +1,6 @@
 #include "game.h"
 using namespace Manager;
+using namespace GUI;
 
 #define WINDOW_SIZE_X_F 1440.f
 #define WINDOW_SIZE_X_I 1440

@@ -5,12 +5,12 @@
 #include "../Traits/PrintableBody/printableBody.h"
 
 /*
-Classe characters que herda características de ser interagível bem como
-tem um corpo para ser desenhavel e animado.
+Classe character que herda características para poder interagir com outras 
+classes, bem como contém um corpo desenhavel e animado.
 */
 namespace Characters
 {
-	class Character : public Entity, public Trait::PrintableBody, public Trait::Animated
+	class Character : public Entity, public Trait::Animated
 	{
 	public:
 		Character();
@@ -18,6 +18,8 @@ namespace Characters
 				  const AnimationSheet _animations = AnimationSheet(), const unsigned int _lifeAmount = 0, 
 				  const float invcFramDuration = 0.f, const bool isStatic = true, const float size_coeff = 1.0f);
 		virtual ~Character();
+
+		void SetSpeedCoeff(const float _coeff) { this->speedCoeff = _coeff; };
 
 		const unsigned int GetLifeCount() const { return this->life_counter; };
 		void Damaged() 
@@ -43,19 +45,20 @@ namespace Characters
 			this->SetTextureProportion(proportion);
 		};
 
-		virtual void SelfPrint(const float& pElapsedTime);
-		virtual void Execute(const float& pElapsedTime);
+		virtual void SelfPrint(const float& pElapsedTime) = 0;
+		virtual void Execute(const float& pElapsedTime) = 0;
 
 	protected:
-		virtual void InCollision(Entity* _other, const sf::Vector2f& intersection);
-		virtual void OfCollision(const sf::FloatRect& ofBounds, const unsigned short int colType);
+		virtual void InCollision(Entity* _other, const sf::Vector2f& intersection) = 0;
+		virtual void OfCollision(const sf::FloatRect& ofBounds, const unsigned short int colType) = 0;
 
 	protected:
-		const float invcFrames;
-		float invecTimer;
+		const float invcFrames; // Tempo de invencibilidade
+		float invecTimer; // Acumulador para o tempo de invencibilidade
 
 		float speedH; // Velocidade horizontal
 		float speedV; // Velocidade vertical
+		float speedCoeff;
 
 		unsigned int life_counter;
 	};
