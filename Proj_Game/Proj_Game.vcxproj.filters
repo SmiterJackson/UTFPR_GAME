@@ -66,7 +66,7 @@
     <ClCompile Include="Traits\PrintableBody\printableBody.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Entes\Projectiles\BaseProjectile\baseProjectile.cpp">
+    <ClCompile Include="Entes\Projectiles\Projectile\projectile.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="Managers\EventManager\event_manager.cpp">
@@ -85,6 +85,9 @@
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="Entes\Obstacles\Road\road.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Entes\Characters\Enemies\Enemy\enemy.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
   </ItemGroup>
@@ -140,7 +143,7 @@
     <ClInclude Include="Traits\PrintableBody\printableBody.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Entes\Projectiles\BaseProjectile\baseProjectile.h">
+    <ClInclude Include="Entes\Projectiles\Projectile\projectile.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="Managers\EventManager\event_manager.h">
@@ -174,6 +177,9 @@
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="Entes\Obstacles\Road\road.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Entes\Characters\Enemies\Enemy\enemy.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>

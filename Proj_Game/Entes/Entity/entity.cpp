@@ -1,4 +1,6 @@
 #include "entity.h"
+#include "../Managers/GraphicManager/graphic_manager.h"
+using namespace Manager;
 
 #ifdef _DEBUG
 #define ORIGIN_SIZE 1.f
@@ -8,46 +10,85 @@
 // List sendo encadeado não há o problema
 Entity::Entity():
 	Ente(Type::UNDEFINED, PrintPriority::undefined),
-	isStatic(true), hitBox()
+	isStatic(true), hitBox(), texture(nullptr), body()
 {
 	this->hitBox.setTexture(NULL);
 	this->hitBox.setFillColor(sf::Color::Transparent);
 
-	this->hitBox.setPosition(0.f, 0.f);
+	this->SetPosition(0.f, 0.f);
+#ifdef _DEBUG
+	this->hitBox.setOutlineThickness(1.5f);
+	this->hitBox.setOutlineColor(sf::Color::Red);
+
+	this->originCircle.setFillColor(sf::Color::Transparent);
+	this->originCircle.setRadius(ORIGIN_SIZE);
+	this->originCircle.setOrigin(ORIGIN_SIZE / 2.f, ORIGIN_SIZE / 2.f);
+	this->originCircle.setOutlineThickness(2.5f);
+	this->originCircle.setOutlineColor(sf::Color::Blue);
+	this->originCircle.setPosition(this->hitBox.getPosition());
+#endif
 };
-Entity::Entity(const unsigned short int _type, const unsigned short int printPriority,
-			   const sf::Vector2f _size, const sf::Vector2f _position, const bool isStatic,
-			   const float size_coeff) :
+Entity::Entity(const unsigned short int _type, const unsigned short int printPriority, const sf::Vector2f _size,
+			   const sf::Vector2f _position, const std::string path, const sf::IntRect sheetCut,
+			   const bool isStatic, const float proportion) :
 	Ente(_type, printPriority),
-	isStatic(isStatic), hitBox()
+	isStatic(isStatic), hitBox(), texture(nullptr), body()
 {
+	if (!path.empty())
+	{
+		this->texture = GraphicManager::LoadTexture(path, sheetCut);
+
+		if (this->texture != nullptr)
+		{
+			this->body.setTexture(*this->texture);
+			this->texture->setRepeated(false);
+
+			this->body.setOrigin(
+				this->texture->getSize().x / 2.f,
+				this->texture->getSize().y / 2.f
+			);
+		}
+	}
+	this->body.setScale(proportion, proportion);
+	this->body.setPosition(_position);
+
 	this->hitBox.setTexture(NULL);
 	this->hitBox.setFillColor(sf::Color::Transparent);
 	this->hitBox.setSize(_size);
 	this->hitBox.setPosition(_position);
-	this->hitBox.setScale(size_coeff, size_coeff);
+	this->hitBox.setScale(proportion, proportion);
 	this->hitBox.setOrigin(this->hitBox.getSize() / 2.f);
 
 #ifdef _DEBUG
 	this->hitBox.setOutlineThickness(1.5f);
 	this->hitBox.setOutlineColor(sf::Color::Red);
 
-	this->origin.setFillColor(sf::Color::Transparent);
-	this->origin.setRadius(ORIGIN_SIZE);
-	this->origin.setOrigin(ORIGIN_SIZE / 2.f, ORIGIN_SIZE / 2.f);
-	this->origin.setOutlineThickness(2.5f);
-	this->origin.setOutlineColor(sf::Color::Blue);
-	this->origin.setPosition(this->hitBox.getPosition());
+	this->originCircle.setFillColor(sf::Color::Transparent);
+	this->originCircle.setRadius(ORIGIN_SIZE);
+	this->originCircle.setOrigin(ORIGIN_SIZE / 2.f, ORIGIN_SIZE / 2.f);
+	this->originCircle.setOutlineThickness(2.5f);
+	this->originCircle.setOutlineColor(sf::Color::Blue);
+	this->originCircle.setPosition(this->hitBox.getPosition());
 #endif
 };
 Entity::~Entity()
 {};
 
-void Entity::Collided(Entity* _other, const sf::Vector2f& intersection,
-					  const sf::FloatRect& otherBounds, const unsigned short int colType)
+void Entity::SetTexture(const std::string path, const sf::IntRect sheetCut)
 {
-	if (colType == CollisionType::CameraColl || colType == CollisionType::MapColl)
-		this->OfCollision(otherBounds, colType);
-	else
-		this->InCollision(_other, intersection);
+	if (!path.empty())
+	{
+		this->texture = GraphicManager::LoadTexture(path, sheetCut);
+
+		if (this->texture != nullptr)
+		{
+			this->body.setTexture(*this->texture);
+			this->texture->setRepeated(false);
+
+			this->body.setOrigin(
+				this->texture->getSize().x / 2.f,
+				this->texture->getSize().y / 2.f
+			);
+		}
+	}
 };

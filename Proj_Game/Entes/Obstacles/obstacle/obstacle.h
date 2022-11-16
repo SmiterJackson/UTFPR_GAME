@@ -4,11 +4,11 @@
 #include "../Traits/PrintableBody/printableBody.h"
 
 /*
-Classe base para obstáculos com aparência gráfica estática.
+Classe base para obstáculos.
 */
 namespace Obstacles
 {
-	class Obstacle : public Entity, public Trait::PrintableBody
+	class Obstacle : public Entity
 	{
 	public:
 		Obstacle();
@@ -16,28 +16,18 @@ namespace Obstacles
 				 const float size_coeff = 1.0f, const bool isStatic = true);
 		virtual ~Obstacle();
 
-		void MovePosition(const sf::Vector2f _newPosition)
-		{
-			this->hitBox.move(_newPosition);
-			this->SetTexturePosition(this->hitBox.getPosition());
-		};
-		void MovePosition(const float X_axis, const float Y_axis)
-		{
-			this->hitBox.move(X_axis, Y_axis);
-			this->SetTexturePosition(this->hitBox.getPosition());
-		};
+		void SetHitBoxSize(const sf::Vector2f _size) 
+		{ 
+			this->hitBox.setSize(_size); 
 
-		void SetProportion(const float proportion)
-		{
-			this->hitBox.setScale(proportion, proportion);
-			this->SetTextureProportion(proportion);
+			this->body.setTextureRect(sf::IntRect(0, 0, int(_size.x), int(_size.y)));
+			this->body.setOrigin(_size / 2.f);
+			this->body.setPosition(this->hitBox.getPosition());
 		};
 
 		virtual void SelfPrint(const float& pElapsedTime);
-		virtual void Execute(const float& pElapsedTime);
 
-	protected:
-		virtual void InCollision(Entity* _other, const sf::Vector2f& intersection);
-		virtual void OfCollision(const sf::FloatRect& ofBounds, const unsigned short int colType);
+		virtual void Execute(const float& pElapsedTime) = 0;
+		virtual void Collided(Entity* _other, const sf::Vector2f& intersection, CollisionType colType) = 0;
 	};
 }

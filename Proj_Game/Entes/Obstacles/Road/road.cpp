@@ -4,7 +4,7 @@ using namespace Obstacles;
 
 #define SIZE 24
 
-TypeToRoad roadTypeMap = {
+TypeToRoad Road::roadTypeMap = {
 	TypeToRoad::value_type(RoadType::MOSS_LEFT_CORNER,	sf::IntRect(SIZE * 0, SIZE * 0, SIZE, SIZE)),
 	TypeToRoad::value_type(RoadType::MOSS_MIDDLE,		sf::IntRect(SIZE * 1, SIZE * 0, SIZE, SIZE)),
 	TypeToRoad::value_type(RoadType::MOSS_RIGHT_CORNER, sf::IntRect(SIZE * 3, SIZE * 0, SIZE, SIZE)),
@@ -21,10 +21,13 @@ Road::Road(sf::Vector2f size, sf::Vector2f pos, const RoadType type):
 Road::~Road()
 {};
 
-void Road::InCollision(Entity* _other, const sf::Vector2f& intersection)
-{
-	if (_other->GetType() == Type::PLAYER || _other->GetType() == Type::ENEMY)
-		static_cast<Characters::Character*>(_other)->SetSpeedCoeff(0.7f);
-};
-void Road::OfCollision(const sf::FloatRect& ofBounds, const unsigned short int colType)
+void Road::Execute(const float& pElapsedTime)
 {};
+void Road::Collided(Entity* _other, const sf::Vector2f& intersection, CollisionType colType)
+{
+	if (colType != CollisionType::EntityColl || _other == nullptr)
+		return;
+
+	if (_other->GetType() == Type::PLAYER)
+		static_cast<Characters::Character*>(_other)->SetSpeedCoeff(1.f);
+};

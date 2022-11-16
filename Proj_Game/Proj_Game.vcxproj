@@ -161,13 +161,14 @@
   <ItemGroup>
     <ClCompile Include="Entes\Characters\Character\character.cpp" />
     <ClCompile Include="Entes\Characters\Enemies\EnemyMelee\enemyMelee.cpp" />
+    <ClCompile Include="Entes\Characters\Enemies\Enemy\enemy.cpp" />
     <ClCompile Include="Entes\Entity\entity.cpp" />
     <ClCompile Include="Entes\Ente\ente.cpp" />
     <ClCompile Include="Entes\GUI\Parallax\parallax.cpp" />
     <ClCompile Include="Entes\Obstacles\obstacle\obstacle.cpp" />
     <ClCompile Include="Entes\Characters\Player\player.cpp" />
     <ClCompile Include="Entes\Obstacles\Road\road.cpp" />
-    <ClCompile Include="Entes\Projectiles\BaseProjectile\baseProjectile.cpp" />
+    <ClCompile Include="Entes\Projectiles\Projectile\projectile.cpp" />
     <ClCompile Include="Factory\playerFabric.cpp" />
     <ClCompile Include="game\game.cpp" />
     <ClCompile Include="Entes\GUI\Button\button.cpp" />
@@ -187,13 +188,14 @@
   <ItemGroup>
     <ClInclude Include="Entes\Characters\Character\character.h" />
     <ClInclude Include="Entes\Characters\Enemies\EnemyMelee\enemyMelee.h" />
+    <ClInclude Include="Entes\Characters\Enemies\Enemy\enemy.h" />
     <ClInclude Include="Entes\Entity\entity.h" />
     <ClInclude Include="Entes\Ente\ente.h" />
     <ClInclude Include="Entes\GUI\Parallax\parallax.h" />
     <ClInclude Include="Entes\Obstacles\obstacle\obstacle.h" />
     <ClInclude Include="Entes\Characters\Player\player.h" />
     <ClInclude Include="Entes\Obstacles\Road\road.h" />
-    <ClInclude Include="Entes\Projectiles\BaseProjectile\baseProjectile.h" />
+    <ClInclude Include="Entes\Projectiles\Projectile\projectile.h" />
     <ClInclude Include="Factory\Abstract\fabric.h" />
     <ClInclude Include="Factory\Abstract\creator.h" />
     <ClInclude Include="Factory\Abstract\generalizedFabric.h" />

@@ -2,8 +2,8 @@
 
 #include "../Interface/interface.h"
 #include "../Traits/Observer/observer.h"
+#include "../Entes/Obstacles/Road/road.h"
 #include "../Entes/Characters/Player/player.h"
-#include "../Entes/Obstacles/mossRoad/mossRoad.h"
 #include "../Managers/ColisionManager/colision_manager.h"
 #include "../../Parallax/parallax.h"
 
@@ -13,11 +13,22 @@ namespace GUI
 	{
 	public:
 		Stage();
-		Stage(const sf::FloatRect bounds, const std::string& stagePath,
-			  const std::vector<std::string>& BackgroundPaths, const float size_coefficient);
+		Stage(const sf::Vector2f worldSize, const std::vector<std::string>& BackgroundPaths, const float proportion = 1.f);
 		~Stage();
 
-		const sf::FloatRect GetBounds() const { return this->worldBounds; };
+		static const sf::Vector2f GetWorldSize() { return world.getSize() * world.getScale().x; };
+		static void SetWorldSize(const sf::Vector2f worldSize) { return world.setSize(worldSize); };
+		static const sf::FloatRect GetWorldBounds()
+		{
+			sf::Vector2f size(Stage::GetWorldSize() / 2.f);
+
+			sf::FloatRect bounds(
+				-size.x, -size.y,
+				size.x, size.y
+			);
+
+			return bounds;
+		};
 
 		virtual void Initalize(const float size_coefficient);
 		void UpdateObsever(const sf::Event& _event);
@@ -34,7 +45,7 @@ namespace GUI
 		void RemovePlayer();
 
 	protected:
-		sf::FloatRect worldBounds;
+		static sf::RectangleShape world;
 
 		Manager::ColisionManager* colision_manager;
 		Parallax background;

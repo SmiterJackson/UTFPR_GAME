@@ -1,5 +1,6 @@
 #include "player.h"
 #include "../game/game.h"
+#include "../Entes/GUI/Interfaces/Stage/stage.h"
 #include "../Managers/GraphicManager/graphic_manager.h"
 using namespace Trait;
 using namespace Manager;
@@ -34,7 +35,7 @@ std::vector<std::pair<int, Animated::Animation>>	Player::playersAnimations = {
 Player::Player() :
 	Character(
 		Type::PLAYER, HITBOX, sf::Vector2f(0.f, 0.f), (playerList.size() == 0 ? P1_TEXTURE_REF : P2_TEXTURE_REF),
-		playersAnimations, PLAYER_TOTAL_LIFE, INVENCIBILITY_FRAMES_TIME, false, SIZE_COEFF
+		playersAnimations, PLAYER_TOTAL_LIFE, INVENCIBILITY_FRAMES_TIME, 1.f, false, SIZE_COEFF
 	),
 	Observer(this->id),
 	keyToActions(Player::GetKeyMap(playerList.size())),
@@ -113,7 +114,7 @@ void Player::SelfPrint(const float& pElapsedTime)
 
 #ifdef _DEBUG
 	GraphicManager::Draw(this->hitBox);
-	GraphicManager::Draw(this->origin);
+	GraphicManager::Draw(this->originCircle);
 #endif
 };
 void Player::Execute(const float& pElapsedTime)
@@ -168,69 +169,49 @@ void Player::Execute(const float& pElapsedTime)
 		this->onGround = false;
 	}
 
-	this->MovePosition(sf::Vector2f(this->speedH, this->speedV));
+	this->MovePosition(this->speedH, this->speedV);
 
 #ifdef _DEBUG
-	this->origin.setPosition(this->hitBox.getPosition());
+	this->originCircle.setPosition(this->hitBox.getPosition());
 #endif
 };
 
-void Player::InCollision(Entity* _other, const sf::Vector2f& intersection)
+void Player::Collided(Entity* _other, const sf::Vector2f& intersection, CollisionType colType)
 {
-	sf::Vector2f distance(
-		_other->GetPosition().x - this->GetPosition().x,
-		_other->GetPosition().y - this->GetPosition().y
-	);
+	sf::Vector2f move(0.f, 0.f);
 
-	if (intersection.y >= intersection.x)
+	if(colType == CollisionType::MapColl)
 	{
-		if (distance.y > 0.f)
-		{
-			this->MovePosition(0.f, (intersection.y));
-				this->onGround = true;
-		}
-		else
-		{
-			this->MovePosition(0.f, -(intersection.y));
-			this->speedV = 0.f;
-		}
+		move = intersection;
+	}
+	else if(colType == CollisionType::CameraColl)
+	{
+		move.x = intersection.x;
 	}
 	else
 	{
-		if (distance.x > 0.f)
-			this->MovePosition(intersection.x, 0.f);
-		else
-			this->MovePosition(-(intersection.x), 0.f);
-	}
-};
-void Player::OfCollision(const sf::FloatRect& ofBounds, const unsigned short int colType)
-{
-	sf::FloatRect bounds(this->GetBounds());
-	sf::Vector2f offSet(0.f, 0.f);
-
-	if (colType == CollisionType::MapColl)
-	{
-		if (bounds.top < ofBounds.top)
-			offSet.y += ofBounds.top - bounds.top;
-		else if (bounds.height > ofBounds.height)
+		if(_other != nullptr)
 		{
-			offSet.y += ofBounds.height - bounds.height;
-			this->onGround = true;
+			if(_other->GetType() == Type::OBSTACLE)
+			{
+				move = intersection;
+			}
+			else if (_other->GetType() == Type::ENEMY || _other->GetType() == Type::PROJECTILE)
+			{
+				
+			}
 		}
 	}
 
-	if (bounds.left < ofBounds.left)
-	{
-		this->speedH = 0.f;
-		offSet.x += ofBounds.left - bounds.left;
-	}
-	else if (bounds.width > ofBounds.width)
-	{
-		this->speedH = 0.f;
-		offSet.x += ofBounds.width - bounds.width;
-	}
+	this->MovePosition(move.x, move.y);
+};
+void Player::Attack()
+{
 
-	this->MovePosition(offSet);
+};
+void Player::Died()
+{
+	
 };
 
 Player::keyToAction Player::GetKeyMap(unsigned int size)

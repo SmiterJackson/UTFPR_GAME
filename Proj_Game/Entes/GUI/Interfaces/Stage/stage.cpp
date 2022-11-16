@@ -2,6 +2,7 @@
 #include "../game/game.h"
 #include "../Managers/GraphicManager/graphic_manager.h"
 using namespace Characters;
+using namespace Obstacles;
 using namespace Manager;
 using namespace Trait;
 using namespace GUI;
@@ -13,29 +14,38 @@ using namespace GUI;
 #define OBSTACLE_NUM 1.f
 #define PLAYER_NUM 1
 
+sf::RectangleShape Stage::world = sf::RectangleShape();
+
 Stage::Stage():
 	Interface(GameStateType::IN_GAME),
 	Observer(this->id),
-	worldBounds(),
 	colision_manager(nullptr),
 	background(),
 	entities()
 {
 	this->Initalize(1.f);
 };
-Stage::Stage(const sf::FloatRect bounds, const std::string& stagePath,
-			 const std::vector<std::string>& BackgroundPaths, const float size_coefficient):
+Stage::Stage(const sf::Vector2f worldSize, const std::vector<std::string>& BackgroundPaths, const float proportion):
 	Interface(GameStateType::IN_GAME),
 	Observer(this->id),
-	worldBounds(bounds.left, bounds.top, bounds.width, bounds.height /* + 200.f*/),
 	colision_manager(nullptr),
-	background(BackgroundPaths, size_coefficient),
+	background(BackgroundPaths, proportion),
 	entities()
 {
-	colision_manager = ColisionManager::GetInstance(*this);
-	GraphicManager::SetCameraLimits(bounds);
+	sf::Vector2f radious(worldSize);
+	radious /= 2.f;
 
-	this->Initalize(size_coefficient);
+	colision_manager = ColisionManager::GetInstance();
+	world.setSize(worldSize);
+	world.setOrigin(worldSize / 2.f);
+	world.setPosition(0.f, 0.f);
+	GraphicManager::SetCameraLimits(
+		sf::FloatRect(
+			-radious.x, -radious.y, radious.x, radious.y
+		)
+	);
+
+	this->Initalize(proportion);
 
 	GraphicManager::UpdateCamera();
 	this->background.ResetBackground();
@@ -63,21 +73,21 @@ void Stage::Initalize(const float size_coefficient)
 	for (i = 0; i < PLAYER_NUM; i++)
 	{
 		players.push_back(new Player());
-		players.back()->MovePosition(position + sf::Vector2f(-48.f * i, 0.f));
+		players.back()->MovePosition(position.x + (-48.f * i), 0.f);
 		
 		this->entities.PushBack(static_cast<Entity*>(players.back()));
 		colidiveis.PushBack(static_cast<Entity*>(players.back()));
 	}
 
-	std::list<Obstacles::Obstacle*> obstacles;
+	std::list<Obstacle*> obstacles;
 	for (float f = 1.f; f < OBSTACLE_NUM + 1.f; f++)
 	{
 		sf::Vector2f obsSize(OBSTACLE_SIZE * 5, OBSTACLE_SIZE * 1);
 
-		obstacles.push_back(new Obstacles::MossRoad(
-			obsSize, sf::Vector2f(0.f,0.f)
+		obstacles.push_back(new Road(
+			obsSize, sf::Vector2f(0.f,0.f), RoadType::MOSS_MIDDLE
 		));
-		obstacles.back()->MovePosition(sf::Vector2f(position.x + (obsSize.x * f * obsCoeff), position.y + 32 * 1.2f));
+		obstacles.back()->MovePosition(position.x + (obsSize.x * f * obsCoeff), position.y + 32 * 1.2f);
 		
 		this->entities.PushBack(static_cast<Entity*>(obstacles.back()));
 		colidiveis.PushBack(static_cast<Entity*>(obstacles.back()));
@@ -178,16 +188,17 @@ void Stage::RemoveRange(const std::vector<unsigned long long int> entityId)
 
 void Stage::AddPlayer()
 {
-	Characters::Player* player = Characters::Player::GetPlayerList().front();
-	Characters::Player* newPlayer = nullptr;
+	Player* player = Characters::Player::GetPlayerList().front();
+	Player* newPlayer = nullptr;
+	sf::Vector2f pos(player->GetPosition());
 	
-	newPlayer = new Characters::Player();
+	newPlayer = new Player();
 	if(newPlayer == nullptr)
 	{
 		std::cerr << "Nao foi possivel criar um novo Jogador." << std::endl;
 		return;
 	}
-	newPlayer->MovePosition(player->GetPosition());
+	newPlayer->MovePosition(pos.x, pos.y);
 
 	this->entities.PushBack(static_cast<Entity*>(newPlayer));
 	this->colision_manager->Add(static_cast<Entity*>(newPlayer));

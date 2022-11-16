@@ -14,9 +14,9 @@ namespace Characters
 	{
 	public:
 		Character();
-		Character(const unsigned short int _type, const sf::Vector2f _size, const sf::Vector2f _position, const std::string path = "",
-				  const AnimationSheet _animations = AnimationSheet(), const unsigned int _lifeAmount = 0, 
-				  const float invcFramDuration = 0.f, const bool isStatic = true, const float size_coeff = 1.0f);
+		Character(const unsigned short int _type, const sf::Vector2f _size, const sf::Vector2f _position, const std::string path, 
+				  const AnimationSheet _animations = AnimationSheet(), const unsigned int _lifeAmount = 0U, const float invcDuration = 0.f,
+				  const float deathTime = 1.f, const bool isStatic = true, const float proportion = 1.0f);
 		virtual ~Character();
 
 		void SetSpeedCoeff(const float _coeff) { this->speedCoeff = _coeff; };
@@ -24,42 +24,31 @@ namespace Characters
 		const unsigned int GetLifeCount() const { return this->life_counter; };
 		void Damaged() 
 		{
-			this->life_counter--;
-			this->invecTimer = this->invcFrames;
-		};
-
-		void MovePosition(const sf::Vector2f _newPosition) 
-		{ 
-			this->hitBox.move(_newPosition);
-			this->SetTexturePosition(this->hitBox.getPosition());
-		};
-		void MovePosition(const float X_axis, const float Y_axis) 
-		{
-			this->hitBox.move(X_axis, Y_axis); 
-			this->SetTexturePosition(this->hitBox.getPosition());
-		};
-
-		void SetProportion(const float proportion) 
-		{
-			this->hitBox.setScale(proportion, proportion);
-			this->SetTextureProportion(proportion);
+			if(this->life_counter > 0 && this->invecTimer <= 0.f)
+			{
+				this->life_counter--;
+				this->invecTimer = this->invcFrames;
+			}
 		};
 
 		virtual void SelfPrint(const float& pElapsedTime) = 0;
 		virtual void Execute(const float& pElapsedTime) = 0;
+		virtual void Attack() = 0;
+		virtual void Collided(Entity* _other, const sf::Vector2f& intersection, CollisionType colType) = 0;
 
 	protected:
-		virtual void InCollision(Entity* _other, const sf::Vector2f& intersection) = 0;
-		virtual void OfCollision(const sf::FloatRect& ofBounds, const unsigned short int colType) = 0;
+		virtual void Died() = 0;
 
 	protected:
-		const float invcFrames; // Tempo de invencibilidade
-		float invecTimer; // Acumulador para o tempo de invencibilidade
+		const float invcFrames; // Tempo de invencibilidade quando recebe dano
 
 		float speedH; // Velocidade horizontal
 		float speedV; // Velocidade vertical
 		float speedCoeff;
 
+		float invecTimer;
+		float deathTimer;
+		float damagedTimer;
 		unsigned int life_counter;
 	};
 }

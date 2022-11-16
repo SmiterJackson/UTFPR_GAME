@@ -4,7 +4,7 @@ using namespace Manager;
 
 #define FONT_PATH "Proj_Game/Resources/fonts/EquipmentPro.ttf"
 
-#define CAMERA_ZOOM 3.5f
+#define CAMERA_ZOOM 2.f
 #define GAME_GRID_SIZE 32.f
 
 #define VIEW_SIZE sf::Vector2f(1440.f / CAMERA_ZOOM, 810.f / CAMERA_ZOOM)
@@ -180,17 +180,17 @@ void GraphicManager::WindowResize() const
     view.setViewport(newPort);
 };
 
-const ColisonVector GraphicManager::GetCameraEntities(const ColisonVector& entities)
+const Entities GraphicManager::GetCameraEntities(const Entities& entities)
 {
-    ColisonVector::const_iterator cIt;
-    ColisonVector entitiesInCam;
+    Entities::const_iterator cIt;
+    Entities entitiesInCam;
 
     sf::Vector2f entSize;
     float delta_X = 0;
 
     for (cIt = entities.cbegin(); cIt != entities.cend(); cIt++)
     {
-        entSize = (*cIt)->GetHitBoxSize() / 2.f;
+        entSize = (*cIt)->GetSize() / 2.f;
         delta_X = fabs(GetViewPosition().x - (*cIt)->GetPosition().x);
 
         if (delta_X <= (GetViewSize().x / 2.f * (1.f + OFF_CAMERA_EXTRA_SPACE_COEFF)) + entSize.x)

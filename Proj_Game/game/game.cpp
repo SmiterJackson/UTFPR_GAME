@@ -11,7 +11,7 @@ using namespace GUI;
 
 #define IMAGE_COEFFICIENT 2.5f
 
-#define BOUNDS sf::FloatRect((352.f * IMAGE_COEFFICIENT * -2.f), (-192.f + 40.f), (352.f * IMAGE_COEFFICIENT * 2.f), (192.f * IMAGE_COEFFICIENT))
+#define SIZE sf::Vector2f((352.f * 4.f * IMAGE_COEFFICIENT), ((192.f - 20.f)* 2.f * IMAGE_COEFFICIENT))
 
 Game*               Game::game          = nullptr;
 Interfaces          Game::interfaces    = Interfaces();
@@ -46,7 +46,7 @@ Game::Game():
         "Proj_Game/Resources/parallax_background/far-buildings.png"
     });
 
-    Stage* stage = new Stage(BOUNDS, "", paths, IMAGE_COEFFICIENT);
+    Stage* stage = new Stage(SIZE, paths, IMAGE_COEFFICIENT);
     interfaces.push(static_cast<GUI::Interface*>(stage));
 };
 Game::~Game()

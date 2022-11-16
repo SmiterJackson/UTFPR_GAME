@@ -4,7 +4,7 @@
 
 namespace Trait
 {
-	class Animated : public PrintableBody
+	class Animated
 	{
 	public:
 		class Animation
@@ -27,11 +27,9 @@ namespace Trait
 			float timeAcumulator, switchTime;
 			bool repeatable;
 		};
-
 		typedef std::vector<std::pair<int, Animation>> AnimationSheet;
 
-		Animated();
-		Animated(const std::string path, const AnimationSheet _animations, const float proportion = 1.0f);
+		Animated(sf::Sprite& _bodyRef, const AnimationSheet _animations = AnimationSheet());
 		~Animated();
 
 		void InvertDirection() { this->looking_right = !this->looking_right; };
@@ -45,6 +43,7 @@ namespace Trait
 
 	protected:
 		std::unordered_map<int, Animation> animations;
+		sf::Sprite& bodyRef;
 
 		unsigned int next_ani, last_ani;
 		bool looking_right;

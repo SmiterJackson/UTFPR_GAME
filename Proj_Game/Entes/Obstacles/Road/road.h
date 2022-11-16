@@ -24,7 +24,7 @@ namespace Obstacles
 	protected:
 		static TypeToRoad roadTypeMap;
 
-		void InCollision(Entity* _other, const sf::Vector2f& intersection);
-		void OfCollision(const sf::FloatRect& ofBounds, const unsigned short int colType);
+		void Execute(const float& pElapsedTime);
+		void Collided(Entity* _other, const sf::Vector2f& intersection, CollisionType colType);
 	};
 }

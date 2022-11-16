@@ -88,7 +88,7 @@ namespace Manager
 		static void Draw(const sf::Sprite& drawTarget);
 		static void Draw(const sf::Text& drawTarget);
 
-		static const ColisonVector GetCameraEntities(const ColisonVector& entities);
+		static const Entities GetCameraEntities(const Entities& entities);
 		
 		static sf::Font* GetFont() { return font; };
 		static sf::Texture* LoadTexture(std::string texturePath, sf::IntRect sheetCut = sf::IntRect(0,0,0,0));

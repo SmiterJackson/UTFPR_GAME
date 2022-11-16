@@ -68,24 +68,15 @@ const sf::IntRect& Trait::Animated::Animation::Update(const float& pElapsed_time
 };
 
 
-Trait::Animated::Animated():
-	PrintableBody(),
-	animations(), next_ani(0), last_ani(0), looking_right(true)
-{};
-Trait::Animated::Animated(const std::string path, const AnimationSheet _animations, const float proportion) :
-	PrintableBody(path, sf::IntRect(), proportion),
-	animations(), next_ani(0), last_ani(0), looking_right(true)
+Trait::Animated::Animated(sf::Sprite& _bodyRef, const AnimationSheet _animations) :
+	animations(), bodyRef(_bodyRef), next_ani(0), last_ani(0), looking_right(true)
 {
 	AnimationSheet::const_iterator it;
 
-	if (!_animations.empty())
-	{
-		this->next_ani = _animations.front().first;
-		this->body.setOrigin(_animations.front().second.GetAnimationSize() / 2.f);
-	}
-
 	for (it = _animations.cbegin(); it != _animations.cend(); it++)
 		this->animations.emplace(it->first, it->second);
+
+	this->UpdateAnimation(float(0.f));
 };
 Trait::Animated::~Animated()
 {};
@@ -98,7 +89,7 @@ void Trait::Animated::UpdateAnimation(const float& pElapsedTime)
 		this->last_ani = this->next_ani;
 	}
 
-	this->body.setTextureRect(this->animations[this->next_ani].Update(
+	this->bodyRef.setTextureRect(this->animations[this->next_ani].Update(
 		pElapsedTime, this->looking_right)
 	);
 };

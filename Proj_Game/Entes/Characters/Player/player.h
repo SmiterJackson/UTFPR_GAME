@@ -39,10 +39,11 @@ namespace Characters
 		void UpdateObsever(const sf::Event& _event);
 		void SelfPrint(const float& pElapsedTime);
 		void Execute(const float& pElapsedTime);
+		void Attack();
+		void Collided(Entity* _other, const sf::Vector2f& intersection, CollisionType colType);
 
 	protected:
-		void InCollision(Entity* _other, const sf::Vector2f& intersection);
-		void OfCollision(const sf::FloatRect& ofBounds, const unsigned short int colType);
+		void Died();
 
 		static keyToAction GetKeyMap(unsigned int size);
 

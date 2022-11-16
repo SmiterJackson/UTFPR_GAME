@@ -1,6 +1,2 @@
-﻿  stage.cpp
-  mossRoad.cpp
-  obstacle.cpp
-  graphic_manager.cpp
-  Generating Code...
+﻿  colision_manager.cpp
   Proj_Game.vcxproj -> C:\Dev\Cplusplus\Game\Proj_Game Debug.exe
