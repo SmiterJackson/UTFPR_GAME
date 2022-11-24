@@ -12,11 +12,11 @@ namespace GUI
 
 		const bool FullOverlay() const { return this->fullOverlay; };
 
-		virtual void SelfPrint(const float& pElapsedTime);
-		virtual void Execute(const float& pElapsedTime) = 0;
+		virtual void SelfPrint();
+		virtual void Execute() = 0;
 
 	protected:
-		void PrintPreviousInterface(const float& pElapsedTime);
+		void PrintPreviousInterface();
 
 	protected:
 		const bool fullOverlay;

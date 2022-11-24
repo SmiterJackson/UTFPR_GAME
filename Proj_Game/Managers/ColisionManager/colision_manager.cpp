@@ -1,4 +1,5 @@
 #include "colision_manager.h"
+#include "../game/game.h"
 #include "../GraphicManager/graphic_manager.h"
 #include "../Entes/GUI/Interfaces/Stage/stage.h"
 using namespace Manager;
@@ -172,31 +173,14 @@ void ColisionManager::CheckOfColision(Entity* entity)
 	sf::Vector2f stageRadious(Stage::GetWorldSize() / 2.f);
 	sf::Vector2f radious(entity->GetSize() / 2.f);
 	sf::Vector2f intersection(0.f, 0.f);
-	sf::Vector2f distance(0.f, 0.f);
+	sf::Vector2f distance(
+		entity->GetPosition().x - Stage::GetWorldPosition().x,
+		entity->GetPosition().y - Stage::GetWorldPosition().y
+	);
 
-	distance -= entity->GetPosition();
 	intersection = sf::Vector2f(
 		fabs(distance.x) - (stageRadious.x - radious.x),
 		fabs(distance.y) - (stageRadious.y - radious.y)
-	);
-	if (intersection.x > 0.f || intersection.y > 0.f)
-	{
-		if(intersection.x <= 0.f)
-			intersection.x = 0.f;
-
-		if (intersection.y <= 0.f)
-			intersection.y = 0.f;
-
-		entity->Collided(nullptr, intersection, CollisionType::MapColl);
-	}
-
-	distance = sf::Vector2f(
-		fabs(GraphicManager::GetViewPosition().x - entity->GetPosition().x),
-		fabs(GraphicManager::GetViewPosition().y - entity->GetPosition().y)
-	);
-	intersection = sf::Vector2f(
-		fabs(distance.x) - (camRadious.x - radious.x),
-		fabs(distance.y) - (camRadious.y - radious.y)
 	);
 	if (intersection.x > 0.f || intersection.y > 0.f)
 	{
@@ -205,6 +189,37 @@ void ColisionManager::CheckOfColision(Entity* entity)
 
 		if (intersection.y <= 0.f)
 			intersection.y = 0.f;
+
+		if (distance.x > 0.f)
+			intersection.x = -(intersection.x);
+
+		if (distance.y > 0.f)
+			intersection.y = -(intersection.y);
+
+		entity->Collided(nullptr, intersection, CollisionType::MapColl);
+	}
+
+	distance = sf::Vector2f(
+		entity->GetPosition().x - GraphicManager::GetViewPosition().x,
+		entity->GetPosition().y - GraphicManager::GetViewPosition().y
+	);
+	intersection = sf::Vector2f(
+		fabs(distance.x) - (camRadious.x - radious.x),
+		fabs(distance.y) - (camRadious.y - radious.y)
+	);
+	if (intersection.x > 0.f || intersection.y > 0.f)
+	{ 
+		if (intersection.x <= 0.f)
+			intersection.x = 0.f;
+
+		if (intersection.y <= 0.f)
+			intersection.y = 0.f;
+
+		if (distance.x > 0.f)
+			intersection.x = -(intersection.x);
+
+		if (distance.y > 0.f)
+			intersection.y = -(intersection.y);
 
 		entity->Collided(nullptr, intersection, CollisionType::CameraColl);
 	}

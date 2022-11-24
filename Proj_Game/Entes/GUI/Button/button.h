@@ -26,8 +26,8 @@ namespace GUI
 		void SetText(const std::string _text_data);
 		const std::string GetText() { return this->text.getString(); };
 
-		void SelfPrint(const float& pElapsedTime);
-		void Execute(const float& pElapsedTime);
+		void SelfPrint();
+		void Execute();
 
 		bool IsClicked();
 

@@ -63,9 +63,6 @@
     <ClCompile Include="Entes\GUI\Interfaces\PauseInterface\pauseInterface.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Traits\PrintableBody\printableBody.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
     <ClCompile Include="Entes\Projectiles\Projectile\projectile.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
@@ -81,13 +78,25 @@
     <ClCompile Include="Entes\GUI\Parallax\parallax.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Factory\playerFabric.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="Entes\Obstacles\Road\road.cpp">
+    <ClCompile Include="Entes\Obstacles\staticTile\staticTile.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="Entes\Characters\Enemies\Enemy\enemy.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Entes\Characters\Enemies\EnemyRanged\enemyRanged.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Entes\GUI\Interfaces\MainMenu\mainMenu.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Stages\Stage1\stage1.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Entes\Characters\Enemies\Enemy\Heuristic\heuristic.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Entes\Characters\Enemies\Enemy\BaseHeuristic\baseHeuristic.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
   </ItemGroup>
@@ -140,9 +149,6 @@
     <ClInclude Include="Entes\GUI\Interfaces\PauseInterface\pauseInterface.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Traits\PrintableBody\printableBody.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
     <ClInclude Include="Entes\Projectiles\Projectile\projectile.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
@@ -164,22 +170,28 @@
     <ClInclude Include="Entes\GUI\Parallax\parallax.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Factory\Abstract\fabric.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
     <ClInclude Include="Factory\Abstract\creator.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Factory\playerFabric.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="Factory\Abstract\generalizedFabric.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="Entes\Obstacles\Road\road.h">
+    <ClInclude Include="Entes\Obstacles\staticTile\staticTile.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="Entes\Characters\Enemies\Enemy\enemy.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Entes\Characters\Enemies\EnemyRanged\enemyRanged.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Entes\GUI\Interfaces\MainMenu\mainMenu.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Stages\Stage1\stage1.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Entes\Characters\Enemies\Enemy\Heuristic\heuristic.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Entes\Characters\Enemies\Enemy\BaseHeuristic\baseHeuristic.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>

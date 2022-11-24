@@ -41,14 +41,14 @@ const sf::IntRect& Trait::Animated::Animation::Update(const float& pElapsed_time
 	{
 		this->timeAcumulator -= this->switchTime;
 
-		if (this->current <= this->end)
-			this->current++;
-
 		if (this->repeatable)
 		{
-			if (this->current > this->end)
+			if (this->current == this->end)
 				this->current = this->start;
 		}
+
+		if (this->current < this->end)
+			this->current++;
 	}
 
 	this->sheet_token.top = this->row * this->sheet_token.height;
@@ -72,11 +72,13 @@ Trait::Animated::Animated(sf::Sprite& _bodyRef, const AnimationSheet _animations
 	animations(), bodyRef(_bodyRef), next_ani(0), last_ani(0), looking_right(true)
 {
 	AnimationSheet::const_iterator it;
+	sf::Vector2f size;
 
 	for (it = _animations.cbegin(); it != _animations.cend(); it++)
 		this->animations.emplace(it->first, it->second);
 
-	this->UpdateAnimation(float(0.f));
+	size = this->animations[this->next_ani].GetAnimationSize();
+	this->bodyRef.setOrigin(size / 2.f);
 };
 Trait::Animated::~Animated()
 {};

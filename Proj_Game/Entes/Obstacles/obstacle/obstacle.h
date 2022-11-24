@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../Entes/Entity/entity.h"
-#include "../Traits/PrintableBody/printableBody.h"
 
 /*
 Classe base para obstáculos.
@@ -25,9 +24,10 @@ namespace Obstacles
 			this->body.setPosition(this->hitBox.getPosition());
 		};
 
-		virtual void SelfPrint(const float& pElapsedTime);
-
-		virtual void Execute(const float& pElapsedTime) = 0;
+		virtual void SelfPrint();
 		virtual void Collided(Entity* _other, const sf::Vector2f& intersection, CollisionType colType) = 0;
+
+	protected:
+		virtual void Move();
 	};
 }

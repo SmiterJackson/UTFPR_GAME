@@ -11,12 +11,12 @@ Interface::Interface(const unsigned short int GameStateType, Interface* _previou
 Interface::~Interface()
 {};
 
-void Interface::SelfPrint(const float& pElapsedTime)
+void Interface::SelfPrint()
 {
-	this->PrintPreviousInterface(pElapsedTime);
+	this->PrintPreviousInterface();
 };
-void Interface::PrintPreviousInterface(const float& pElapsedTime)
+void Interface::PrintPreviousInterface()
 {
 	if(this->previousGState != nullptr)
-		this->previousGState->SelfPrint(pElapsedTime);
+		this->previousGState->SelfPrint();
 };

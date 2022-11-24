@@ -2,8 +2,9 @@
 
 #include "../Managers/EventManager/event_manager.h"
 #include "../Managers/GraphicManager/graphic_manager.h"
+
+#include "../Stages/Stage1/stage1.h"
 #include "../Entes/GUI/Interfaces/PauseInterface/pauseInterface.h"
-#include "../Entes/GUI/Interfaces/Stage/stage.h"
 
 typedef std::stack<GUI::Interface*> Interfaces;
 

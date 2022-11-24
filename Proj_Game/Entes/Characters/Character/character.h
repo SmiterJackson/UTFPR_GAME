@@ -2,7 +2,6 @@
 
 #include "../Entes/Entity/entity.h"
 #include "../Traits/Animated/animated.h"
-#include "../Traits/PrintableBody/printableBody.h"
 
 /*
 Classe character que herda características para poder interagir com outras 
@@ -31,12 +30,12 @@ namespace Characters
 			}
 		};
 
-		virtual void SelfPrint(const float& pElapsedTime) = 0;
-		virtual void Execute(const float& pElapsedTime) = 0;
+		virtual void SelfPrint() = 0;
 		virtual void Attack() = 0;
 		virtual void Collided(Entity* _other, const sf::Vector2f& intersection, CollisionType colType) = 0;
 
 	protected:
+		virtual void Move();
 		virtual void Died() = 0;
 
 	protected:

@@ -2,19 +2,18 @@
 #include "../game/game.h"
 #include "../Managers/GraphicManager/graphic_manager.h"
 using namespace Characters;
-using namespace Obstacles;
 using namespace Manager;
 using namespace Trait;
 using namespace GUI;
 
-#define RECT_SIZE 50.f
-
-#define OBSTACLE_SIZE 24
-
-#define OBSTACLE_NUM 1.f
-#define PLAYER_NUM 1
+#define THREADS_TO_PRINT_GRID 4
 
 sf::RectangleShape Stage::world = sf::RectangleShape();
+std::vector<std::vector<bool>> Stage::worldGrid = std::vector<std::vector<bool>>();
+
+#ifdef _DEBUG
+Stage::GridBlocks Stage::worldGridBlocks = GridBlocks();
+#endif
 
 Stage::Stage():
 	Interface(GameStateType::IN_GAME),
@@ -22,78 +21,107 @@ Stage::Stage():
 	colision_manager(nullptr),
 	background(),
 	entities()
-{
-	this->Initalize(1.f);
-};
-Stage::Stage(const sf::Vector2f worldSize, const std::vector<std::string>& BackgroundPaths, const float proportion):
+{};
+Stage::Stage(const sf::Vector2u worldSize_grid, const std::vector<std::string>& BackgroundPaths, const float proportion):
 	Interface(GameStateType::IN_GAME),
 	Observer(this->id),
 	colision_manager(nullptr),
 	background(BackgroundPaths, proportion),
 	entities()
 {
-	sf::Vector2f radious(worldSize);
-	radious /= 2.f;
+	sf::Vector2f size(static_cast<sf::Vector2f>(worldSize_grid) * GraphicManager::GetGridSize());
+	unsigned int i = 0, j = 0;
+
+	worldGrid.resize(worldSize_grid.x);
+	for (i = 0; i < worldSize_grid.x; i++)
+		worldGrid[i].resize(worldSize_grid.y, true);
+
+#ifdef _DEBUG
+	sf::RectangleShape gridBlock;
+	sf::Text txt;
+	txt.setFont(*GraphicManager::GetFont());
+	txt.setCharacterSize(10);
+	gridBlock.setSize(sf::Vector2f(GraphicManager::GetGridSize(), GraphicManager::GetGridSize()));
+	gridBlock.setFillColor(sf::Color(0U, 0U, 255U, 100U));
+	gridBlock.setOutlineColor(sf::Color::Magenta);
+	gridBlock.setOutlineThickness(0.5f);
+
+	worldGridBlocks.resize(worldSize_grid.x);
+	for (i = 0; i < worldSize_grid.x; i++)
+		worldGridBlocks[i].resize(worldSize_grid.y, std::make_pair(gridBlock, txt));
+
+	for (i = 0; i < worldSize_grid.x; i++)
+		for (j = 0; j < worldSize_grid.y; j++)
+		{
+			std::stringstream ss;
+			ss << "(" << i << ", " << j << ")";
+			worldGridBlocks[i][j].first.setPosition(sf::Vector2f(
+					GraphicManager::GetGridSize() * i,
+					GraphicManager::GetGridSize() * j
+				)
+			);
+			worldGridBlocks[i][j].second.setString(ss.str());
+			worldGridBlocks[i][j].second.setPosition(sf::Vector2f(
+					GraphicManager::GetGridSize() * i + 6.f,
+					GraphicManager::GetGridSize() * j + 7.f
+				)
+			);
+		}
+#endif
+
+	world.setSize(size);
+	world.setOrigin(size / 2.f);
+	world.setPosition(size / 2.f);
 
 	colision_manager = ColisionManager::GetInstance();
-	world.setSize(worldSize);
-	world.setOrigin(worldSize / 2.f);
-	world.setPosition(0.f, 0.f);
-	GraphicManager::SetCameraLimits(
-		sf::FloatRect(
-			-radious.x, -radious.y, radious.x, radious.y
-		)
-	);
-
-	this->Initalize(proportion);
+	GraphicManager::SetCameraLimits(sf::FloatRect(0.f, 0.f, size.x, size.y));
 
 	GraphicManager::UpdateCamera();
 	this->background.ResetBackground();
 };
 Stage::~Stage()
-{
-	Lista<Entity*>::Iterador it;
+{};
 
-	for(it = this->entities.begin(); it != this->entities.end(); it++)
+void Stage::VerifyGridOcupation()
+{
+	float grid(GraphicManager::GetGridSize());
+	unsigned int i = 0;
+	int j = 0, x = 0;
+	sf::FloatRect sizeInGrid;
+	sf::IntRect LimToGrid;
+
+	for (i = 0; i < this->entities.GetSize(); i++)
 	{
-		delete (*it);
-		this->entities.PopAt(it);
+		if(this->entities[i]->GetType() == Type::OBSTACLE)
+		{
+			Obstacles::Obstacle* ob = static_cast<Obstacles::Obstacle*>(this->entities[i]);
+			sizeInGrid = sf::FloatRect(
+				this->entities[i]->GetBounds().left		/ grid,
+				this->entities[i]->GetBounds().width	/ grid,
+				this->entities[i]->GetBounds().top		/ grid,
+				this->entities[i]->GetBounds().height	/ grid
+			);
+			LimToGrid = sf::IntRect(
+				int(roundf(sizeInGrid.left)),
+				int(roundf(sizeInGrid.width)),
+				int(roundf(sizeInGrid.top)),
+				int(roundf(sizeInGrid.height))
+			);
+
+			for (j = LimToGrid.left; j < LimToGrid.width; j++)
+			{
+				for (x = LimToGrid.top; x < LimToGrid.height; x++)
+				{
+					worldGrid[j][x].flip();
+				#ifdef  _DEBUG
+					worldGridBlocks[j][x].first.setFillColor(worldGrid[j][x] == true ? sf::Color(0U, 0U, 255U, 100U) : sf::Color(255U, 0U, 0U, 100U));
+				#endif
+				}
+			}
+		}
 	}
 };
 
-void Stage::Initalize(const float size_coefficient)
-{
-	Lista<Entity*> colidiveis;
-
-	sf::Vector2f position(0.f, (192 * size_coefficient) - RECT_SIZE - 36.f);
-	float obsCoeff = 1.f;
-	int i = 0, x_axis = 0, y_axis = 0;
-	
-	std::list<Player*> players;
-	for (i = 0; i < PLAYER_NUM; i++)
-	{
-		players.push_back(new Player());
-		players.back()->MovePosition(position.x + (-48.f * i), 0.f);
-		
-		this->entities.PushBack(static_cast<Entity*>(players.back()));
-		colidiveis.PushBack(static_cast<Entity*>(players.back()));
-	}
-
-	std::list<Obstacle*> obstacles;
-	for (float f = 1.f; f < OBSTACLE_NUM + 1.f; f++)
-	{
-		sf::Vector2f obsSize(OBSTACLE_SIZE * 5, OBSTACLE_SIZE * 1);
-
-		obstacles.push_back(new Road(
-			obsSize, sf::Vector2f(0.f,0.f), RoadType::MOSS_MIDDLE
-		));
-		obstacles.back()->MovePosition(position.x + (obsSize.x * f * obsCoeff), position.y + 32 * 1.2f);
-		
-		this->entities.PushBack(static_cast<Entity*>(obstacles.back()));
-		colidiveis.PushBack(static_cast<Entity*>(obstacles.back()));
-	}
-	this->colision_manager->AddRange(&colidiveis);
-};
 void Stage::UpdateObsever(const sf::Event& _event)
 {
 	if(Game::GetGameState() == GameStateType::IN_GAME)
@@ -105,85 +133,42 @@ void Stage::UpdateObsever(const sf::Event& _event)
 		}
 	}
 };
-
-void Stage::SelfPrint(const float& pElapsedTime)
+void Stage::SelfPrint()
 {
-	Lista<Entity*>::Iterador it;
+	unsigned int i = 0, j = 0;
 
-	this->background.SelfPrint(pElapsedTime);
-	for(it = this->entities.begin(); it != this->entities.end(); it++)
-		(*it)->SelfPrint(pElapsedTime);
+	this->background.SelfPrint();
+	for (i = 0; i < this->entities.GetSize(); i++)
+	{
+		this->entities[i]->SelfPrint();
+	}
+
+#ifdef _DEBUG
+	sf::IntRect bounds(GraphicManager::CameraGridIndexs());
+	sf::Vector2u extra((bounds.width - bounds.left) % 2 == 1 ? 1 : 0, (bounds.height - bounds.top) % 2 == 1 ? 1 : 0);
+	sf::Vector2u half_diff((bounds.width - bounds.left) / 2u, (bounds.height - bounds.top) / 2u);
+	sf::IntRect aux;
+
+	for (i = bounds.left; i < bounds.width; i++)
+		for (j = bounds.top; j < bounds.height; j++)
+		{
+			GraphicManager::Draw(worldGridBlocks[i][j].first);
+			GraphicManager::Draw(worldGridBlocks[i][j].second);
+		}
+#endif
 };
-void Stage::Execute(const float& pElapsedTime)
+void Stage::Execute()
 {
 	unsigned int i = 0;
 
 	for (i = 0; i < this->entities.GetSize(); i++)
 	{
-		this->entities[i].GetInfo()->Execute(pElapsedTime);
+		this->entities[i]->Execute();
 	}
+	this->colision_manager->UpdateColisions(elapsedTime);
+
 	Manager::GraphicManager::UpdateCamera();
-
-	this->colision_manager->UpdateColisions(pElapsedTime);
-	this->background.Execute(pElapsedTime);
-};
-
-void Stage::AddEntity(Entity* entity)
-{
-	if (entity == nullptr)
-		return;
-
-	this->entities.PushBack(entity);
-	this->colision_manager->Add(static_cast<Entity*>(entity));
-};
-void Stage::AddRange(std::list<Entity*>* _entities)
-{
-	std::list<Entity*>::iterator it;
-
-	if (_entities == nullptr)
-		return;
-
-	for(it = _entities->begin(); it != _entities->end(); it++)
-	{
-		this->entities.PushBack(*it);
-		this->colision_manager->Add(static_cast<Entity*>(*it));
-	}
-};
-void Stage::RemoveEntity(const unsigned long long int entityId)
-{
-	Lista<Entity*>::Iterador it;
-
-	for(it = this->entities.begin(); it != this->entities.end(); it++)
-	{
-		if ((*it)->GetId() == entityId)
-		{
-			delete (*it);
-			this->entities.PopAt(it);
-			break;
-		}
-	}
-
-	this->colision_manager->Remove(entityId);
-};
-void Stage::RemoveRange(const std::vector<unsigned long long int> entityId)
-{
-	std::vector<unsigned long long int>::const_iterator cIt;
-	Lista<Entity*>::Iterador it;
-
-	for (cIt = entityId.cbegin(); cIt != entityId.cend(); cIt++)
-	{
-		for (it = this->entities.begin(); it != this->entities.end(); ++it)
-		{
-
-			if ((*it)->GetId() == (*cIt))
-			{
-				delete (*it); 
-				this->entities.PopAt(it);
-			}
-
-			this->colision_manager->Remove(*cIt);
-		}
-	}
+	this->background.Execute();
 };
 
 void Stage::AddPlayer()
@@ -200,7 +185,7 @@ void Stage::AddPlayer()
 	}
 	newPlayer->MovePosition(pos.x, pos.y);
 
-	this->entities.PushBack(static_cast<Entity*>(newPlayer));
+	this->entities.AddEntity(static_cast<Entity*>(newPlayer));
 	this->colision_manager->Add(static_cast<Entity*>(newPlayer));
 };
 void Stage::RemovePlayer()
@@ -208,5 +193,14 @@ void Stage::RemovePlayer()
 	Characters::Player* player = Characters::Player::GetPlayerList().back();
 
 	this->colision_manager->Remove(player->GetId());
-	this->RemoveEntity(player->GetId());
+	this->entities.RemoveEntity(player->GetId());
+};
+
+void Stage::EntityCreated(Entity* pEntity)
+{
+	if (pEntity == nullptr)
+		return;
+
+	this->entities.AddEntity(pEntity);
+	this->colision_manager->Add(pEntity);
 };

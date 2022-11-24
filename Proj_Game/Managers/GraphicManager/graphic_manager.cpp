@@ -17,13 +17,14 @@ using namespace Manager;
 
 #define OFF_CAMERA_EXTRA_SPACE_COEFF 0.5f
 
-float               GraphicManager::gridSize    =   GAME_GRID_SIZE;
-sf::Font*           GraphicManager::font        =   nullptr;
-GraphicManager*     GraphicManager::instance    =   nullptr;
-sf::RenderWindow*   GraphicManager::window      =   nullptr;
-sf::FloatRect       GraphicManager::cameraLim   =   sf::FloatRect();
-TextureMap          GraphicManager::textures    =   TextureMap();
-sf::View            GraphicManager::view        =   sf::View(sf::Vector2f(), VIEW_SIZE);
+const float         GraphicManager::camExtraSpace   =   OFF_CAMERA_EXTRA_SPACE_COEFF;
+float               GraphicManager::gridSize        =   GAME_GRID_SIZE;
+sf::Font*           GraphicManager::font            =   nullptr;
+GraphicManager*     GraphicManager::instance        =   nullptr;
+sf::RenderWindow*   GraphicManager::window          =   nullptr;
+sf::FloatRect       GraphicManager::cameraLim       =   sf::FloatRect();
+TextureMap          GraphicManager::textures        =   TextureMap();
+sf::View            GraphicManager::view            =   sf::View(sf::Vector2f(), VIEW_SIZE);
 
 GraphicManager* GraphicManager::GetInstance(Interfaces* _pInterfaces)
 {
@@ -44,12 +45,12 @@ void GraphicManager::DesconstructInstance()
 
 GraphicManager::GraphicManager(Interfaces* _pInterfaces) :
     originalSize(VIEW_SIZE), pInterfaces(_pInterfaces),
-    zoom(CAMERA_ZOOM), elapsedTimeRef(Game::GetElapsedTime()),
-    distort_x(DISTORTION_X), distort_y(DISTORTION_Y),
+    zoom(CAMERA_ZOOM),distort_x(DISTORTION_X), distort_y(DISTORTION_Y),
     bar_x(BLCK_BAR_X), bar_y(BLCK_BAR_Y)
 {
     window = new sf::RenderWindow(sf::VideoMode(WINDOW_SIZE.x, WINDOW_SIZE.y), "JANELA DE CONTEXTO");
     window->setKeyRepeatEnabled(false);
+    window->setFramerateLimit(60);
 
     if (font == nullptr)
     {
@@ -193,7 +194,7 @@ const Entities GraphicManager::GetCameraEntities(const Entities& entities)
         entSize = (*cIt)->GetSize() / 2.f;
         delta_X = fabs(GetViewPosition().x - (*cIt)->GetPosition().x);
 
-        if (delta_X <= (GetViewSize().x / 2.f * (1.f + OFF_CAMERA_EXTRA_SPACE_COEFF)) + entSize.x)
+        if (delta_X <= (GetViewSize().x / 2.f * (1.f + camExtraSpace)) + entSize.x)
             entitiesInCam.emplace_back((*cIt));
     }
 
@@ -257,7 +258,7 @@ void GraphicManager::Update()
 
     window->clear();
     
-    pInterfaces->top()->SelfPrint(elapsedTimeRef);
+    pInterfaces->top()->SelfPrint();
 
     window->setView(view);
     window->display();

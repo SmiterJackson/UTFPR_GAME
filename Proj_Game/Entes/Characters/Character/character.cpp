@@ -27,3 +27,10 @@ Character::Character(const unsigned short int _type, const sf::Vector2f _size, c
 {};
 Character::~Character()
 {};
+
+void Character::Move()
+{
+	float coeff(gravity * elapsedTime);
+
+	this->MovePosition(0.f, coeff);
+};

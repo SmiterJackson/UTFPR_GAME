@@ -27,8 +27,8 @@ namespace GUI
 					it->second[i].setScale(_size_coeff, _size_coeff);
 		};
 
-		void SelfPrint(const float& pElapsedTime);
-		void Execute(const float& pElapsedTime);
+		void SelfPrint();
+		void Execute();
 
 	private:
 		std::vector<Layer> backGrounds;

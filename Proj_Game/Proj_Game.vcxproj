@@ -161,15 +161,18 @@
   <ItemGroup>
     <ClCompile Include="Entes\Characters\Character\character.cpp" />
     <ClCompile Include="Entes\Characters\Enemies\EnemyMelee\enemyMelee.cpp" />
+    <ClCompile Include="Entes\Characters\Enemies\EnemyRanged\enemyRanged.cpp" />
+    <ClCompile Include="Entes\Characters\Enemies\Enemy\BaseHeuristic\baseHeuristic.cpp" />
     <ClCompile Include="Entes\Characters\Enemies\Enemy\enemy.cpp" />
+    <ClCompile Include="Entes\Characters\Enemies\Enemy\Heuristic\heuristic.cpp" />
     <ClCompile Include="Entes\Entity\entity.cpp" />
     <ClCompile Include="Entes\Ente\ente.cpp" />
+    <ClCompile Include="Entes\GUI\Interfaces\MainMenu\mainMenu.cpp" />
     <ClCompile Include="Entes\GUI\Parallax\parallax.cpp" />
     <ClCompile Include="Entes\Obstacles\obstacle\obstacle.cpp" />
     <ClCompile Include="Entes\Characters\Player\player.cpp" />
-    <ClCompile Include="Entes\Obstacles\Road\road.cpp" />
+    <ClCompile Include="Entes\Obstacles\staticTile\staticTile.cpp" />
     <ClCompile Include="Entes\Projectiles\Projectile\projectile.cpp" />
-    <ClCompile Include="Factory\playerFabric.cpp" />
     <ClCompile Include="game\game.cpp" />
     <ClCompile Include="Entes\GUI\Button\button.cpp" />
     <ClCompile Include="Entes\GUI\Interfaces\Interface\interface.cpp" />
@@ -180,26 +183,27 @@
     <ClCompile Include="Managers\GraphicManager\graphic_manager.cpp" />
     <ClCompile Include="Proj_Game.cpp" />
     <ClCompile Include="Entes\GUI\Interfaces\Stage\stage.cpp" />
+    <ClCompile Include="Stages\Stage1\stage1.cpp" />
     <ClCompile Include="stdafx\stdafx.cpp" />
     <ClCompile Include="Traits\Animated\animated.cpp" />
     <ClCompile Include="Traits\Observer\observer.cpp" />
-    <ClCompile Include="Traits\PrintableBody\printableBody.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entes\Characters\Character\character.h" />
     <ClInclude Include="Entes\Characters\Enemies\EnemyMelee\enemyMelee.h" />
+    <ClInclude Include="Entes\Characters\Enemies\EnemyRanged\enemyRanged.h" />
+    <ClInclude Include="Entes\Characters\Enemies\Enemy\BaseHeuristic\baseHeuristic.h" />
     <ClInclude Include="Entes\Characters\Enemies\Enemy\enemy.h" />
+    <ClInclude Include="Entes\Characters\Enemies\Enemy\Heuristic\heuristic.h" />
     <ClInclude Include="Entes\Entity\entity.h" />
     <ClInclude Include="Entes\Ente\ente.h" />
+    <ClInclude Include="Entes\GUI\Interfaces\MainMenu\mainMenu.h" />
     <ClInclude Include="Entes\GUI\Parallax\parallax.h" />
     <ClInclude Include="Entes\Obstacles\obstacle\obstacle.h" />
     <ClInclude Include="Entes\Characters\Player\player.h" />
-    <ClInclude Include="Entes\Obstacles\Road\road.h" />
+    <ClInclude Include="Entes\Obstacles\staticTile\staticTile.h" />
     <ClInclude Include="Entes\Projectiles\Projectile\projectile.h" />
-    <ClInclude Include="Factory\Abstract\fabric.h" />
     <ClInclude Include="Factory\Abstract\creator.h" />
-    <ClInclude Include="Factory\Abstract\generalizedFabric.h" />
-    <ClInclude Include="Factory\playerFabric.h" />
     <ClInclude Include="game\game.h" />
     <ClInclude Include="Entes\GUI\Button\button.h" />
     <ClInclude Include="Entes\GUI\Interfaces\Interface\interface.h" />
@@ -212,10 +216,10 @@
     <ClInclude Include="Managers\EventManager\event_manager.h" />
     <ClInclude Include="Managers\GraphicManager\graphic_manager.h" />
     <ClInclude Include="Entes\GUI\Interfaces\Stage\stage.h" />
+    <ClInclude Include="Stages\Stage1\stage1.h" />
     <ClInclude Include="stdafx\stdafx.h" />
     <ClInclude Include="Traits\Animated\animated.h" />
     <ClInclude Include="Traits\Observer\observer.h" />
-    <ClInclude Include="Traits\PrintableBody\printableBody.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\parallax_background\back-buildings.png" />

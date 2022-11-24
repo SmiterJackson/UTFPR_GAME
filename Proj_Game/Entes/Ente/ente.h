@@ -41,8 +41,8 @@ public:
 	const unsigned short int GetType() const { return this->type; };
 	const unsigned short int GetPrintPriority() const { return this->printPriority; };
 
-	virtual void SelfPrint(const float& pElapsedTime) = 0;
-	virtual void Execute(const float& pElapsedTime) = 0;
+	virtual void SelfPrint() = 0;
+	virtual void Execute() = 0;
 
 	virtual bool operator> (const Ente& other)
 	{
@@ -58,6 +58,7 @@ public:
 	};
 
 protected:
+	static float& elapsedTime;
 	const unsigned long long int id;
 	const unsigned short int type;
 	const unsigned short int printPriority;

@@ -24,9 +24,9 @@ namespace GUI
 		PauseInterface(Stage* _pStage);
 		~PauseInterface();
 
-		void SelfPrint(const float& pElapsedTime);
 		void UpdateObsever(const sf::Event& _event);
-		void Execute(const float& pElapsedTime);
+		void SelfPrint();
+		void Execute();
 
 	private:
 		void VerifyButtons();

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Traits/PrintableBody/printableBody.h"
+#include "stdafx.h"
 
 namespace Trait
 {

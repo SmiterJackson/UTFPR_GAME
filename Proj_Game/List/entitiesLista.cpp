@@ -29,9 +29,7 @@ void EntitiesLista::AddRange(std::list<Entity*>* _entities)
 		return;
 
 	for (it = _entities->begin(); it != _entities->end(); it++)
-	{
 		this->entities.PushBack(*it);
-	}
 };
 void EntitiesLista::RemoveEntity(const unsigned long long int entityId)
 {

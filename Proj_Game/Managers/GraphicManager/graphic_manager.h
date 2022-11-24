@@ -56,6 +56,22 @@ namespace Manager
 		{
 			sf::Vector2f mousToView = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
 			return sf::Vector2i(mousToView / gridSize);
+		}; 
+		static const sf::Vector2i PositionToGrid(const sf::Vector2f pos)
+		{
+			return static_cast<sf::Vector2i>(pos / gridSize);
+		};
+		static const sf::IntRect CameraGridIndexs()
+		{
+			sf::FloatRect bounds(GraphicManager::GetViewBounds());
+			sf::IntRect indexs(
+				int(bounds.left		/ gridSize),
+				int(bounds.top		/ gridSize),
+				int(bounds.width	/ gridSize),
+				int(bounds.height	/ gridSize)
+			);
+
+			return indexs;
 		};
 		static const float GetGridSize() { return gridSize; };
 
@@ -100,6 +116,7 @@ namespace Manager
 		~GraphicManager();
 
 	private:
+		static const float camExtraSpace;
 		static float gridSize;
 		static sf::Font* font;
 		static GraphicManager* instance;
@@ -112,8 +129,6 @@ namespace Manager
 		Interfaces* pInterfaces;
 
 		float zoom;
-		float& elapsedTimeRef;
-
 		bool distort_x, distort_y;
 		bool bar_x, bar_y;
 	};

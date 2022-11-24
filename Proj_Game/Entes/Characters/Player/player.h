@@ -11,20 +11,25 @@ namespace Characters
 {
 	class Player : public Character, public Trait::Observer
 	{
-	public:
+	private:
 		enum Actions
 		{
 			IDLE = 0,
-			WALKING,
-			KICK,
+			IDLE_CROUCH,
+			WALK,
+			WALK_CROUCH,
+			ATTACK,
+			ATTACK_CROUCH,
+			JUMP,
+			FALL,
 			DAMAGED,
-			CROUCHING
+			DIED
 		};
 		enum ActionMap
 		{
 			WALK_LEFT = 0,
 			WALK_RIGHT,
-			JUMP,
+			JUMPED,
 			CROUCH
 		};
 		typedef std::map<sf::Keyboard::Key, ActionMap> keyToAction;
@@ -33,17 +38,19 @@ namespace Characters
 		Player();
 		~Player();
 
-		static const std::list<Player*>& GetPlayerList() { return playerList; };
+		static std::list<Player*>& GetPlayerList() { return playerList; };
 		static const unsigned int GetNumberOfPlayers() { return playerList.size(); };
 
 		void UpdateObsever(const sf::Event& _event);
-		void SelfPrint(const float& pElapsedTime);
-		void Execute(const float& pElapsedTime);
+		void SelfPrint();
+		void Execute();
 		void Attack();
 		void Collided(Entity* _other, const sf::Vector2f& intersection, CollisionType colType);
 
 	protected:
+		void Move();
 		void Died();
+		const sf::Vector2f EntityCollision(const Entity* other, const sf::Vector2f& intersection);
 
 		static keyToAction GetKeyMap(unsigned int size);
 
@@ -53,6 +60,7 @@ namespace Characters
 
 		keyToAction keyToActions;
 
+		bool shorter;
 		bool onGround;
 		bool crouching;
 		bool jump;

@@ -4,6 +4,7 @@ using namespace Obstacles;
 using namespace Manager;
 
 #define PATH "Proj_Game/Resources/tile_sets/oak_woods_v1.0/oak_woods_tileset.png"
+#define OBSTACLE_BOUYANCY 10.f
 
 Obstacle::Obstacle():
 	Entity(
@@ -28,7 +29,7 @@ Obstacle::Obstacle(const sf::Vector2f _size, const sf::Vector2f _position, const
 Obstacle::~Obstacle()
 {};
 
-void Obstacle::SelfPrint(const float& pElapsedTime)
+void Obstacle::SelfPrint()
 {
 	GraphicManager::Draw(this->body);
 
@@ -36,4 +37,11 @@ void Obstacle::SelfPrint(const float& pElapsedTime)
 	GraphicManager::Draw(this->hitBox);
 	GraphicManager::Draw(this->originCircle);
 #endif
+};
+void Obstacle::Move()
+{
+	float coeff(gravity * elapsedTime);
+	float buoyancy(OBSTACLE_BOUYANCY * elapsedTime);
+
+	this->MovePosition(0.f, coeff - buoyancy);
 };

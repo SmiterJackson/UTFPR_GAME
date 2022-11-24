@@ -34,7 +34,7 @@ void Parallax::SetBackgrounds(const std::vector<std::string>& paths)
 	this->backGrounds.reserve(paths.size());
 	for (cIt = paths.cbegin(); cIt != paths.cend(); cIt++)
 	{
-		txt = Manager::GraphicManager::LoadTexture(*cIt);
+		txt = GraphicManager::LoadTexture(*cIt);
 		this->backGrounds.emplace_back(Layer(txt, std::vector<sf::Sprite>()));
 		pLastSpriteVec = &this->backGrounds.back().second;
 
@@ -45,6 +45,7 @@ void Parallax::SetBackgrounds(const std::vector<std::string>& paths)
 			pLastSprite = &pLastSpriteVec->back();
 
 			pLastSprite->setTexture(*txt);
+			pLastSprite->setPosition(0.f, 0.f);
 			pLastSprite->setScale(this->size_coeff, this->size_coeff);
 			pLastSprite->move((txt->getSize().x * this->size_coeff * i), 0.f);
 		}
@@ -71,7 +72,7 @@ void Parallax::ResetBackground()
 	this->lastPosition = GraphicManager::GetViewPosition();
 };
 
-void Parallax::SelfPrint(const float& pElapsedTime)
+void Parallax::SelfPrint()
 {
 	std::vector<Layer>::reverse_iterator rIt;
 	size_t i = 0;
@@ -80,7 +81,7 @@ void Parallax::SelfPrint(const float& pElapsedTime)
 		for (i = 0; i < rIt->second.size(); i++)
 			GraphicManager::Draw(rIt->second[i]);
 };
-void Parallax::Execute(const float& pElapsedTime)
+void Parallax::Execute()
 {
 	std::vector<Layer>::iterator it;
 	sf::Sprite* pSprite = nullptr;

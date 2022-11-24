@@ -76,12 +76,12 @@ void GUI::Button::SetText(const std::string _text_data)
 	this->text.setPosition(pos);
 };
 
-void GUI::Button::SelfPrint(const float& pElapsedTime)
+void GUI::Button::SelfPrint()
 {
 	GraphicManager::Draw(this->body);
 	GraphicManager::Draw(this->text);
 };
-void GUI::Button::Execute(const float& pElapsedTime)
+void GUI::Button::Execute()
 {
 
 	this->button_status = BTN_IDLE;

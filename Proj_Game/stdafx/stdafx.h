@@ -3,12 +3,13 @@
 #include <iostream>
 #include <cmath>
 #include <ctime>
+#include <limits>
+#include <stack>
+#include <set>
 #include <list>
 #include <vector>
-#include <limits>
 #include <unordered_map>
-#include <memory>
-#include <stack>
+#include <stdarg.h>
 #include <sstream>
 
 #include "SFML\Graphics.hpp"

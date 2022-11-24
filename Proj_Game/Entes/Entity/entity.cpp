@@ -2,9 +2,15 @@
 #include "../Managers/GraphicManager/graphic_manager.h"
 using namespace Manager;
 
+#define GRAVITY_VELOCITY 10.f
+#define MAX_GRAVITY_VELOCITY 13.f
+
 #ifdef _DEBUG
 #define ORIGIN_SIZE 1.f
 #endif
+
+const float Entity::gravity = GRAVITY_VELOCITY;
+const float Entity::maxGravityPull = MAX_GRAVITY_VELOCITY;
 
 // OBS multiplas inserções em vector pode causar realocação de memória onde perde-se a textura do objeto
 // List sendo encadeado não há o problema
@@ -73,6 +79,11 @@ Entity::Entity(const unsigned short int _type, const unsigned short int printPri
 };
 Entity::~Entity()
 {};
+
+void Entity::Execute()
+{
+	this->Move();
+};
 
 void Entity::SetTexture(const std::string path, const sf::IntRect sheetCut)
 {

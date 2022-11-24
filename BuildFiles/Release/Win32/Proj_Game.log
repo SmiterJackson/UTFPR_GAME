@@ -1,6 +1,9 @@
-﻿  stage.cpp
+﻿  enemy.cpp
+C:\Dev\Cplusplus\Game\Proj_Game\Entes\Characters\Enemies\Enemy\enemy.cpp(89,16): warning C4018: '<': signed/unsigned mismatch
+C:\Dev\Cplusplus\Game\Proj_Game\Entes\Characters\Enemies\Enemy\enemy.cpp(135,10): warning C4018: '>=': signed/unsigned mismatch
+C:\Dev\Cplusplus\Game\Proj_Game\Entes\Characters\Enemies\Enemy\enemy.cpp(144,11): warning C4018: '>=': signed/unsigned mismatch
   Generating code
-  1 of 1772 functions (<0.1%) were compiled, the rest were copied from previous compilation.
+  1 of 2406 functions (<0.1%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     1 functions had inline decision re-evaluated but remain unchanged
   Finished generating code

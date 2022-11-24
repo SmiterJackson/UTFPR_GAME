@@ -9,10 +9,6 @@ using namespace GUI;
 
 #define ZOOM_COEFF 2.0f
 
-#define IMAGE_COEFFICIENT 2.5f
-
-#define SIZE sf::Vector2f((352.f * 4.f * IMAGE_COEFFICIENT), ((192.f - 20.f)* 2.f * IMAGE_COEFFICIENT))
-
 Game*               Game::game          = nullptr;
 Interfaces          Game::interfaces    = Interfaces();
 unsigned short int  Game::gameState     = GameStateType::IN_GAME;
@@ -39,14 +35,7 @@ Game::Game():
     graphicManager(GraphicManager::GetInstance(&interfaces)),
     eventManager(EventManager::GetInstance())
 {
-    std::vector<std::string> paths(
-    {
-        "Proj_Game/Resources/parallax_background/foreground.png",
-        "Proj_Game/Resources/parallax_background/back-buildings.png",
-        "Proj_Game/Resources/parallax_background/far-buildings.png"
-    });
-
-    Stage* stage = new Stage(SIZE, paths, IMAGE_COEFFICIENT);
+    Stages::Stage1* stage = new Stages::Stage1();
     interfaces.push(static_cast<GUI::Interface*>(stage));
 };
 Game::~Game()
@@ -65,7 +54,7 @@ bool Game::StartGame()
     {
         this->elapsedTime = clock.restart().asSeconds();
 
-        this->interfaces.top()->Execute(this->elapsedTime);
+        this->interfaces.top()->Execute();
 
         this->graphicManager->Update();
         this->eventManager->Update();
@@ -83,7 +72,7 @@ void Game::UpdateGameState()
     {
     case GameStateType::PAUSE_MENU:
         if (currentInter->GetType() == GameStateType::IN_GAME)
-            newInterface = static_cast<GUI::Interface*>(new GUI::PauseInterface(static_cast<Stage*>(currentInter)));
+            newInterface = static_cast<Interface*>(new PauseInterface(static_cast<Stage*>(currentInter)));
         break;
     case GameStateType::IN_GAME:
         if (currentInter->GetType() == GameStateType::PAUSE_MENU)

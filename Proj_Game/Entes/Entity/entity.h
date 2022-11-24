@@ -62,8 +62,8 @@ public:
 		this->body.setPosition(X_axis, Y_axis);
 	};
 
-	virtual void SelfPrint(const float& pElapsedTime) = 0;
-	virtual void Execute(const float& pElapsedTime) = 0;
+	virtual void Execute();
+	virtual void SelfPrint() = 0;
 	virtual void Collided(Entity* _other, const sf::Vector2f& intersection, CollisionType colType) = 0;
 
 	virtual bool operator!= (const Entity& other)
@@ -72,6 +72,11 @@ public:
 	};
 
 protected:
+	virtual void Move() = 0;
+
+protected:
+	static const float gravity;
+	static const float maxGravityPull;
 	const bool isStatic;
 
 	sf::RectangleShape hitBox;
