@@ -188,6 +188,300 @@
     <ClInclude Include="Entes\Characters\Enemies\Enemy\Node\node.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Audio.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Audio\AlResource.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Audio\Export.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Audio\InputSoundFile.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Audio\Listener.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Audio\Music.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Audio\OutputSoundFile.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Audio\Sound.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Audio\SoundBuffer.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Audio\SoundBufferRecorder.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Audio\SoundFileFactory.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Audio\SoundFileReader.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Audio\SoundFileWriter.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Audio\SoundRecorder.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Audio\SoundSource.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Audio\SoundStream.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Config.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\GpuPreference.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\BlendMode.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\CircleShape.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\Color.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\ConvexShape.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\Drawable.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\Export.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\Font.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\Glsl.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\Glyph.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\Image.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\PrimitiveType.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\Rect.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\RectangleShape.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\RenderStates.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\RenderTarget.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\RenderTexture.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\RenderWindow.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\Shader.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\Shape.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\Sprite.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\Text.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\Texture.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\Transform.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\Transformable.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\Vertex.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\VertexArray.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\VertexBuffer.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\View.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Main.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Network.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Network\Export.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Network\Ftp.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Network\Http.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Network\IpAddress.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Network\Packet.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Network\Socket.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Network\SocketHandle.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Network\SocketSelector.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Network\TcpListener.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Network\TcpSocket.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Network\UdpSocket.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\OpenGL.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\System.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\System\Clock.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\System\Err.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\System\Export.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\System\FileInputStream.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\System\InputStream.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\System\Lock.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\System\MemoryInputStream.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\System\Mutex.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\System\NativeActivity.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\System\NonCopyable.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\System\Sleep.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\System\String.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\System\Thread.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\System\ThreadLocal.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\System\ThreadLocalPtr.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\System\Time.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\System\Utf.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\System\Vector2.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\System\Vector3.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Window.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Window\Clipboard.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Window\Context.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Window\ContextSettings.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Window\Cursor.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Window\Event.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Window\Export.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Window\GlResource.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Window\Joystick.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Window\Keyboard.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Window\Mouse.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Window\Sensor.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Window\Touch.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Window\VideoMode.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Window\Window.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Window\WindowHandle.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Window\WindowStyle.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\parallax_background\back-buildings.png">
@@ -199,11 +493,256 @@
     <Image Include="Resources\parallax_background\foreground.png">
       <Filter>Arquivos de Recurso</Filter>
     </Image>
+    <Image Include="Resources\characters\arcaneArcher\projectile.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\characters\arcaneArcher\spritesheet.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\characters\nightBorne\NightBorne.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\characters\player\Colour1\spritesheet.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\characters\player\Colour1\_Attack2.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\characters\player\Colour1\_Crouch.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\characters\player\Colour1\_CrouchAttack.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\characters\player\Colour1\_CrouchWalk.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\characters\player\Colour1\_Death.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\characters\player\Colour1\_Fall.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\characters\player\Colour1\_Hit.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\characters\player\Colour1\_Idle.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\characters\player\Colour1\_Jump.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\characters\player\Colour1\_Run.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\characters\player\Colour2\spritesheet.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\characters\player\Colour2\_Attack2.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\characters\player\Colour2\_Crouch.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\characters\player\Colour2\_CrouchAttack.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\characters\player\Colour2\_CrouchWalk.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\characters\player\Colour2\_Death.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\characters\player\Colour2\_Fall.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\characters\player\Colour2\_Hit.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\characters\player\Colour2\_Idle.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\characters\player\Colour2\_Jump.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\characters\player\Colour2\_Run.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\characters\player\sheets\DinoSprites_doux.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\characters\player\sheets\DinoSprites_mort.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\characters\player\sheets\DinoSprites_tard.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\characters\player\sheets\DinoSprites_vita.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\characters\skeletonEnemy\skeleton.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\parallax_background\Background_0.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\parallax_background\Background_1.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\parallax_background\Background_2.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\tile_sets\oak_woods_v1.0\background\background_layer_1.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\tile_sets\oak_woods_v1.0\background\background_layer_2.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\tile_sets\oak_woods_v1.0\background\background_layer_3.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\tile_sets\oak_woods_v1.0\decorations\fence_1.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\tile_sets\oak_woods_v1.0\decorations\fence_2.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\tile_sets\oak_woods_v1.0\decorations\grass_1.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\tile_sets\oak_woods_v1.0\decorations\grass_2.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\tile_sets\oak_woods_v1.0\decorations\grass_3.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\tile_sets\oak_woods_v1.0\decorations\lamp.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\tile_sets\oak_woods_v1.0\decorations\rock_1.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\tile_sets\oak_woods_v1.0\decorations\rock_2.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\tile_sets\oak_woods_v1.0\decorations\rock_3.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\tile_sets\oak_woods_v1.0\decorations\shop.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\tile_sets\oak_woods_v1.0\decorations\shop_anim.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\tile_sets\oak_woods_v1.0\decorations\sign.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\tile_sets\oak_woods_v1.0\oak_woods_tileset.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Font Include="Resources\fonts\EquipmentPro.ttf" />
     <Font Include="Resources\fonts\PixelHigh.ttf" />
     <Font Include="Resources\fonts\PixelMiddle.ttf" />
     <Font Include="Resources\fonts\PixelSmall.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="Dependecies\SFML-2.5.1\lib\flac.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\freetype.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\ogg.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\openal32.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-audio-d.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-audio-s-d.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-audio-s.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-audio.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-graphics-d.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-graphics-s-d.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-graphics-s.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-graphics.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-main-d.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-main.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-network-d.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-network-s-d.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-network-s.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-network.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-system-d.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-system-s-d.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-system-s.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-system.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-window-d.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-window-s-d.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-window-s.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-window.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\vorbis.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\vorbisenc.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\vorbisfile.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Dependecies\SFML-2.5.1\bin\openal32.dll" />
+    <None Include="Dependecies\SFML-2.5.1\bin\sfml-audio-2.dll" />
+    <None Include="Dependecies\SFML-2.5.1\bin\sfml-audio-d-2.dll" />
+    <None Include="Dependecies\SFML-2.5.1\bin\sfml-graphics-2.dll" />
+    <None Include="Dependecies\SFML-2.5.1\bin\sfml-graphics-d-2.dll" />
+    <None Include="Dependecies\SFML-2.5.1\bin\sfml-network-2.dll" />
+    <None Include="Dependecies\SFML-2.5.1\bin\sfml-network-d-2.dll" />
+    <None Include="Dependecies\SFML-2.5.1\bin\sfml-system-2.dll" />
+    <None Include="Dependecies\SFML-2.5.1\bin\sfml-system-d-2.dll" />
+    <None Include="Dependecies\SFML-2.5.1\bin\sfml-window-2.dll" />
+    <None Include="Dependecies\SFML-2.5.1\bin\sfml-window-d-2.dll" />
+    <None Include="Dependecies\SFML-2.5.1\include\SFML\Audio\SoundFileFactory.inl">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </None>
+    <None Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\Glsl.inl">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </None>
+    <None Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\Rect.inl">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </None>
+    <None Include="Dependecies\SFML-2.5.1\include\SFML\System\String.inl">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </None>
+    <None Include="Dependecies\SFML-2.5.1\include\SFML\System\Thread.inl">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </None>
+    <None Include="Dependecies\SFML-2.5.1\include\SFML\System\ThreadLocalPtr.inl">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </None>
+    <None Include="Dependecies\SFML-2.5.1\include\SFML\System\Utf.inl">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </None>
+    <None Include="Dependecies\SFML-2.5.1\include\SFML\System\Vector2.inl">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </None>
+    <None Include="Dependecies\SFML-2.5.1\include\SFML\System\Vector3.inl">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </None>
+    <None Include="Dependecies\SFML-2.5.1\lib\cmake\SFML\SFMLConfig.cmake" />
+    <None Include="Dependecies\SFML-2.5.1\lib\cmake\SFML\SFMLConfigDependencies.cmake" />
+    <None Include="Dependecies\SFML-2.5.1\lib\cmake\SFML\SFMLConfigVersion.cmake" />
+    <None Include="Dependecies\SFML-2.5.1\lib\cmake\SFML\SFMLSharedTargets-debug.cmake" />
+    <None Include="Dependecies\SFML-2.5.1\lib\cmake\SFML\SFMLSharedTargets-release.cmake" />
+    <None Include="Dependecies\SFML-2.5.1\lib\cmake\SFML\SFMLSharedTargets.cmake" />
+    <None Include="Dependecies\SFML-2.5.1\lib\cmake\SFML\SFMLStaticTargets-debug.cmake" />
+    <None Include="Dependecies\SFML-2.5.1\lib\cmake\SFML\SFMLStaticTargets-release.cmake" />
+    <None Include="Dependecies\SFML-2.5.1\lib\cmake\SFML\SFMLStaticTargets.cmake" />
+    <None Include="Dependecies\SFML-2.5.1\lib\sfml-audio-d.pdb" />
+    <None Include="Dependecies\SFML-2.5.1\lib\sfml-audio-s-d.pdb" />
+    <None Include="Dependecies\SFML-2.5.1\lib\sfml-graphics-d.pdb" />
+    <None Include="Dependecies\SFML-2.5.1\lib\sfml-graphics-s-d.pdb" />
+    <None Include="Dependecies\SFML-2.5.1\lib\sfml-main-s-d.pdb" />
+    <None Include="Dependecies\SFML-2.5.1\lib\sfml-network-d.pdb" />
+    <None Include="Dependecies\SFML-2.5.1\lib\sfml-network-s-d.pdb" />
+    <None Include="Dependecies\SFML-2.5.1\lib\sfml-system-d.pdb" />
+    <None Include="Dependecies\SFML-2.5.1\lib\sfml-system-s-d.pdb" />
+    <None Include="Dependecies\SFML-2.5.1\lib\sfml-window-d.pdb" />
+    <None Include="Dependecies\SFML-2.5.1\lib\sfml-window-s-d.pdb" />
+    <None Include="Resources\%40original sources\Arcane archer.zip" />
+    <None Include="Resources\%40original sources\FreeKnight_v1.zip" />
+    <None Include="Resources\%40original sources\NightBorne.zip" />
+    <None Include="Resources\%40original sources\oak_woods_v1.0.zip" />
+    <None Include="Resources\%40original sources\PixelPlatformerSet1v.1.1.zip" />
+    <None Include="Resources\%40original sources\Skeleton enemy.zip" />
+    <None Include="Resources\%40original sources\SRAFreePixelFontPack.zip" />
   </ItemGroup>
 </Project>

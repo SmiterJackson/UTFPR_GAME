@@ -101,7 +101,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-audio-d.lib;sfml-network-d.lib;sfml-system-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-audio-d.lib;sfml-network-d.lib;sfml-system-d.lib;</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Proj_Game\Dependecies\SFML-2.5.1\lib;</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -135,7 +135,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-audio-d.lib;sfml-network-d.lib;sfml-system-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-audio-d.lib;sfml-network-d.lib;sfml-system-d.lib;</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Proj_Game\Dependecies\SFML-2.5.1\lib;</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -188,6 +188,104 @@
     <ClCompile Include="Traits\Observer\observer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Audio.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Audio\AlResource.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Audio\Export.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Audio\InputSoundFile.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Audio\Listener.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Audio\Music.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Audio\OutputSoundFile.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Audio\Sound.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Audio\SoundBuffer.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Audio\SoundBufferRecorder.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Audio\SoundFileFactory.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Audio\SoundFileReader.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Audio\SoundFileWriter.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Audio\SoundRecorder.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Audio\SoundSource.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Audio\SoundStream.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Config.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\GpuPreference.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\BlendMode.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\CircleShape.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\Color.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\ConvexShape.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\Drawable.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\Export.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\Font.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\Glsl.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\Glyph.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\Image.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\PrimitiveType.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\Rect.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\RectangleShape.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\RenderStates.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\RenderTarget.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\RenderTexture.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\RenderWindow.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\Shader.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\Shape.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\Sprite.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\Text.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\Texture.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\Transform.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\Transformable.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\Vertex.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\VertexArray.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\VertexBuffer.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\View.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Main.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Network.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Network\Export.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Network\Ftp.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Network\Http.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Network\IpAddress.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Network\Packet.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Network\Socket.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Network\SocketHandle.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Network\SocketSelector.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Network\TcpListener.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Network\TcpSocket.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Network\UdpSocket.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\OpenGL.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\System.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\System\Clock.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\System\Err.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\System\Export.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\System\FileInputStream.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\System\InputStream.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\System\Lock.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\System\MemoryInputStream.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\System\Mutex.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\System\NativeActivity.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\System\NonCopyable.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\System\Sleep.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\System\String.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\System\Thread.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\System\ThreadLocal.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\System\ThreadLocalPtr.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\System\Time.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\System\Utf.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\System\Vector2.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\System\Vector3.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Window.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Window\Clipboard.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Window\Context.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Window\ContextSettings.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Window\Cursor.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Window\Event.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Window\Export.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Window\GlResource.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Window\Joystick.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Window\Keyboard.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Window\Mouse.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Window\Sensor.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Window\Touch.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Window\VideoMode.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Window\Window.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Window\WindowHandle.hpp" />
+    <ClInclude Include="Dependecies\SFML-2.5.1\include\SFML\Window\WindowStyle.hpp" />
     <ClInclude Include="Entes\Characters\Character\character.h" />
     <ClInclude Include="Entes\Characters\Enemies\EnemyMelee\enemyMelee.h" />
     <ClInclude Include="Entes\Characters\Enemies\EnemyRanged\enemyRanged.h" />
@@ -220,15 +318,144 @@
     <ClInclude Include="Traits\Observer\observer.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Resources\characters\arcaneArcher\projectile.png" />
+    <Image Include="Resources\characters\arcaneArcher\spritesheet.png" />
+    <Image Include="Resources\characters\nightBorne\NightBorne.png" />
+    <Image Include="Resources\characters\player\Colour1\spritesheet.png" />
+    <Image Include="Resources\characters\player\Colour1\_Attack2.png" />
+    <Image Include="Resources\characters\player\Colour1\_Crouch.png" />
+    <Image Include="Resources\characters\player\Colour1\_CrouchAttack.png" />
+    <Image Include="Resources\characters\player\Colour1\_CrouchWalk.png" />
+    <Image Include="Resources\characters\player\Colour1\_Death.png" />
+    <Image Include="Resources\characters\player\Colour1\_Fall.png" />
+    <Image Include="Resources\characters\player\Colour1\_Hit.png" />
+    <Image Include="Resources\characters\player\Colour1\_Idle.png" />
+    <Image Include="Resources\characters\player\Colour1\_Jump.png" />
+    <Image Include="Resources\characters\player\Colour1\_Run.png" />
+    <Image Include="Resources\characters\player\Colour2\spritesheet.png" />
+    <Image Include="Resources\characters\player\Colour2\_Attack2.png" />
+    <Image Include="Resources\characters\player\Colour2\_Crouch.png" />
+    <Image Include="Resources\characters\player\Colour2\_CrouchAttack.png" />
+    <Image Include="Resources\characters\player\Colour2\_CrouchWalk.png" />
+    <Image Include="Resources\characters\player\Colour2\_Death.png" />
+    <Image Include="Resources\characters\player\Colour2\_Fall.png" />
+    <Image Include="Resources\characters\player\Colour2\_Hit.png" />
+    <Image Include="Resources\characters\player\Colour2\_Idle.png" />
+    <Image Include="Resources\characters\player\Colour2\_Jump.png" />
+    <Image Include="Resources\characters\player\Colour2\_Run.png" />
+    <Image Include="Resources\characters\player\sheets\DinoSprites_doux.png" />
+    <Image Include="Resources\characters\player\sheets\DinoSprites_mort.png" />
+    <Image Include="Resources\characters\player\sheets\DinoSprites_tard.png" />
+    <Image Include="Resources\characters\player\sheets\DinoSprites_vita.png" />
+    <Image Include="Resources\characters\skeletonEnemy\skeleton.png" />
     <Image Include="Resources\parallax_background\back-buildings.png" />
+    <Image Include="Resources\parallax_background\Background_0.png" />
+    <Image Include="Resources\parallax_background\Background_1.png" />
+    <Image Include="Resources\parallax_background\Background_2.png" />
     <Image Include="Resources\parallax_background\far-buildings.png" />
     <Image Include="Resources\parallax_background\foreground.png" />
+    <Image Include="Resources\tile_sets\oak_woods_v1.0\background\background_layer_1.png" />
+    <Image Include="Resources\tile_sets\oak_woods_v1.0\background\background_layer_2.png" />
+    <Image Include="Resources\tile_sets\oak_woods_v1.0\background\background_layer_3.png" />
+    <Image Include="Resources\tile_sets\oak_woods_v1.0\decorations\fence_1.png" />
+    <Image Include="Resources\tile_sets\oak_woods_v1.0\decorations\fence_2.png" />
+    <Image Include="Resources\tile_sets\oak_woods_v1.0\decorations\grass_1.png" />
+    <Image Include="Resources\tile_sets\oak_woods_v1.0\decorations\grass_2.png" />
+    <Image Include="Resources\tile_sets\oak_woods_v1.0\decorations\grass_3.png" />
+    <Image Include="Resources\tile_sets\oak_woods_v1.0\decorations\lamp.png" />
+    <Image Include="Resources\tile_sets\oak_woods_v1.0\decorations\rock_1.png" />
+    <Image Include="Resources\tile_sets\oak_woods_v1.0\decorations\rock_2.png" />
+    <Image Include="Resources\tile_sets\oak_woods_v1.0\decorations\rock_3.png" />
+    <Image Include="Resources\tile_sets\oak_woods_v1.0\decorations\shop.png" />
+    <Image Include="Resources\tile_sets\oak_woods_v1.0\decorations\shop_anim.png" />
+    <Image Include="Resources\tile_sets\oak_woods_v1.0\decorations\sign.png" />
+    <Image Include="Resources\tile_sets\oak_woods_v1.0\oak_woods_tileset.png" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="Resources\fonts\EquipmentPro.ttf" />
     <Font Include="Resources\fonts\PixelHigh.ttf" />
     <Font Include="Resources\fonts\PixelMiddle.ttf" />
     <Font Include="Resources\fonts\PixelSmall.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Dependecies\SFML-2.5.1\bin\openal32.dll" />
+    <None Include="Dependecies\SFML-2.5.1\bin\sfml-audio-2.dll" />
+    <None Include="Dependecies\SFML-2.5.1\bin\sfml-audio-d-2.dll" />
+    <None Include="Dependecies\SFML-2.5.1\bin\sfml-graphics-2.dll" />
+    <None Include="Dependecies\SFML-2.5.1\bin\sfml-graphics-d-2.dll" />
+    <None Include="Dependecies\SFML-2.5.1\bin\sfml-network-2.dll" />
+    <None Include="Dependecies\SFML-2.5.1\bin\sfml-network-d-2.dll" />
+    <None Include="Dependecies\SFML-2.5.1\bin\sfml-system-2.dll" />
+    <None Include="Dependecies\SFML-2.5.1\bin\sfml-system-d-2.dll" />
+    <None Include="Dependecies\SFML-2.5.1\bin\sfml-window-2.dll" />
+    <None Include="Dependecies\SFML-2.5.1\bin\sfml-window-d-2.dll" />
+    <None Include="Dependecies\SFML-2.5.1\include\SFML\Audio\SoundFileFactory.inl" />
+    <None Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\Glsl.inl" />
+    <None Include="Dependecies\SFML-2.5.1\include\SFML\Graphics\Rect.inl" />
+    <None Include="Dependecies\SFML-2.5.1\include\SFML\System\String.inl" />
+    <None Include="Dependecies\SFML-2.5.1\include\SFML\System\Thread.inl" />
+    <None Include="Dependecies\SFML-2.5.1\include\SFML\System\ThreadLocalPtr.inl" />
+    <None Include="Dependecies\SFML-2.5.1\include\SFML\System\Utf.inl" />
+    <None Include="Dependecies\SFML-2.5.1\include\SFML\System\Vector2.inl" />
+    <None Include="Dependecies\SFML-2.5.1\include\SFML\System\Vector3.inl" />
+    <None Include="Dependecies\SFML-2.5.1\lib\cmake\SFML\SFMLConfig.cmake" />
+    <None Include="Dependecies\SFML-2.5.1\lib\cmake\SFML\SFMLConfigDependencies.cmake" />
+    <None Include="Dependecies\SFML-2.5.1\lib\cmake\SFML\SFMLConfigVersion.cmake" />
+    <None Include="Dependecies\SFML-2.5.1\lib\cmake\SFML\SFMLSharedTargets-debug.cmake" />
+    <None Include="Dependecies\SFML-2.5.1\lib\cmake\SFML\SFMLSharedTargets-release.cmake" />
+    <None Include="Dependecies\SFML-2.5.1\lib\cmake\SFML\SFMLSharedTargets.cmake" />
+    <None Include="Dependecies\SFML-2.5.1\lib\cmake\SFML\SFMLStaticTargets-debug.cmake" />
+    <None Include="Dependecies\SFML-2.5.1\lib\cmake\SFML\SFMLStaticTargets-release.cmake" />
+    <None Include="Dependecies\SFML-2.5.1\lib\cmake\SFML\SFMLStaticTargets.cmake" />
+    <None Include="Dependecies\SFML-2.5.1\lib\sfml-audio-d.pdb" />
+    <None Include="Dependecies\SFML-2.5.1\lib\sfml-audio-s-d.pdb" />
+    <None Include="Dependecies\SFML-2.5.1\lib\sfml-graphics-d.pdb" />
+    <None Include="Dependecies\SFML-2.5.1\lib\sfml-graphics-s-d.pdb" />
+    <None Include="Dependecies\SFML-2.5.1\lib\sfml-main-s-d.pdb" />
+    <None Include="Dependecies\SFML-2.5.1\lib\sfml-network-d.pdb" />
+    <None Include="Dependecies\SFML-2.5.1\lib\sfml-network-s-d.pdb" />
+    <None Include="Dependecies\SFML-2.5.1\lib\sfml-system-d.pdb" />
+    <None Include="Dependecies\SFML-2.5.1\lib\sfml-system-s-d.pdb" />
+    <None Include="Dependecies\SFML-2.5.1\lib\sfml-window-d.pdb" />
+    <None Include="Dependecies\SFML-2.5.1\lib\sfml-window-s-d.pdb" />
+    <None Include="Resources\%40original sources\Arcane archer.zip" />
+    <None Include="Resources\%40original sources\FreeKnight_v1.zip" />
+    <None Include="Resources\%40original sources\NightBorne.zip" />
+    <None Include="Resources\%40original sources\oak_woods_v1.0.zip" />
+    <None Include="Resources\%40original sources\PixelPlatformerSet1v.1.1.zip" />
+    <None Include="Resources\%40original sources\Skeleton enemy.zip" />
+    <None Include="Resources\%40original sources\SRAFreePixelFontPack.zip" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="Dependecies\SFML-2.5.1\lib\flac.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\freetype.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\ogg.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\openal32.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-audio-d.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-audio-s-d.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-audio-s.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-audio.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-graphics-d.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-graphics-s-d.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-graphics-s.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-graphics.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-main-d.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-main.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-network-d.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-network-s-d.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-network-s.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-network.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-system-d.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-system-s-d.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-system-s.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-system.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-window-d.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-window-s-d.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-window-s.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\sfml-window.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\vorbis.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\vorbisenc.lib" />
+    <Library Include="Dependecies\SFML-2.5.1\lib\vorbisfile.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

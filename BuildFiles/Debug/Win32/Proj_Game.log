@@ -1,4 +1,1 @@
-﻿  enemy.cpp
-C:\Dev\Cplusplus\Game\Proj_Game\Entes\Characters\Enemies\Enemy\enemy.cpp(141,10): warning C4018: '>=': signed/unsigned mismatch
-C:\Dev\Cplusplus\Game\Proj_Game\Entes\Characters\Enemies\Enemy\enemy.cpp(153,11): warning C4018: '>=': signed/unsigned mismatch
-  Proj_Game.vcxproj -> C:\Dev\Cplusplus\Game\Proj_Game Debug.exe
+﻿  Proj_Game.vcxproj -> C:\Dev\Cplusplus\Game\Proj_Game Debug.exe

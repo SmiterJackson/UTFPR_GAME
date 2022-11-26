@@ -4,10 +4,10 @@
 using namespace Manager;
 using namespace Enemies;
 
-void tracePath(NodeList& closed, const Node& trg)
+void tracePath(NodeList& closed, const NodeList::iterator& trg)
 {
 	printf("\n\nThe Path is ");
-	NodeList::iterator previous = closed.find(trg.previous);
+	NodeList::iterator previous = trg;
 
 	std::stack<sf::Vector2i> Path;
 
@@ -18,7 +18,7 @@ void tracePath(NodeList& closed, const Node& trg)
 		previous = closed.find(previous->second.previous);
 	}
 
-	while (!Path.empty()) 
+	while (!Path.empty())
 	{
 		sf::Vector2i p = Path.top();
 		Path.pop();
@@ -121,7 +121,7 @@ unsigned int Enemy::AStarAlgorithm(const sf::Vector2f srcPos)
 
 		if (currentValue == target)
 		{
-			tracePath(closedList, currentNode);
+			tracePath(closedList, closedList.find(currentValue));
 			found = true;
 			break;
 		}
@@ -136,22 +136,16 @@ unsigned int Enemy::AStarAlgorithm(const sf::Vector2f srcPos)
 
 		for (x = currentValue.x - 1; x <= currentValue.x + 1; x++)
 		{
-			if (x < 0)
-				x++;
-			if (x >= grid.size())
-				break;
+			if (x < 0 || x >= grid.size())
+				continue;
 
 			for (y = currentValue.y - 1; y <= currentValue.y + 1; y++)
 			{
 				neighbourPos = sf::Vector2i(x, y);
 				totalcost = currentNode.distance + Node::CalcHeuristic(currentValue, target);
 
-				if (y < 0)
-					y++;
-				if ((x == currentValue.x && y == currentValue.y))
-					y++;
-				if (y >= grid[x].size())
-					break;
+				if (y < 0 || y >= grid[x].size() || (x == currentValue.x && y == currentValue.y))
+					continue;
 
 				it = closedList.find(neighbourPos);
 				if (grid[currentValue.x][currentValue.y] == false || it != closedList.end())
