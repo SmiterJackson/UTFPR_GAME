@@ -93,10 +93,7 @@
     <ClCompile Include="Stages\Stage1\stage1.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Entes\Characters\Enemies\Enemy\Heuristic\heuristic.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="Entes\Characters\Enemies\Enemy\BaseHeuristic\baseHeuristic.cpp">
+    <ClCompile Include="Entes\Characters\Enemies\Enemy\Node\node.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
   </ItemGroup>
@@ -188,10 +185,7 @@
     <ClInclude Include="Stages\Stage1\stage1.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Entes\Characters\Enemies\Enemy\Heuristic\heuristic.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="Entes\Characters\Enemies\Enemy\BaseHeuristic\baseHeuristic.h">
+    <ClInclude Include="Entes\Characters\Enemies\Enemy\Node\node.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,10 +1,12 @@
 #pragma once
 
 #include "../../Player/player.h"
+#include "Node/node.h"
 
 namespace Enemies
 {
 	typedef std::list<Characters::Player*> PlayerList;
+	typedef std::unordered_map<sf::Vector2i, Node> NodeList;
 	class Enemy : public Characters::Character
 	{
 	private:

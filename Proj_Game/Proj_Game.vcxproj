@@ -162,9 +162,8 @@
     <ClCompile Include="Entes\Characters\Character\character.cpp" />
     <ClCompile Include="Entes\Characters\Enemies\EnemyMelee\enemyMelee.cpp" />
     <ClCompile Include="Entes\Characters\Enemies\EnemyRanged\enemyRanged.cpp" />
-    <ClCompile Include="Entes\Characters\Enemies\Enemy\BaseHeuristic\baseHeuristic.cpp" />
     <ClCompile Include="Entes\Characters\Enemies\Enemy\enemy.cpp" />
-    <ClCompile Include="Entes\Characters\Enemies\Enemy\Heuristic\heuristic.cpp" />
+    <ClCompile Include="Entes\Characters\Enemies\Enemy\Node\node.cpp" />
     <ClCompile Include="Entes\Entity\entity.cpp" />
     <ClCompile Include="Entes\Ente\ente.cpp" />
     <ClCompile Include="Entes\GUI\Interfaces\MainMenu\mainMenu.cpp" />
@@ -192,9 +191,8 @@
     <ClInclude Include="Entes\Characters\Character\character.h" />
     <ClInclude Include="Entes\Characters\Enemies\EnemyMelee\enemyMelee.h" />
     <ClInclude Include="Entes\Characters\Enemies\EnemyRanged\enemyRanged.h" />
-    <ClInclude Include="Entes\Characters\Enemies\Enemy\BaseHeuristic\baseHeuristic.h" />
     <ClInclude Include="Entes\Characters\Enemies\Enemy\enemy.h" />
-    <ClInclude Include="Entes\Characters\Enemies\Enemy\Heuristic\heuristic.h" />
+    <ClInclude Include="Entes\Characters\Enemies\Enemy\Node\node.h" />
     <ClInclude Include="Entes\Entity\entity.h" />
     <ClInclude Include="Entes\Ente\ente.h" />
     <ClInclude Include="Entes\GUI\Interfaces\MainMenu\mainMenu.h" />

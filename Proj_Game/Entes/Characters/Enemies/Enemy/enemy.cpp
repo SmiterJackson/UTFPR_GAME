@@ -1,29 +1,23 @@
 #include "enemy.h"
-#include "Heuristic/heuristic.h"
 #include "../Entes/GUI/Interfaces/Stage/stage.h"
 #include "../Managers/GraphicManager/graphic_manager.h"
 using namespace Manager;
 using namespace Enemies;
 
-void tracePath(const std::vector<std::vector<Heuristic>> vals, const sf::Vector2i trg)
+void tracePath(NodeList& closed, const Node& trg)
 {
 	printf("\n\nThe Path is ");
-	int row = trg.x;
-	int col = trg.y;
+	NodeList::iterator previous = closed.find(trg.previous);
 
 	std::stack<sf::Vector2i> Path;
 
-	while (!(vals[row][col].previous.x == row
-		&&	 vals[row][col].previous.y == col)) 
+	Path.push(previous->first);
+	while (previous->first != previous->second.previous)
 	{
-		Path.push(sf::Vector2i(row, col));
-		int temp_row = vals[row][col].previous.x;
-		int temp_col = vals[row][col].previous.y;
-		row = temp_row;
-		col = temp_col;
+		Path.push(previous->second.previous);
+		previous = closed.find(previous->second.previous);
 	}
 
-	Path.push(sf::Vector2i(row, col));
 	while (!Path.empty()) 
 	{
 		sf::Vector2i p = Path.top();
@@ -72,48 +66,37 @@ void Enemy::SelfPrint()
 unsigned int Enemy::AStarAlgorithm(const sf::Vector2f srcPos)
 {
 	std::vector<std::vector<bool>> grid = GUI::Stage::GetGridStatus();
-	std::vector<std::vector<bool>> closedList;
-	std::vector<std::vector<Heuristic>> nodeValues;
-	std::set<BaseHeuristc> openList;
+	NodeList::iterator  it;
+	NodeList closedList;
+	NodeList openList;
+	Node currentNode;
+	Node neighbour;
 
-	PlayerList::const_iterator it;
+	PlayerList::const_iterator cit;
 	sf::Vector2i src(GraphicManager::PositionToGrid(srcPos));
+	sf::Vector2i currentValue;
+	sf::Vector2i neighbourPos;
 	sf::Vector2i target;
 
 	constexpr double maxVal(std::numeric_limits<double>::max());
-	double delta, least(maxVal);
-	double f = 0.0, g = 0.0, h = 0.0;
-	int i = 0, j = 0, x = 0, k = 0;
+	double delta = 0.0, totalcost = 0.0, least(maxVal);
+	int x = 0, y = 0;
 	bool found = false;
 
-	closedList.resize(grid.size());
-	nodeValues.resize(grid.size());
-	for (i = 0; i < grid.size(); i++)
-	{
-		closedList[i].resize(grid[i].size(), false);
-		nodeValues[i].resize(grid[i].size());
-	}
-	i = src.x;
-	j = src.y;
-	nodeValues[i][j].cost		= 0.0;
-	nodeValues[i][j].distance	= 0.0;
-	nodeValues[i][j].heuristic	= 0.0;
-	nodeValues[i][j].previous	= src;
-	openList.insert(BaseHeuristc(0.0, src));
-
-	for (it = players.cbegin(); it != players.cend(); it++)
+	for (cit = players.cbegin(); cit != players.cend(); cit++)
 	{
 		delta = sqrt(
-			pow((*it)->GetPosition().x - srcPos.x, 2) +
-			pow((*it)->GetPosition().y - srcPos.y, 2)
+			pow((*cit)->GetPosition().x - srcPos.x, 2) +
+			pow((*cit)->GetPosition().y - srcPos.y, 2)
 		);
 
 		if (delta <= least)
 		{
 			least = delta;
-			target = GraphicManager::PositionToGrid((*it)->GetPosition());
+			target = GraphicManager::PositionToGrid((*cit)->GetPosition());
 		}
 	};
+	openList.emplace(src, Node(0.0, 0.0, src));
 
 	if(src == target)
 	{
@@ -123,59 +106,72 @@ unsigned int Enemy::AStarAlgorithm(const sf::Vector2f srcPos)
 
 	while(!openList.empty())
 	{
-		BaseHeuristc current = *openList.begin();
-		openList.erase(openList.begin());
+		currentValue = openList.begin()->first;
+		currentNode = openList.begin()->second;
+		least = maxVal;
 
-		i = current.previous.x;
-		j = current.previous.y;
-		closedList[i][j] = true;
+		for (it = openList.begin(); it != openList.end(); it++)
+		{
+			if (it->second.cost < currentNode.cost || it->second <= currentNode)
+			{
+				currentValue = it->first;
+				currentNode = it->second;
+			}
+		}
 
-		for (x = i - 1; x <= i + 1; x++)
+		if (currentValue == target)
+		{
+			tracePath(closedList, currentNode);
+			found = true;
+			break;
+		}
+
+		if (currentValue.x < 0 || currentValue.y < 0)
+		{
+			bool val = true;
+		}
+
+		openList.erase(currentValue);
+		closedList.insert(NodeList::value_type(currentValue, currentNode));
+
+		for (x = currentValue.x - 1; x <= currentValue.x + 1; x++)
 		{
 			if (x < 0)
 				x++;
-			if (x >= nodeValues.size())
+			if (x >= grid.size())
 				break;
 
-			for (k = j - 1; k <= j + 1; k++)
+			for (y = currentValue.y - 1; y <= currentValue.y + 1; y++)
 			{
-				if (k < 0)
-					k++;
-				if ((x == i && k == j))
-					k++;
-				if (k >= nodeValues[x].size())
+				neighbourPos = sf::Vector2i(x, y);
+				totalcost = currentNode.distance + Node::CalcHeuristic(currentValue, target);
+
+				if (y < 0)
+					y++;
+				if ((x == currentValue.x && y == currentValue.y))
+					y++;
+				if (y >= grid[x].size())
 					break;
 
-				if(sf::Vector2i(x, k) == target)
+				it = closedList.find(neighbourPos);
+				if (grid[currentValue.x][currentValue.y] == false || it != closedList.end())
+					continue;
+				
+				it = openList.find(neighbourPos);
+				if (totalcost < neighbour.distance || it == openList.end())
 				{
-					nodeValues[x][k].previous.x = i;
-					nodeValues[x][k].previous.y = j;
-					tracePath(nodeValues, target);
-					found = true;
-					goto endloop;
-				}
-				else if(closedList[x][k] == false && grid[x][k] == true)
-				{
-					g = nodeValues[i][j].distance + 1.0;
-					h = Heuristic::CalcHeuristic(sf::Vector2i(x, k), target);
-					f = g + h;
-
-					if(nodeValues[x][k].cost == maxVal ||
-					   nodeValues[x][k].cost < f)
+					neighbour.distance	= totalcost;
+					neighbour.heuristic = Node::CalcHeuristic(neighbourPos, target);
+					neighbour.previous	= currentValue;
+					if (it == openList.end())
 					{
-						std::cout << "Fui para -> (" << x << ", \t" << k << ");" << std::endl;
-						openList.insert(BaseHeuristc(f, sf::Vector2i(x, k)));
-						nodeValues[x][k].cost		= f;
-						nodeValues[x][k].distance	= g;
-						nodeValues[x][k].heuristic	= h;
-						nodeValues[x][k].previous.x = i;
-						nodeValues[x][k].previous.y = j;
+						std::cout << "Fui para -> (" << x << ", \t" << y << ");" << std::endl;
+						openList.insert(NodeList::value_type(neighbourPos, neighbour));
 					}
 				}
 			}
 		}
 	}
-	endloop:
 
 	if (!found)
 		std::cout << "\nNao foi possivel achar o jogador." << std::endl;
