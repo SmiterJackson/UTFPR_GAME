@@ -1,1 +1,4 @@
-﻿  Proj_Game.vcxproj -> C:\Dev\Cplusplus\Game\Proj_Game Debug.exe
+﻿  enemy.cpp
+C:\Dev\Cplusplus\Game\Proj_Game\Entes\Characters\Enemies\Enemy\enemy.cpp(146,19): warning C4018: '>=': signed/unsigned mismatch
+C:\Dev\Cplusplus\Game\Proj_Game\Entes\Characters\Enemies\Enemy\enemy.cpp(154,20): warning C4018: '>=': signed/unsigned mismatch
+  Proj_Game.vcxproj -> C:\Dev\Cplusplus\Game\Proj_Game Debug.exe

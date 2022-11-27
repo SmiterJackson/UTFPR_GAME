@@ -4,29 +4,34 @@
 using namespace Manager;
 using namespace Enemies;
 
-void tracePath(NodeList& closed, const NodeList::iterator& trg)
+#ifdef _DEBUG
+void tracePath(NodeList& closed, Node& trg, const sf::Vector2i& val)
 {
-	printf("\n\nThe Path is ");
-	NodeList::iterator previous = trg;
+	printf("\nThe Path is ");
+	sf::Vector2i currentVal(val);
+	Node* current(&trg);
 
 	std::stack<sf::Vector2i> Path;
 
-	Path.push(previous->first);
-	while (previous->first != previous->second.previous)
+	Path.push(val);
+	while (currentVal != current->previous)
 	{
-		Path.push(previous->second.previous);
-		previous = closed.find(previous->second.previous);
+		Path.push(current->previous);
+		currentVal = current->previous;
+		current = &closed.find(current->previous)->second;
 	}
 
 	while (!Path.empty())
 	{
 		sf::Vector2i p = Path.top();
-		Path.pop();
 		printf("-> (%d,%d) ", p.x, p.y);
+		Path.pop();
 	}
+	printf("\n\n");
 
 	return;
 };
+#endif
 
 const PlayerList& Enemy::players(Characters::Player::GetPlayerList());
 
@@ -80,7 +85,7 @@ unsigned int Enemy::AStarAlgorithm(const sf::Vector2f srcPos)
 
 	constexpr double maxVal(std::numeric_limits<double>::max());
 	double delta = 0.0, totalcost = 0.0, least(maxVal);
-	int x = 0, y = 0;
+	long int x = 0, y = 0;
 	bool found = false;
 
 	for (cit = players.cbegin(); cit != players.cend(); cit++)
@@ -121,7 +126,9 @@ unsigned int Enemy::AStarAlgorithm(const sf::Vector2f srcPos)
 
 		if (currentValue == target)
 		{
-			tracePath(closedList, closedList.find(currentValue));
+		#ifdef _DEBUG
+			tracePath(closedList, currentNode, currentValue);
+		#endif
 			found = true;
 			break;
 		}
@@ -159,7 +166,9 @@ unsigned int Enemy::AStarAlgorithm(const sf::Vector2f srcPos)
 					neighbour.previous	= currentValue;
 					if (it == openList.end())
 					{
+					#ifdef _DEBUG
 						std::cout << "Fui para -> (" << x << ", \t" << y << ");" << std::endl;
+					#endif
 						openList.insert(NodeList::value_type(neighbourPos, neighbour));
 					}
 				}
